@@ -1,9 +1,22 @@
-const express = require("express")
-const router=express.Router()
+const express = require("express");
+const User = require("../models/User");
+const vailduser = require("../utilis/validator");
+const userRouter = express.Router()
 
 
-const userRoutes =()=>{
-    return 0;
-};
+userRouter.post("/login", async(req, res) => {
 
-module.exports=userRoutes;
+    try {
+        vailduser(req.body)
+        await User.create(req.body)
+        res.send("working")
+    } catch (error) {
+
+        res.status(400).json({
+            msg:"error happen from user login "
+        })
+    }
+})
+
+
+module.exports = userRouter;

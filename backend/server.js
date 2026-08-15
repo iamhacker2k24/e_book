@@ -1,19 +1,22 @@
 const express = require("express")
+const app = express();
 const cors = require("cors")
-
+app.use(cors())
+const limiter = require("./middleware/rateLimmtter")
 const dbConnection = require("./config/db") 
 
-const userRoutes=require("./routes/userRoutes")
-const app = express();
+const userRouter=require("./routes/userRoutes")
+
+app.use(express.json())
+
+// app.use(limiter)
+
+app.get("/",(req,res)=>{
+    res.send("server working ")
+})
 
 
-
-app.use(express.json)
-app.use(cors())
-
-
-app.use("/api/user",userRoutes)
-
+app.use("/api/user",userRouter)
 
 
 
