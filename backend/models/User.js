@@ -14,6 +14,7 @@ const userDetails = new Schema({
         trim: true,
         match: /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     },
+
     isVerified: {
         type: Boolean,
         default: false,
