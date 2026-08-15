@@ -1,6 +1,6 @@
 const { Resend } = require("resend");
 
-const resend = new Resend("re_iGw3o2Af_A4YmRoXaLYuabQWRK29PTQmK");
+const resend = new Resend("api_key");
 
 async function sendOTP(email, otp) {
     const { data, error } = await resend.emails.send({
