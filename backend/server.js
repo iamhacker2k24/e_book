@@ -1,9 +1,19 @@
 const express = require("express")
 const cors = require("cors")
-const dbConnection = require("./config/db")
+
+const dbConnection = require("./config/db") 
+
+const userRoutes=require("./routes/userRoutes")
 const app = express();
+
+
+
 app.use(express.json)
 app.use(cors())
+
+
+app.use("/api/user",userRoutes)
+
 
 
 
@@ -16,7 +26,7 @@ const dbServer = async () => {
             })
         })
     } catch (error) {
-
+        console.log("error in server  connection ", error.message)
     }
 
 
