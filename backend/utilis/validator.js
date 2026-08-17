@@ -1,7 +1,7 @@
 var validator = require('validator');
 function vailduser(data) {
     console.log(data)
-    const mandatoryField = ["fullName", "email"]
+    const mandatoryField = ["name", "email"]
 
     const IsAllowed = mandatoryField.every((k) => Object.keys(data).includes(k));
     //thsi will check is everything there or not 

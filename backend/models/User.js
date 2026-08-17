@@ -2,7 +2,7 @@ const mongoose = require("mongoose")
 const Schema = mongoose.Schema
 
 const userDetails = new Schema({
-    fullName: {
+    name: {
         type: String,
         required: [true, "Name is required"],
         minlength: true,
@@ -14,11 +14,17 @@ const userDetails = new Schema({
         trim: true,
         match: /^[^\s@]+@[^\s@]+\.[^\s@]+$/
     },
-
-    isVerified: {
+    otp: {
+        type: Number,
+        trim: true
+    },
+    isOtpVerified: {
         type: Boolean,
         default: false,
 
+    },
+    otpExpiresAt: {
+        type: Date
     },
     profileIcon: {
         type: String,
