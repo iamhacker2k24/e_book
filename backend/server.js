@@ -3,10 +3,10 @@ const app = express();
 const cors = require("cors")
 app.use(cors())
 const limiter = require("./middleware/rateLimmtter")
-const dbConnection = require("./config/db") 
-const Cookies = require('cookies')
+const dbConnection = require("./config/db")
+const cookieParser = require('cookie-parser')
 const userRouter=require("./routes/userRoutes")
-
+app.use(cookieParser())
 app.use(express.json())
 
 // app.use(limiter)

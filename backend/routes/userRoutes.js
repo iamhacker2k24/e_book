@@ -6,7 +6,8 @@ const vailduser = require("../utilis/validator");
 const { Resend } = require("resend");
 const userRouter = express.Router()
 const jwt = require('jsonwebtoken');
-const Cookies = require('cookies')
+const Cookies = require('cookies');
+const isLoggedin = require("../utilis/islogedin");
 
 userRouter.post("/login", upload.none(), async (req, res) => {
 
@@ -96,11 +97,11 @@ userRouter.post("/login", upload.none(), async (req, res) => {
                     msg: "OTP expired"
                 });
             }
+
             const token = jwt.sign({
                 "id": data._id,
-                "isOtpVerified": data.isOtpVerified,
-                "otpExpiresAt": data.otpExpiresAt
-            }, 'THIS_IS_YOUR_SALT_KEY');
+                "isOtpVerified":true,
+            }, 'THIS_IS_YOUR_SALT_KEY', { expiresIn: "1d" });
             console.log(token)
             res.cookie("login", token, {
                 httpOnly: true,
@@ -108,14 +109,15 @@ userRouter.post("/login", upload.none(), async (req, res) => {
                 sameSite: "lax",
                 maxAge: 24 * 60 * 60 * 1000
             });
+
             await User.findByIdAndUpdate(
                 data._id,
                 {
                     otp: null,
-                    isOtpVerified: true
+                    isOtpVerified: true,
+                    otpExpiresAt: null
                 }
             );
-
 
             return res.status(200).json({
                 msg: "OTP verified successfully"
@@ -130,7 +132,8 @@ userRouter.post("/login", upload.none(), async (req, res) => {
     }
 });
 
-userRouter.get("/logout", (req, res) => {
+userRouter.get("/logout", async (req, res) => {
+    await isLoggedin(req, res)
 
 })
 
