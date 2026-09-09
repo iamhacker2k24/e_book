@@ -28,8 +28,13 @@ const userDetails = new Schema({
     },
     profileIcon: {
         type: String,
-        default: "dev",
-
+        default: "user",
+        required: true
+    },
+    role: {
+        type: String,
+        enum: ["user", "admin"],
+        default: "user",
     }
 
 }, {

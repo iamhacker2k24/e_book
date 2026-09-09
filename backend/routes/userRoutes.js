@@ -1,6 +1,7 @@
 const express = require("express");
 const multer = require('multer')
-const upload = multer();
+const storage = multer.memoryStorage();
+const upload = multer({ storage });
 const User = require("../models/User");
 const vailduser = require("../utilis/validator");
 const { Resend } = require("resend");
@@ -8,17 +9,24 @@ const userRouter = express.Router()
 const jwt = require('jsonwebtoken');
 const Cookies = require('cookies');
 const isLoggedin = require("../utilis/islogedin");
+const cloudinary = require("../config/cloudinary");
+const uploadToCloudinary = require("../config/cloudinary");
 
-userRouter.post("/login", upload.none(), async (req, res) => {
+userRouter.post("/login", upload.single("photo"), async (req, res) => {
 
     try {
-        let { email, name, methode, otp } = req.body;
-
+        let { email, name, methode, otp, role, profileIcon } = req.body;
+        // console.log(req.file.buffer);
         if (!methode || !["email", "otpverify"].includes(methode.trim().toLowerCase())) {
             return res.status(400).json({
                 msg: "Please select a valid method: email or otpverify"
             });
         }
+
+        if (role != "user") {
+            req.body.role = "user" // this is going to convert all role to user ,admin alredy set here 
+        }
+
 
         const alreadyExists = await User.findOne({ email });
 
@@ -54,8 +62,15 @@ userRouter.post("/login", upload.none(), async (req, res) => {
                     otp: code,
                     isOtpVerified: false,
                     otpExpiresAt: otpExpiresAt
+
                 });
 
+                if (req.file.buffer) {
+                    const ans = await uploadToCloudinary(req.file.buffer);
+                    console.log(ans.url);
+                    req.body.profileIcon = ans.url;
+                    console.log(req.body)
+                }
                 await user.save();
 
                 console.log("New user created");
@@ -100,7 +115,7 @@ userRouter.post("/login", upload.none(), async (req, res) => {
 
             const token = jwt.sign({
                 "id": data._id,
-                "isOtpVerified":true,
+                "isOtpVerified": true,
             }, 'THIS_IS_YOUR_SALT_KEY', { expiresIn: "1d" });
             console.log(token)
             res.cookie("login", token, {

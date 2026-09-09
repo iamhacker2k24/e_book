@@ -6,6 +6,7 @@ const limiter = require("./middleware/rateLimmtter")
 const dbConnection = require("./config/db")
 const cookieParser = require('cookie-parser')
 const userRouter=require("./routes/userRoutes")
+const adminRoutes = require ("./routes/adminRoutes")
 app.use(cookieParser())
 app.use(express.json())
 
@@ -17,6 +18,7 @@ app.get("/",(req,res)=>{
 
 
 app.use("/api/user",userRouter)
+app.use("/api/admin",adminRoutes)
 
 
 

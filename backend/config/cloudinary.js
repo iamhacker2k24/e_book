@@ -1,4 +1,5 @@
-const { v2: cloudinary } = require("cloudinary");
+require('dotenv').config()
+const cloudinary = require("cloudinary").v2;
 
 cloudinary.config({
     cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -6,4 +7,43 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET
 });
 
-module.exports = cloudinary;
+function uploadToCloudinary(buffer) {
+    return new Promise((resolve, reject) => {
+
+        const stream = cloudinary.uploader.upload_stream(
+            {
+                folder: "ebooks"
+            },
+            (error, result) => {
+                if (error) {
+                    reject(error);
+                } else {
+                    resolve(result);
+                }
+            }
+        );
+
+        stream.end(buffer);
+    });
+}
+
+const uploadPDF = async (fileBuffer, fileName) => {
+  return new Promise((resolve, reject) => {
+    cloudinary.uploader.upload_stream(
+      {
+        resource_type: "image",
+        folder: "pdfs",
+        format: "pdf",
+      },
+      (error, result) => {
+        if (error) {
+          reject(error);
+        } else {
+          resolve(result.secure_url);
+        }
+      }
+    ).end(fileBuffer);
+  });
+};
+
+module.exports = {uploadToCloudinary,uploadPDF};
