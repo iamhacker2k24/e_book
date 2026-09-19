@@ -33,17 +33,23 @@ const uploadPDF = async (fileBuffer, fileName) => {
       {
         resource_type: "image",
         folder: "pdfs",
+        public_id: fileName.replace(/\.[^/.]+$/, ""),
         format: "pdf",
       },
       (error, result) => {
         if (error) {
+          console.error("Cloudinary PDF upload error:", error);
           reject(error);
         } else {
+          console.log("PDF uploaded:", result.secure_url);
           resolve(result.secure_url);
         }
       }
     ).end(fileBuffer);
   });
 };
+
+
+
 
 module.exports = {uploadToCloudinary,uploadPDF};
