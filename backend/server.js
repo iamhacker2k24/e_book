@@ -6,7 +6,8 @@ const limiter = require("./middleware/rateLimmtter")
 const dbConnection = require("./config/db")
 const cookieParser = require('cookie-parser')
 const userRouter=require("./routes/userRoutes")
-const adminRoutes = require ("./routes/adminRoutes")
+const adminRoutes = require ("./routes/adminRoutes");
+const uiRoutes = require("./routes/uiRoutes");
 app.use(cookieParser())
 app.use(express.json())
 
@@ -19,7 +20,7 @@ app.get("/",(req,res)=>{
 
 app.use("/api/user",userRouter)
 app.use("/api/admin",adminRoutes)
-
+app.use("/api/ui",uiRoutes)
 
 
 const dbServer = async () => {
@@ -33,7 +34,6 @@ const dbServer = async () => {
     } catch (error) {
         console.log("error in server  connection ", error.message)
     }
-
 
 }
 dbServer();

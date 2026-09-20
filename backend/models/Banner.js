@@ -8,13 +8,23 @@ const newBanner = new Schema({
     externallink: {
         type: String
     },
-    isnewPgeL: {
+    isnewPgeredirect: {
         type: Boolean
     },
     headerText: {
         type: String
-    }, 
- otherstext: {
+    },
+    otherstext: {
         type: String,
+    },
+    expiry: {
+        type: Date || String
+    },
+    imgUrl: {
+        type: String
     }
+
 })
+
+const newBannerData = moogosh.model("newBanner", newBanner)
+module.exports = newBannerData;

@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken")
 const multer = require('multer');
 const { uploadPDF, uploadToCloudinary } = require("../config/cloudinary");
 const bookData = require("../models/Book");
+const newBannerData = require("../models/Banner");
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
@@ -109,14 +110,38 @@ adminRoutes.post(
 );
 
 
-adminRoutes.post("/createbanner", upload.single("banner"), async(req, res) => {
-    const ans = await uploadToCloudinary(req.file.buffer);
+adminRoutes.post("/createbanner", upload.single("banner"), async (req, res) => {
 
-    console.log(ans)
-    res.status(200).json({
-        success: true,
-        msg: "ok bro"
-    })
+
+    try {
+        const imgUrl = await uploadToCloudinary(req.file.buffer);
+        const { tittle, isnewPgeredirect, headerText, otherstext, expiry } = req.body;
+
+        // console.log(tittle, isnewPgeredirect, headerText, otherstext, expiry)
+        // console.log(imgUrl.url)
+
+        const newBanner = new newBannerData({
+            tittle: tittle,
+            isnewPgeredirect: isnewPgeredirect,
+            headerText: headerText,
+            otherstext: otherstext,
+            expiry: expiry,
+            imgUrl: imgUrl.url
+        })
+        await newBanner.save();
+        console.log(newBanner)
+        res.status(200).json({
+            success: true,
+            msg: newBanner
+        })
+    }
+    catch (err) {
+        res.status(400).json({
+            success: false,
+            msg: err.message
+        })
+    }
+
 })
 
 module.exports = adminRoutes
