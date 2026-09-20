@@ -1,8 +1,8 @@
 import React from "react";
-import img_1 from "../components/Category_icon/image_1.png"
+import img_1 from "./Category_icon/image_1.png"
 
-import img_2 from "../components/Category_icon/image_2.png"
-import img_3 from "../components/Category_icon/image_3.png"
+import img_2 from "./Category_icon/image_2.png"
+import img_3 from "./Category_icon/image_3.png"
 const categories = [
   {
     name: "All",

@@ -1,22 +1,15 @@
-import React from 'react'
-import Header from './components/Header'
-import Hero_Section from './components/Hero_Section'
-import Category from './components/Category'
-import Featured_Books from './components/Featured_Books'
-import Review from './components/Review'
-import JoinCommunity from './components/JoinCommunity'
+import React from "react";
+import Home from "./components/Home";
+import AboutUs from "./components/AboutUs";
 
 const App = () => {
   return (
     <>
-    <Header/>
-    <Hero_Section/>
-    <Category/>
-    <Featured_Books/>
-    <Review/>
-    <JoinCommunity/>
+      
+      {/* <Home/> */}
+      <AboutUs />
     </>
-  )
-}
+  );
+};
 
-export default App
+export default App;
