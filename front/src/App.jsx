@@ -6,6 +6,7 @@ import Return_Refund from "./components/Return_Refund";
 import Shipping_Delivery from "./components/Shipping_Delivery";
 import FAQs from "./components/FAQs";
 import Catagories from "./components/Catagories";
+import AllBook from "./components/AllBook";
 
 const App = () => {
   return (
@@ -16,7 +17,8 @@ const App = () => {
       {/* <Return_Refund/> */}
       {/* <Shipping_Delivery /> */}
       {/* <FAQs/> */}
-      <Catagories/>
+      {/* <Catagories/> */}
+      <AllBook/>
     </>
   );
 };

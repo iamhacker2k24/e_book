@@ -1,7 +1,7 @@
 import React from "react";
 import { FiArrowRight } from "react-icons/fi";
 
-import categoryBanner from "../About_";
+import categoryBanner from "../Catagories/assets/image.png";
 
 const CategoryCTA = () => {
   return (
