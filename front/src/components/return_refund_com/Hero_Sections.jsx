@@ -64,7 +64,7 @@ const Hero_Section = () => {
                 <FiChevronRight className="text-slate-400" />
 
                 <span className="font-medium text-slate-700">
-                  Privacy Policy
+                  Return & Refund Policy
                 </span>
 
               </div>
@@ -80,9 +80,9 @@ const Hero_Section = () => {
                   md:text-5xl
                 "
               >
-                Privacy{" "}
+                Return &{" "}
                 <span className="text-blue-600">
-                  Policy
+                  Refund Policy
                 </span>
               </h1>
 
@@ -98,8 +98,7 @@ const Hero_Section = () => {
                   md:leading-6
                 "
               >
-                Your privacy matters to us. Learn how we collect, use,
-                and protect your information at BookNest.
+                Hassle-free returns and instant refund process. Learn about our customer satisfaction guarantee at BookNest.
               </p>
 
               {/* Updated Date */}

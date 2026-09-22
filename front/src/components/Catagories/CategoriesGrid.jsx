@@ -1,4 +1,5 @@
 import React from "react";
+import { useNavigate, Link } from "react-router-dom";
 import {
   FiBookOpen,
   FiSun,
@@ -171,11 +172,10 @@ const CategoriesGrid = () => {
     },
   ];
 
-  const handleCategoryClick = (category) => {
-    console.log("Selected category:", category.name);
+  const navigate = useNavigate();
 
-    // Later you can navigate:
-    // navigate(`/categories/${category.name.toLowerCase()}`);
+  const handleCategoryClick = (category) => {
+    navigate(`/books?category=${encodeURIComponent(category.name)}`);
   };
 
   return (
@@ -195,8 +195,8 @@ const CategoriesGrid = () => {
             </p>
           </div>
 
-          <button
-            type="button"
+          <Link
+            to="/books"
             className="
               hidden
               items-center
@@ -211,7 +211,7 @@ const CategoriesGrid = () => {
           >
             View All
             <FiArrowRight />
-          </button>
+          </Link>
         </div>
 
         {/* ================= CATEGORY GRID ================= */}

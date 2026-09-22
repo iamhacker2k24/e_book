@@ -64,7 +64,7 @@ const ShippingHeader = () => {
                 <FiChevronRight className="text-slate-400" />
 
                 <span className="font-medium text-slate-700">
-                  Privacy Policy
+                  Shipping & Delivery
                 </span>
 
               </div>
@@ -80,9 +80,9 @@ const ShippingHeader = () => {
                   md:text-5xl
                 "
               >
-                Privacy{" "}
+                Shipping &{" "}
                 <span className="text-blue-600">
-                  Policy
+                  Delivery
                 </span>
               </h1>
 
@@ -98,8 +98,7 @@ const ShippingHeader = () => {
                   md:leading-6
                 "
               >
-                Your privacy matters to us. Learn how we collect, use,
-                and protect your information at BookNest.
+                Fast, reliable digital delivery and physical shipping options. Learn about delivery timelines and tracking at BookNest.
               </p>
 
               {/* Updated Date */}

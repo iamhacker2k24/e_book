@@ -39,86 +39,37 @@ const Features = () => {
   ];
 
   return (
-    <section className="w-full bg-white py-6">
-      <div className="mx-auto max-w-[1400px] px-5">
-
-        <div
-          className="
-            grid
-            grid-cols-1
-            gap-3
-            sm:grid-cols-2
-            lg:grid-cols-4
-          "
-        >
+    <section className="w-full bg-white py-8 sm:py-10">
+      <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 items-stretch">
           {features.map((feature) => {
             const Icon = feature.icon;
 
             return (
               <div
                 key={feature.title}
-                className="
-                  group
-                  flex
-                  items-center
-                  gap-5
-                  rounded-2xl
-                  border
-                  border-slate-100
-                  bg-slate-50/70
-                  px-5
-                  py-4
-                  transition-all
-                  duration-300
-                  hover:-translate-y-1
-                  hover:border-blue-100
-                  hover:bg-white
-                  hover:shadow-md
-                "
+                className="group flex h-full min-h-[96px] items-center gap-4 rounded-2xl border border-slate-100 bg-slate-50/60 p-4 transition-all duration-300 hover:-translate-y-1 hover:border-blue-200 hover:bg-white hover:shadow-md"
               >
-
                 {/* Icon */}
                 <div
-                  className={`
-                    flex
-                    h-16
-                    w-16
-                    shrink-0
-                    items-center
-                    justify-center
-                    rounded-full
-                    ${feature.iconBg}
-                    transition-transform
-                    duration-300
-                    group-hover:scale-105
-                  `}
+                  className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl ${feature.iconBg} transition-transform duration-300 group-hover:scale-105`}
                 >
-                  <Icon
-                    className={`
-                      text-2xl
-                      ${feature.iconColor}
-                    `}
-                  />
+                  <Icon className={`text-2xl ${feature.iconColor}`} />
                 </div>
 
                 {/* Text */}
                 <div className="min-w-0">
-
-                  <h3 className="text-base font-bold text-slate-900">
+                  <h3 className="text-sm sm:text-base font-bold text-slate-900">
                     {feature.title}
                   </h3>
-
-                  <p className="mt-1 text-sm text-slate-500">
+                  <p className="mt-0.5 text-xs text-slate-500">
                     {feature.description}
                   </p>
-
                 </div>
-
               </div>
             );
           })}
         </div>
-
       </div>
     </section>
   );

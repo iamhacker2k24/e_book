@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import {
   FiFileText,
@@ -17,8 +17,6 @@ import {
 
 const PrivacyContent = () => {
   const [activeSection, setActiveSection] = useState("introduction");
-
-  const contentRef = useRef(null);
 
   const sections = [
     {
@@ -80,40 +78,23 @@ const PrivacyContent = () => {
   */
 
   useEffect(() => {
-    const container = contentRef.current;
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + 120;
+      const elements = sections
+        .map((section) => document.getElementById(section.id))
+        .filter(Boolean);
 
-    if (!container) return;
-
-    const elements = sections
-      .map((section) => document.getElementById(section.id))
-      .filter(Boolean);
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort(
-            (a, b) =>
-              a.boundingClientRect.top -
-              b.boundingClientRect.top
-          );
-
-        if (visible.length > 0) {
-          setActiveSection(visible[0].target.id);
+      for (let i = elements.length - 1; i >= 0; i--) {
+        const el = elements[i];
+        if (el && el.offsetTop <= scrollPosition) {
+          setActiveSection(el.id);
+          break;
         }
-      },
-      {
-        root: container,
-        rootMargin: "-10% 0px -70% 0px",
-        threshold: 0,
       }
-    );
+    };
 
-    elements.forEach((element) => {
-      observer.observe(element);
-    });
-
-    return () => observer.disconnect();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   /*
@@ -123,21 +104,15 @@ const PrivacyContent = () => {
   */
 
   const scrollToSection = (id) => {
-    const container = contentRef.current;
     const element = document.getElementById(id);
+    if (!element) return;
 
-    if (!container || !element) return;
+    const yOffset = -90;
+    const y =
+      element.getBoundingClientRect().top + window.pageYOffset + yOffset;
 
-    const containerRect = container.getBoundingClientRect();
-    const elementRect = element.getBoundingClientRect();
-
-    const scrollTop =
-      container.scrollTop +
-      (elementRect.top - containerRect.top) -
-      20;
-
-    container.scrollTo({
-      top: scrollTop,
+    window.scrollTo({
+      top: y,
       behavior: "smooth",
     });
 
@@ -287,34 +262,8 @@ const PrivacyContent = () => {
           <main className="min-w-0">
 
             <div
-              ref={contentRef}
               id="privacy-content"
-
-              className="
-                max-h-none
-                overflow-visible
-
-                rounded-2xl
-                border
-                border-slate-200
-                bg-white
-                px-6
-                py-7
-                shadow-sm
-
-                md:px-8
-
-                lg:max-h-[calc(100vh-120px)]
-                lg:overflow-y-auto
-                lg:overflow-x-hidden
-
-                overscroll-y-auto
-
-                scrollbar-thin
-                scrollbar-track-transparent
-                scrollbar-thumb-slate-300
-                hover:scrollbar-thumb-slate-400
-              "
+              className="rounded-2xl border border-slate-200 bg-white px-6 py-7 shadow-sm md:px-8"
             >
 
               {/* =================================================

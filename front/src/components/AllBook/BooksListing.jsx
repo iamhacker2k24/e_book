@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
+import { Link, useSearchParams } from "react-router-dom";
 import {
   Heart,
   ShoppingCart,
@@ -10,1089 +11,541 @@ import {
   ChevronRight,
   SlidersHorizontal,
   Star,
+  Check,
+  Search,
 } from "lucide-react";
-
-// ======================================================
-// BOOK DATA
-// ======================================================
-
-const books = [
-  {
-    id: 1,
-    title: "Atomic Habits",
-    author: "James Clear",
-    image: "/images/books/atomic-habits.jpg",
-    price: 599,
-    oldPrice: 799,
-    discount: 25,
-    rating: 4.8,
-    reviews: "12.4K",
-    badge: "Bestseller",
-    badgeColor: "yellow",
-  },
-  {
-    id: 2,
-    title: "The Psychology of Money",
-    author: "Morgan Housel",
-    image: "/images/books/psychology-money.jpg",
-    price: 499,
-    oldPrice: 699,
-    discount: 29,
-    rating: 4.7,
-    reviews: "9.2K",
-    badge: "Trending",
-    badgeColor: "green",
-  },
-  {
-    id: 3,
-    title: "Ikigai",
-    author: "Héctor García",
-    image: "/images/books/ikigai.jpg",
-    price: 450,
-    oldPrice: 599,
-    discount: 25,
-    rating: 4.6,
-    reviews: "8.1K",
-  },
-  {
-    id: 4,
-    title: "Think Like a Monk",
-    author: "Jay Shetty",
-    image: "/images/books/think-like-a-monk.jpg",
-    price: 550,
-    oldPrice: 699,
-    discount: 21,
-    rating: 4.7,
-    reviews: "10.5K",
-    badge: "New",
-    badgeColor: "green",
-  },
-  {
-    id: 5,
-    title: "Dopamine Detox",
-    author: "Thibaut Meurisse",
-    image: "/images/books/dopamine-detox.jpg",
-    price: 399,
-    oldPrice: 549,
-    discount: 27,
-    rating: 4.5,
-    reviews: "6.2K",
-  },
-  {
-    id: 6,
-    title: "Rich Dad Poor Dad",
-    author: "Robert T. Kiyosaki",
-    image: "/images/books/rich-dad-poor-dad.jpg",
-    price: 480,
-    oldPrice: 650,
-    discount: 26,
-    rating: 4.6,
-    reviews: "12.1K",
-  },
-  {
-    id: 7,
-    title: "The Alchemist",
-    author: "Paulo Coelho",
-    image: "/images/books/alchemist.jpg",
-    price: 499,
-    oldPrice: 699,
-    discount: 29,
-    rating: 4.7,
-    reviews: "14.3K",
-  },
-  {
-    id: 8,
-    title: "Sapiens: A Brief History...",
-    author: "Yuval Noah Harari",
-    image: "/images/books/sapiens.jpg",
-    price: 620,
-    oldPrice: 799,
-    discount: 23,
-    rating: 4.8,
-    reviews: "11.8K",
-  },
-  {
-    id: 9,
-    title: "The 5 AM Club",
-    author: "Robin Sharma",
-    image: "/images/books/5am-club.jpg",
-    price: 499,
-    oldPrice: 699,
-    discount: 29,
-    rating: 4.5,
-    reviews: "5.9K",
-  },
-  {
-    id: 10,
-    title: "Deep Work",
-    author: "Cal Newport",
-    image: "/images/books/deep-work.jpg",
-    price: 520,
-    oldPrice: 699,
-    discount: 26,
-    rating: 4.6,
-    reviews: "7.1K",
-  },
-  {
-    id: 11,
-    title: "Do Epic Shit",
-    author: "Ankur Warikoo",
-    image: "/images/books/do-epic-shit.jpg",
-    price: 399,
-    oldPrice: 549,
-    discount: 27,
-    rating: 4.5,
-    reviews: "9.4K",
-  },
-  {
-    id: 12,
-    title: "When Breath Becomes Air",
-    author: "Paul Kalanithi",
-    image: "/images/books/when-breath-becomes-air.jpg",
-    price: 450,
-    oldPrice: 599,
-    discount: 25,
-    rating: 4.8,
-    reviews: "6.7K",
-  },
-];
-
-
-// ======================================================
-// FILTER DATA
-// ======================================================
+import { ALL_BOOKS } from "../../data/booksData";
+import { useCart } from "../../context/CartContext";
+import BookCover from "../Common_componts/BookCover";
 
 const categories = [
-  ["Fiction", 320],
-  ["Non-Fiction", 280],
-  ["Self-Help", 150],
-  ["Technology", 120],
-  ["Science", 90],
-  ["Biography", 85],
-  ["Children", 110],
-  ["Academic", 95],
-  ["Comics & Graphic Novels", 60],
+  ["All Categories", ALL_BOOKS.length],
+  ["Self-Help", ALL_BOOKS.filter((b) => b.category === "Self-Help").length],
+  ["Business", ALL_BOOKS.filter((b) => b.category === "Business").length],
+  ["Technology", ALL_BOOKS.filter((b) => b.category === "Technology").length],
+  ["Fiction", ALL_BOOKS.filter((b) => b.category === "Fiction").length],
+  ["Science", ALL_BOOKS.filter((b) => b.category === "Science").length],
 ];
-
-const languages = [
-  ["English", 980],
-  ["Hindi", 180],
-  ["Bengali", 60],
-  ["Others", 20],
-];
-
-const formats = [
-  ["Paperback", 750],
-  ["Hardcover", 320],
-  ["eBook", 150],
-  ["Audiobook", 20],
-];
-
-
-// ======================================================
-// FILTER SECTION COMPONENT
-// ======================================================
-
-function FilterSection({
-  title,
-  children,
-  defaultOpen = true,
-}) {
-  const [open, setOpen] = useState(defaultOpen);
-
-  return (
-    <div className="border-b border-[#e7edf5] py-4">
-      <button
-        onClick={() => setOpen(!open)}
-        className="flex w-full items-center justify-between"
-      >
-        <span className="text-[13px] font-bold text-[#07164b]">
-          {title}
-        </span>
-
-        {open ? (
-          <ChevronUp size={16} className="text-[#07164b]" />
-        ) : (
-          <ChevronDown size={16} className="text-[#07164b]" />
-        )}
-      </button>
-
-      {open && (
-        <div className="mt-3">
-          {children}
-        </div>
-      )}
-    </div>
-  );
-}
-
-
-// ======================================================
-// CHECKBOX ROW
-// ======================================================
-
-function CheckboxRow({
-  label,
-  count,
-  checked = false,
-  onChange,
-}) {
-  return (
-    <label className="flex cursor-pointer items-center justify-between py-[5px]">
-      <div className="flex items-center gap-2">
-
-        <input
-          type="checkbox"
-          checked={checked}
-          onChange={onChange}
-          className="
-            h-4
-            w-4
-            cursor-pointer
-            rounded
-            border-[#b9c7db]
-            accent-[#0878f9]
-          "
-        />
-
-        <span className="text-[12px] text-[#60729b]">
-          {label}
-        </span>
-      </div>
-
-      <span className="text-[11px] text-[#7182a5]">
-        ({count})
-      </span>
-    </label>
-  );
-}
-
-
-// ======================================================
-// FILTER SIDEBAR
-// ======================================================
-
-function FiltersSidebar() {
-  const [selectedCategory, setSelectedCategory] =
-    useState("All Categories");
-
-  const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(2000);
-
-  return (
-    <aside
-      className="
-        w-full
-        rounded-xl
-        border
-        border-[#e2e9f2]
-        bg-white
-        p-4
-        lg:w-[205px]
-        lg:shrink-0
-      "
-    >
-
-      {/* Header */}
-      <div className="mb-2 flex items-center justify-between">
-        <h2 className="text-[15px] font-bold text-[#07164b]">
-          Filters
-        </h2>
-
-        <button
-          onClick={() => {
-            setSelectedCategory("All Categories");
-            setMinPrice(0);
-            setMaxPrice(2000);
-          }}
-          className="text-[11px] font-medium text-[#0878f9] hover:underline"
-        >
-          Clear All
-        </button>
-      </div>
-
-
-      {/* Categories */}
-      <FilterSection title="Categories">
-
-        <CheckboxRow
-          label="All Categories"
-          count="1240"
-          checked={selectedCategory === "All Categories"}
-          onChange={() =>
-            setSelectedCategory("All Categories")
-          }
-        />
-
-        {categories.map(([name, count]) => (
-          <CheckboxRow
-            key={name}
-            label={name}
-            count={count}
-            checked={selectedCategory === name}
-            onChange={() =>
-              setSelectedCategory(name)
-            }
-          />
-        ))}
-
-      </FilterSection>
-
-
-      {/* Price */}
-      <FilterSection title="Price Range">
-
-        <div className="space-y-3">
-
-          {/* Slider */}
-          <div className="relative pt-1">
-
-            <input
-              type="range"
-              min="0"
-              max="2000"
-              value={maxPrice}
-              onChange={(e) =>
-                setMaxPrice(Number(e.target.value))
-              }
-              className="
-                w-full
-                accent-[#0878f9]
-              "
-            />
-
-          </div>
-
-
-          <div className="flex justify-between text-[11px] font-medium text-[#53678f]">
-            <span>₹0</span>
-            <span>₹2,000</span>
-          </div>
-
-
-          {/* Inputs */}
-          <div className="flex items-center gap-2">
-
-            <input
-              type="number"
-              value={minPrice}
-              onChange={(e) =>
-                setMinPrice(Number(e.target.value))
-              }
-              className="
-                w-full
-                rounded-lg
-                border
-                border-[#d8e1ed]
-                px-2
-                py-2
-                text-[11px]
-                outline-none
-                focus:border-[#0878f9]
-              "
-            />
-
-            <span className="text-[11px] text-[#7182a5]">
-              to
-            </span>
-
-            <input
-              type="number"
-              value={maxPrice}
-              onChange={(e) =>
-                setMaxPrice(Number(e.target.value))
-              }
-              className="
-                w-full
-                rounded-lg
-                border
-                border-[#d8e1ed]
-                px-2
-                py-2
-                text-[11px]
-                outline-none
-                focus:border-[#0878f9]
-              "
-            />
-
-          </div>
-
-        </div>
-
-      </FilterSection>
-
-
-      {/* Language */}
-      <FilterSection title="Language">
-
-        {languages.map(([name, count]) => (
-          <CheckboxRow
-            key={name}
-            label={name}
-            count={count}
-          />
-        ))}
-
-      </FilterSection>
-
-
-      {/* Format */}
-      <FilterSection title="Book Format">
-
-        {formats.map(([name, count]) => (
-          <CheckboxRow
-            key={name}
-            label={name}
-            count={count}
-          />
-        ))}
-
-      </FilterSection>
-
-
-      {/* Rating */}
-      <FilterSection title="Rating">
-
-        {[5, 4, 3].map((rating) => (
-          <label
-            key={rating}
-            className="flex cursor-pointer items-center gap-2 py-[5px]"
-          >
-
-            <input
-              type="checkbox"
-              className="
-                h-4
-                w-4
-                accent-[#0878f9]
-              "
-            />
-
-            <div className="flex items-center">
-
-              {Array.from({ length: 5 }).map(
-                (_, index) => (
-                  <Star
-                    key={index}
-                    size={12}
-                    className={
-                      index < rating
-                        ? "fill-[#ffb400] text-[#ffb400]"
-                        : "text-[#cbd4e2]"
-                    }
-                  />
-                )
-              )}
-
-            </div>
-
-            <span className="text-[11px] text-[#65769a]">
-              & up
-            </span>
-
-          </label>
-        ))}
-
-      </FilterSection>
-
-
-      {/* Availability */}
-      <FilterSection title="Availability">
-
-        <CheckboxRow
-          label="In Stock"
-          count="1100"
-        />
-
-        <CheckboxRow
-          label="Out of Stock"
-          count="140"
-        />
-
-      </FilterSection>
-
-    </aside>
-  );
-}
-
-
-// ======================================================
-// BOOK CARD
-// ======================================================
-
-function BookCard({ book }) {
-
-  const [liked, setLiked] = useState(false);
-
-  return (
-    <div
-      className="
-        group
-        relative
-        flex
-        min-w-0
-        flex-col
-        overflow-hidden
-        rounded-xl
-        border
-        border-[#e0e8f2]
-        bg-white
-        transition
-        duration-300
-        hover:-translate-y-1
-        hover:border-[#bcd4f3]
-        hover:shadow-lg
-      "
-    >
-
-      {/* Image area */}
-      <div
-        className="
-          relative
-          flex
-          h-[185px]
-          items-center
-          justify-center
-          bg-[#f5f9fd]
-          p-4
-        "
-      >
-
-        {/* Badge */}
-        {book.badge && (
-          <span
-            className={`
-              absolute
-              left-3
-              top-3
-              z-10
-              rounded-md
-              px-3
-              py-1
-              text-[10px]
-              font-bold
-              text-white
-
-              ${
-                book.badge === "Bestseller"
-                  ? "bg-[#ffb400]"
-                  : "bg-[#08a86b]"
-              }
-            `}
-          >
-            {book.badge}
-          </span>
-        )}
-
-
-        {/* Wishlist */}
-        <button
-          onClick={() => setLiked(!liked)}
-          className="
-            absolute
-            right-3
-            top-3
-            z-10
-            flex
-            h-8
-            w-8
-            items-center
-            justify-center
-            rounded-full
-            bg-white
-            shadow-sm
-            transition
-            hover:scale-110
-          "
-        >
-          <Heart
-            size={17}
-            className={
-              liked
-                ? "fill-red-500 text-red-500"
-                : "text-[#07164b]"
-            }
-          />
-        </button>
-
-
-        {/* Book Image */}
-        <img
-          src={book.image}
-          alt={book.title}
-          className="
-            h-full
-            max-h-[150px]
-            w-auto
-            max-w-[125px]
-            object-contain
-            transition
-            duration-300
-            group-hover:scale-105
-          "
-        />
-
-      </div>
-
-
-      {/* Content */}
-      <div className="flex flex-1 flex-col p-3">
-
-        {/* Title */}
-        <h3
-          className="
-            line-clamp-1
-            text-[13px]
-            font-bold
-            text-[#07164b]
-          "
-        >
-          {book.title}
-        </h3>
-
-
-        {/* Author */}
-        <p className="mt-1 line-clamp-1 text-[11px] text-[#63759e]">
-          {book.author}
-        </p>
-
-
-        {/* Rating */}
-        <div className="mt-2 flex items-center gap-1">
-
-          <div className="flex">
-            {Array.from({ length: 5 }).map(
-              (_, index) => (
-                <Star
-                  key={index}
-                  size={13}
-                  className={
-                    index < Math.round(book.rating)
-                      ? "fill-[#ffb400] text-[#ffb400]"
-                      : "text-[#d6dce5]"
-                  }
-                />
-              )
-            )}
-          </div>
-
-          <span className="text-[10px] text-[#70809e]">
-            {book.rating} ({book.reviews})
-          </span>
-
-        </div>
-
-
-        {/* Price */}
-        <div className="mt-2 flex items-center gap-2">
-
-          <span className="text-[15px] font-bold text-[#0878f9]">
-            ₹{book.price}
-          </span>
-
-          <span className="text-[10px] text-[#9aa5b8] line-through">
-            ₹{book.oldPrice}
-          </span>
-
-          <span className="text-[10px] font-bold text-[#08a86b]">
-            {book.discount}% off
-          </span>
-
-        </div>
-
-
-        {/* Add to cart */}
-        <button
-          className="
-            mt-3
-            flex
-            h-9
-            w-full
-            items-center
-            justify-center
-            gap-2
-            rounded-lg
-            bg-[#0878f9]
-            text-[12px]
-            font-semibold
-            text-white
-            transition
-            hover:bg-[#0568dc]
-            active:scale-[0.98]
-          "
-        >
-          <ShoppingCart size={15} />
-
-          Add to Cart
-        </button>
-
-      </div>
-
-    </div>
-  );
-}
-
-
-// ======================================================
-// PAGINATION
-// ======================================================
-
-function Pagination() {
-
-  const [page, setPage] = useState(1);
-
-  return (
-    <div className="mt-7 flex items-center justify-center gap-2">
-
-      {/* Previous */}
-      <button
-        onClick={() =>
-          setPage(Math.max(1, page - 1))
-        }
-        className="
-          flex
-          h-9
-          w-9
-          items-center
-          justify-center
-          rounded-lg
-          border
-          border-[#dce4ef]
-          bg-white
-          text-[#60729a]
-          hover:border-[#0878f9]
-          hover:text-[#0878f9]
-        "
-      >
-        <ChevronLeft size={17} />
-      </button>
-
-
-      {/* Pages */}
-      {[1, 2, 3, 4, 5].map((number) => (
-        <button
-          key={number}
-          onClick={() => setPage(number)}
-          className={`
-            flex
-            h-9
-            w-9
-            items-center
-            justify-center
-            rounded-lg
-            text-[12px]
-            font-medium
-            transition
-
-            ${
-              page === number
-                ? "bg-[#0878f9] text-white"
-                : "border border-[#dce4ef] bg-white text-[#52658b] hover:border-[#0878f9] hover:text-[#0878f9]"
-            }
-          `}
-        >
-          {number}
-        </button>
-      ))}
-
-
-      <span className="px-1 text-[#71809d]">
-        ...
-      </span>
-
-
-      <button
-        onClick={() => setPage(62)}
-        className="
-          flex
-          h-9
-          w-9
-          items-center
-          justify-center
-          rounded-lg
-          border
-          border-[#dce4ef]
-          bg-white
-          text-[12px]
-          text-[#52658b]
-          hover:border-[#0878f9]
-        "
-      >
-        62
-      </button>
-
-
-      {/* Next */}
-      <button
-        onClick={() => setPage(page + 1)}
-        className="
-          flex
-          h-9
-          w-9
-          items-center
-          justify-center
-          rounded-lg
-          border
-          border-[#dce4ef]
-          bg-white
-          text-[#60729a]
-          hover:border-[#0878f9]
-          hover:text-[#0878f9]
-        "
-      >
-        <ChevronRight size={17} />
-      </button>
-
-    </div>
-  );
-}
-
-
-// ======================================================
-// MAIN COMPONENT
-// ======================================================
 
 export default function BooksListing() {
-
-  const [mobileFilters, setMobileFilters] =
-    useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const initialCategory = searchParams.get("category") || "All Categories";
+  const initialSearch = searchParams.get("search") || "";
+  const initialBadge = searchParams.get("badge") || "";
 
   const [view, setView] = useState("grid");
+  const [mobileFilters, setMobileFilters] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState(initialCategory);
+  const [maxPrice, setMaxPrice] = useState(1000);
+  const [minRating, setMinRating] = useState(0);
+  const [sortBy, setSortBy] = useState("featured");
+  const [searchQuery, setSearchQuery] = useState(initialSearch);
 
-  const [sort, setSort] =
-    useState("Popularity");
+  // Sync state if URL search parameters change
+  React.useEffect(() => {
+    const cat = searchParams.get("category");
+    if (cat) setSelectedCategory(cat);
+    const q = searchParams.get("search");
+    if (q !== null) setSearchQuery(q);
+  }, [searchParams]);
+
+  // Filtered & Sorted books
+  const filteredBooks = useMemo(() => {
+    return ALL_BOOKS.filter((book) => {
+      // Category filter
+      if (
+        selectedCategory !== "All Categories" &&
+        book.category.toLowerCase() !== selectedCategory.toLowerCase()
+      ) {
+        return false;
+      }
+
+      // Search query filter
+      if (searchQuery.trim()) {
+        const query = searchQuery.toLowerCase();
+        const matchesTitle = book.title.toLowerCase().includes(query);
+        const matchesAuthor = book.author.toLowerCase().includes(query);
+        const matchesCat = book.category.toLowerCase().includes(query);
+        if (!matchesTitle && !matchesAuthor && !matchesCat) return false;
+      }
+
+      // Badge filter
+      if (initialBadge && book.badge?.toLowerCase() !== initialBadge.toLowerCase()) {
+        return false;
+      }
+
+      // Price filter
+      if (book.price > maxPrice) return false;
+
+      // Rating filter
+      if (book.rating < minRating) return false;
+
+      return true;
+    }).sort((a, b) => {
+      if (sortBy === "price-low") return a.price - b.price;
+      if (sortBy === "price-high") return b.price - a.price;
+      if (sortBy === "rating") return b.rating - a.rating;
+      return a.id - b.id; // default featured
+    });
+  }, [selectedCategory, searchQuery, initialBadge, maxPrice, minRating, sortBy]);
+
+  const clearAllFilters = () => {
+    setSelectedCategory("All Categories");
+    setMaxPrice(1000);
+    setMinRating(0);
+    setSearchQuery("");
+    setSearchParams({});
+  };
 
   return (
-    <section className="w-full bg-white">
+    <section className="w-full bg-[#f4faff] px-4 py-8 sm:px-6 lg:px-10">
+      <div className="mx-auto max-w-[1400px]">
+        {/* ================= BAR: Search, Total & View Toggle ================= */}
+        <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div className="flex items-center gap-3">
+            <button
+              type="button"
+              onClick={() => setMobileFilters(true)}
+              className="flex items-center gap-2 rounded-xl border border-blue-200 bg-white px-4 py-2 text-xs font-bold text-blue-600 shadow-sm transition hover:bg-blue-50 lg:hidden"
+            >
+              <SlidersHorizontal size={16} />
+              <span>Filters</span>
+            </button>
 
-      <div className="mx-auto max-w-[1400px] px-4 py-6 sm:px-6 lg:px-10">
+            <div>
+              <h1 className="text-xl sm:text-2xl font-extrabold text-[#07164b]">
+                All Books
+              </h1>
+              <p className="text-xs text-slate-500">
+                Showing {filteredBooks.length} of {ALL_BOOKS.length} books
+                {selectedCategory !== "All Categories" && (
+                  <span className="font-semibold text-blue-600"> • {selectedCategory}</span>
+                )}
+                {searchQuery && (
+                  <span className="font-semibold text-slate-700"> • Matching "{searchQuery}"</span>
+                )}
+              </p>
+            </div>
+          </div>
 
-        {/* ============================================
-            TOP BAR
-        ============================================ */}
-
-        <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
-
-          {/* Mobile filter button */}
-          <button
-            onClick={() =>
-              setMobileFilters(!mobileFilters)
-            }
-            className="
-              flex
-              items-center
-              gap-2
-              rounded-lg
-              border
-              border-[#dce4ef]
-              px-4
-              py-2
-              text-sm
-              font-medium
-              text-[#07164b]
-              lg:hidden
-            "
-          >
-            <SlidersHorizontal size={17} />
-
-            Filters
-          </button>
-
-
-          {/* Books found */}
-          <p className="text-[13px] text-[#60729b]">
-            <span className="font-medium">
-              1,240
-            </span>{" "}
-            books found
-          </p>
-
-
-          {/* Right controls */}
-          <div className="ml-auto flex items-center gap-2">
-
-            {/* Sort */}
-            <div className="relative">
-
+          <div className="flex flex-wrap items-center gap-3">
+            {/* Sort By */}
+            <div className="flex items-center gap-2">
+              <span className="text-xs text-slate-500 hidden sm:inline">Sort:</span>
               <select
-                value={sort}
-                onChange={(e) =>
-                  setSort(e.target.value)
-                }
-                className="
-                  h-10
-                  appearance-none
-                  rounded-lg
-                  border
-                  border-[#dce4ef]
-                  bg-white
-                  py-0
-                  pl-4
-                  pr-9
-                  text-[12px]
-                  text-[#60729b]
-                  outline-none
-                  focus:border-[#0878f9]
-                "
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+                aria-label="Sort books"
+                className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 outline-none transition focus:border-blue-500"
               >
-                <option>Popularity</option>
-                <option>Price: Low to High</option>
-                <option>Price: High to Low</option>
-                <option>Newest</option>
-                <option>Rating</option>
+                <option value="featured">Featured</option>
+                <option value="price-low">Price: Low to High</option>
+                <option value="price-high">Price: High to Low</option>
+                <option value="rating">Highest Rated</option>
               </select>
-
-              <ChevronDown
-                size={15}
-                className="
-                  pointer-events-none
-                  absolute
-                  right-3
-                  top-1/2
-                  -translate-y-1/2
-                  text-[#60729b]
-                "
-              />
-
             </div>
 
-
-            {/* Grid button */}
-            <button
-              onClick={() => setView("grid")}
-              className={`
-                flex
-                h-10
-                w-10
-                items-center
-                justify-center
-                rounded-lg
-                border
-                ${
+            {/* View Mode */}
+            <div className="flex items-center rounded-xl border border-slate-200 bg-white p-1">
+              <button
+                type="button"
+                onClick={() => setView("grid")}
+                className={`flex h-8 w-8 items-center justify-center rounded-lg transition ${
                   view === "grid"
-                    ? "border-[#0878f9] bg-[#0878f9] text-white"
-                    : "border-[#dce4ef] bg-white text-[#60729b]"
-                }
-              `}
-            >
-              <Grid2X2 size={17} />
-            </button>
-
-
-            {/* List button */}
-            <button
-              onClick={() => setView("list")}
-              className={`
-                flex
-                h-10
-                w-10
-                items-center
-                justify-center
-                rounded-lg
-                border
-                ${
+                    ? "bg-blue-600 text-white shadow-sm"
+                    : "text-slate-500 hover:text-slate-900"
+                }`}
+                aria-label="Grid view"
+              >
+                <Grid2X2 size={16} />
+              </button>
+              <button
+                type="button"
+                onClick={() => setView("list")}
+                className={`flex h-8 w-8 items-center justify-center rounded-lg transition ${
                   view === "list"
-                    ? "border-[#0878f9] bg-[#0878f9] text-white"
-                    : "border-[#dce4ef] bg-white text-[#60729b]"
-                }
-              `}
-            >
-              <List size={18} />
-            </button>
-
+                    ? "bg-blue-600 text-white shadow-sm"
+                    : "text-slate-500 hover:text-slate-900"
+                }`}
+                aria-label="List view"
+              >
+                <List size={16} />
+              </button>
+            </div>
           </div>
-
         </div>
 
-
-        {/* ============================================
-            MAIN CONTENT
-        ============================================ */}
-
-        <div className="flex items-start gap-5">
-
+        {/* ================= MAIN CONTENT ================= */}
+        <div className="flex items-start gap-6">
           {/* DESKTOP SIDEBAR */}
-          <div className="hidden lg:block">
-            <FiltersSidebar />
-          </div>
+          <aside className="hidden w-[240px] shrink-0 rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm lg:block">
+            <div className="mb-4 flex items-center justify-between border-b border-slate-100 pb-3">
+              <h2 className="text-sm font-bold text-[#07164b]">Filters</h2>
+              <button
+                type="button"
+                onClick={clearAllFilters}
+                className="text-xs font-semibold text-blue-600 hover:underline"
+              >
+                Reset All
+              </button>
+            </div>
 
-
-          {/* MOBILE SIDEBAR */}
-          {mobileFilters && (
-            <div className="fixed inset-0 z-50 bg-black/30 lg:hidden">
-
-              <div className="absolute left-0 top-0 h-full w-[290px] overflow-y-auto bg-white p-4 shadow-xl">
-
-                <div className="mb-4 flex items-center justify-between">
-
-                  <h2 className="font-bold text-[#07164b]">
-                    Filters
-                  </h2>
-
+            {/* Categories */}
+            <div className="py-3 border-b border-slate-100">
+              <h3 className="mb-2.5 text-xs font-bold uppercase tracking-wider text-slate-500">
+                Categories
+              </h3>
+              <div className="space-y-1">
+                {categories.map(([name, count]) => (
                   <button
-                    onClick={() =>
-                      setMobileFilters(false)
-                    }
-                    className="text-xl text-[#07164b]"
+                    key={name}
+                    type="button"
+                    onClick={() => setSelectedCategory(name)}
+                    className={`flex w-full items-center justify-between rounded-lg px-2.5 py-1.5 text-xs font-medium transition ${
+                      selectedCategory === name
+                        ? "bg-blue-50 text-blue-600 font-bold"
+                        : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+                    }`}
                   >
-                    ×
+                    <span>{name}</span>
+                    <span className="text-[11px] text-slate-400">({count})</span>
                   </button>
+                ))}
+              </div>
+            </div>
 
+            {/* Price Filter */}
+            <div className="py-4 border-b border-slate-100">
+              <div className="flex items-center justify-between text-xs mb-2">
+                <span className="font-bold uppercase tracking-wider text-slate-500">
+                  Max Price
+                </span>
+                <span className="font-bold text-blue-600">₹{maxPrice}</span>
+              </div>
+              <input
+                type="range"
+                min="200"
+                max="1000"
+                step="50"
+                value={maxPrice}
+                onChange={(e) => setMaxPrice(Number(e.target.value))}
+                aria-label="Max price filter"
+                className="w-full accent-blue-600 cursor-pointer"
+              />
+              <div className="flex justify-between text-[10px] text-slate-400 mt-1">
+                <span>₹200</span>
+                <span>₹1000</span>
+              </div>
+            </div>
+
+            {/* Rating Filter */}
+            <div className="py-4">
+              <h3 className="mb-2.5 text-xs font-bold uppercase tracking-wider text-slate-500">
+                Minimum Rating
+              </h3>
+              <div className="space-y-1">
+                {[4.5, 4.0, 0].map((rating) => (
+                  <button
+                    key={rating}
+                    type="button"
+                    onClick={() => setMinRating(rating)}
+                    className={`flex w-full items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs transition ${
+                      minRating === rating
+                        ? "bg-blue-50 text-blue-600 font-bold"
+                        : "text-slate-600 hover:bg-slate-50"
+                    }`}
+                  >
+                    {rating > 0 ? (
+                      <>
+                        <Star size={13} className="fill-amber-400 text-amber-400" />
+                        <span>{rating}★ & above</span>
+                      </>
+                    ) : (
+                      <span>All Ratings</span>
+                    )}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </aside>
+
+          {/* MOBILE FILTER MODAL / DRAWER */}
+          {mobileFilters && (
+            <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm lg:hidden">
+              <div className="absolute left-0 top-0 h-full w-[300px] overflow-y-auto bg-white p-5 shadow-2xl">
+                <div className="mb-4 flex items-center justify-between border-b border-slate-100 pb-3">
+                  <h2 className="text-base font-bold text-[#07164b]">Filters</h2>
+                  <button
+                    type="button"
+                    onClick={() => setMobileFilters(false)}
+                    className="rounded-lg p-1.5 text-slate-500 hover:bg-slate-100"
+                  >
+                    ✕
+                  </button>
                 </div>
 
-                <FiltersSidebar />
+                {/* Categories */}
+                <div className="py-3 border-b border-slate-100">
+                  <h3 className="mb-2 text-xs font-bold text-slate-500 uppercase">
+                    Categories
+                  </h3>
+                  <div className="space-y-1">
+                    {categories.map(([name, count]) => (
+                      <button
+                        key={name}
+                        type="button"
+                        onClick={() => {
+                          setSelectedCategory(name);
+                          setMobileFilters(false);
+                        }}
+                        className={`flex w-full items-center justify-between rounded-lg px-3 py-2 text-xs transition ${
+                          selectedCategory === name
+                            ? "bg-blue-50 text-blue-600 font-bold"
+                            : "text-slate-600 hover:bg-slate-50"
+                        }`}
+                      >
+                        <span>{name}</span>
+                        <span>({count})</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
 
+                {/* Price */}
+                <div className="py-4 border-b border-slate-100">
+                  <div className="flex items-center justify-between text-xs mb-2">
+                    <span className="font-bold text-slate-500">Max Price:</span>
+                    <span className="font-bold text-blue-600">₹{maxPrice}</span>
+                  </div>
+                  <input
+                    type="range"
+                    min="200"
+                    max="1000"
+                    step="50"
+                    value={maxPrice}
+                    onChange={(e) => setMaxPrice(Number(e.target.value))}
+                    aria-label="Max price filter"
+                    className="w-full accent-blue-600"
+                  />
+                </div>
+
+                <div className="mt-6">
+                  <button
+                    type="button"
+                    onClick={() => setMobileFilters(false)}
+                    className="w-full rounded-xl bg-blue-600 py-2.5 text-xs font-bold text-white shadow-md shadow-blue-200"
+                  >
+                    Apply Filters
+                  </button>
+                </div>
               </div>
-
             </div>
           )}
 
-
-          {/* ==========================================
-              BOOK GRID
-          ========================================== */}
-
+          {/* ================= BOOK CARDS ================= */}
           <div className="min-w-0 flex-1">
+            {filteredBooks.length === 0 ? (
+              <div className="rounded-2xl border border-slate-200 bg-white p-12 text-center shadow-sm">
+                <p className="text-4xl">🔍</p>
+                <h3 className="mt-3 text-lg font-bold text-slate-800">
+                  No eBooks found
+                </h3>
+                <p className="mt-1 text-xs text-slate-500">
+                  Try adjusting your filters or search terms.
+                </p>
+                <button
+                  type="button"
+                  onClick={clearAllFilters}
+                  className="mt-4 rounded-xl bg-blue-600 px-5 py-2 text-xs font-bold text-white shadow-sm hover:bg-blue-700"
+                >
+                  Clear All Filters
+                </button>
+              </div>
+            ) : (
+              <div
+                className={
+                  view === "grid"
+                    ? "grid grid-cols-2 gap-3 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 sm:gap-4"
+                    : "grid grid-cols-1 gap-4"
+                }
+              >
+                {filteredBooks.map((book) => (
+                  <ListingBookCard key={book.id} book={book} view={view} />
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
 
-            <div
-              className={
-                view === "grid"
-                  ? `
-                    grid
-                    grid-cols-2
-                    gap-3
-                    sm:grid-cols-2
-                    md:grid-cols-3
-                    lg:grid-cols-4
-                    xl:gap-4
-                  `
-                  : `
-                    grid
-                    grid-cols-1
-                    gap-4
-                  `
-              }
-            >
+function ListingBookCard({ book, view }) {
+  const { addToCart, toggleWishlist, isWishlisted } = useCart();
+  const [added, setAdded] = useState(false);
+  const liked = isWishlisted(book.id);
 
-              {books.map((book) => (
-                <BookCard
-                  key={book.id}
-                  book={book}
+  const handleAddToCart = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    addToCart(book);
+    setAdded(true);
+    setTimeout(() => setAdded(false), 1800);
+  };
+
+  if (view === "list") {
+    return (
+      <div className="group flex flex-col sm:flex-row items-center gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:border-blue-200 hover:shadow-md">
+        <Link to={`/book/${book.id}`} className="h-32 w-24 shrink-0 overflow-hidden rounded-xl bg-slate-100">
+          <BookCover
+            src={book.image}
+            alt={book.title}
+            title={book.title}
+            author={book.author}
+            coverColor={book.coverColor}
+            className="h-full w-full object-cover transition duration-300 group-hover:scale-105"
+          />
+        </Link>
+
+        <div className="flex flex-1 flex-col justify-between w-full">
+          <div>
+            <div className="flex items-start justify-between">
+              <div>
+                <span className="text-[10px] font-bold text-blue-600 uppercase tracking-wider">
+                  {book.category}
+                </span>
+                <Link to={`/book/${book.id}`}>
+                  <h3 className="text-base font-bold text-[#07164b] hover:text-blue-600 transition">
+                    {book.title}
+                  </h3>
+                </Link>
+                <p className="text-xs text-slate-500">by {book.author}</p>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => toggleWishlist(book.id)}
+                className="text-slate-400 hover:text-red-500 transition"
+              >
+                <Heart
+                  size={18}
+                  className={liked ? "fill-red-500 text-red-500" : ""}
                 />
-              ))}
-
+              </button>
             </div>
 
-
-            {/* Pagination */}
-            <Pagination />
-
+            <p className="mt-2 text-xs text-slate-600 line-clamp-2">
+              {book.description}
+            </p>
           </div>
 
+          <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3">
+            <div className="flex items-center gap-2">
+              <span className="text-lg font-bold text-slate-900">₹{book.price}</span>
+              <span className="text-xs text-slate-400 line-through">₹{book.oldPrice}</span>
+            </div>
+
+            <button
+              type="button"
+              onClick={handleAddToCart}
+              className={`flex items-center gap-1.5 rounded-xl px-4 py-2 text-xs font-bold text-white transition ${
+                added
+                  ? "bg-green-600 shadow-green-200"
+                  : "bg-blue-600 hover:bg-blue-700 shadow-blue-200"
+              }`}
+            >
+              {added ? <Check size={14} /> : <ShoppingCart size={14} />}
+              <span>{added ? "Added!" : "Add to Cart"}</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="group relative flex flex-col justify-between overflow-hidden rounded-xl border border-slate-200 bg-white p-3 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-blue-300 hover:shadow-lg">
+      <div>
+        {/* Image Area */}
+        <div className="relative mb-2.5 aspect-[3/4] w-full overflow-hidden rounded-lg bg-slate-100">
+          <Link to={`/book/${book.id}`} className="block h-full w-full">
+            <BookCover
+              src={book.image}
+              alt={book.title}
+              title={book.title}
+              author={book.author}
+              coverColor={book.coverColor}
+              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
+            />
+          </Link>
+
+          {/* Badge */}
+          {book.badge && (
+            <span className="absolute left-2 top-2 z-10 rounded-md bg-blue-600 px-2 py-0.5 text-[10px] font-bold text-white shadow-sm">
+              {book.badge}
+            </span>
+          )}
+
+          {/* Wishlist */}
+          <button
+            type="button"
+            onClick={() => toggleWishlist(book.id)}
+            className="absolute right-2 top-2 z-10 flex h-7 w-7 items-center justify-center rounded-full bg-white/95 shadow-sm transition hover:scale-110"
+          >
+            <Heart
+              size={15}
+              className={liked ? "fill-red-500 text-red-500" : "text-slate-600"}
+            />
+          </button>
         </div>
 
+        {/* Info */}
+        <div>
+          <span className="text-[10px] font-bold text-blue-600 uppercase tracking-wide">
+            {book.category}
+          </span>
+          <Link to={`/book/${book.id}`}>
+            <h3 className="line-clamp-1 text-xs sm:text-sm font-bold text-[#07164b] hover:text-blue-600 transition">
+              {book.title}
+            </h3>
+          </Link>
+          <p className="line-clamp-1 text-[11px] text-slate-500">{book.author}</p>
+
+          <div className="mt-1 flex items-center gap-1 text-[11px]">
+            <Star size={11} className="fill-amber-400 text-amber-400" />
+            <span className="font-semibold text-slate-700">{book.rating}</span>
+            <span className="text-slate-400">({book.reviews})</span>
+          </div>
+        </div>
       </div>
 
-    </section>
+      {/* Pricing & Cart Button */}
+      <div className="mt-3 border-t border-slate-100 pt-2.5">
+        <div className="flex items-center justify-between mb-2">
+          <span className="text-sm sm:text-base font-extrabold text-slate-900">
+            ₹{book.price}
+          </span>
+          {book.oldPrice && (
+            <span className="text-[11px] text-slate-400 line-through">
+              ₹{book.oldPrice}
+            </span>
+          )}
+        </div>
+
+        <button
+          type="button"
+          onClick={handleAddToCart}
+          className={`flex w-full items-center justify-center gap-1 rounded-lg py-1.5 text-xs font-bold text-white transition active:scale-95 ${
+            added
+              ? "bg-green-600 shadow-green-200"
+              : "bg-blue-600 hover:bg-blue-700 shadow-blue-200"
+          }`}
+        >
+          {added ? <Check size={13} /> : <ShoppingCart size={13} />}
+          <span>{added ? "Added!" : "Add to Cart"}</span>
+        </button>
+      </div>
+    </div>
   );
 }

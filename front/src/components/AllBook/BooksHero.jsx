@@ -17,14 +17,12 @@ const BooksHero = () => {
 
             {/* Breadcrumb */}
             <div className="mb-4 flex items-center gap-2 text-sm text-[#61739d]">
-              <span>Home</span>
-
+              <a href="/" className="hover:text-[#0878f9] transition">Home</a>
               <ChevronRight
                 size={15}
                 className="text-[#8da0c4]"
               />
-
-              <span>Books</span>
+              <span className="font-semibold text-[#07164b]">Books</span>
             </div>
 
 

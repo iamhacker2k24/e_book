@@ -1,248 +1,167 @@
-import React, { useRef } from "react";
+import React, { useState, useRef } from "react";
 import { FaStar } from "react-icons/fa";
-import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import { FiChevronLeft, FiChevronRight, FiCheckCircle } from "react-icons/fi";
 
 const Review = () => {
   const scrollRef = useRef(null);
-
-  const img =
-    "https://instagram.fixb1-3.fna.fbcdn.net/v/t51.82787-15/713004208_17896845222463970_590389362563801511_n.webp?_nc_cat=105&_nc_map=urlgen_bucketless&ig_cache_key=MzkwOTI3NTk5ODk0ODcxMzEzOA%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTA4MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=RQZb_GtDZhIQ7kNvwHg54L2&_nc_oc=Adox-AERP6V56h_Wowby9KSny-sMaKEgAKpPZUzdkrypbNUZ43LAgIQEMajTrL8vixWS9Kk11wCT_I4qSUIujvui&_nc_zt=23&_nc_ht=instagram.fixb1-3.fna&_nc_gid=nJKWEolbdjekb0L0Xi86Ww&_nc_ss=7b689&oh=00_AQKAIpbBn3qaXoyHc3tumLDSfjYnE3Vu59wjdkt9oIaL5A&oe=6AB54EE3";
+  const [canScrollLeft, setCanScrollLeft] = useState(false);
+  const [canScrollRight, setCanScrollRight] = useState(true);
 
   const Reviews = [
     {
       name: "Priya Sharma",
-
+      role: "Literature Enthusiast",
       rattings: 5,
       context:
-        "BookNest has completely changed the way I learn. Amazing collection and super easy to use!",
-      profile_photo: img,
+        "BookNest has completely changed the way I read and learn. The instant digital downloads, reader-friendly UI, and curated catalog are fantastic!",
+      profile_photo:
+        "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=150",
     },
-
     {
       name: "Amit Verma",
-      rattings: 4,
+      role: "Software Engineer",
+      rattings: 5,
       context:
-        "Great prices, instant access, and a beautiful reading experience. Highly recommended!",
-      profile_photo: img,
+        "Great prices, instant access, and crisp formatting. Found technical books that were out of stock elsewhere. Highly recommended for every avid reader!",
+      profile_photo:
+        "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=150",
     },
-
     {
       name: "Sneha Das",
-      rattings: 3,
+      role: "Academic Researcher",
+      rattings: 5,
       context:
-        "I found so many rare books here. This is a paradise for book lovers!",
-      profile_photo: img,
+        "I found rare titles across multiple categories here. Customer support is super quick and the reading experience on tablet is flawless.",
+      profile_photo:
+        "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=150",
     },
-
     {
       name: "Rahul Sen",
-      rattings: 2,
+      role: "Competitive Exam Aspirant",
+      rattings: 5,
       context:
-        "The collection is excellent and finding the right books is extremely easy.",
-      profile_photo: img,
+        "The collection is top tier and finding specific books by author or genre takes seconds. The affordable pricing helped me build my personal study library.",
+      profile_photo:
+        "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=150",
     },
-
     {
       name: "Ananya Roy",
-      rattings: 1,
+      role: "Design Lead & Book Club Host",
+      rattings: 5,
       context:
-        "The interface is clean, fast and the e-book collection is really impressive.",
-      profile_photo: img,
+        "The interface is fast, modern, and beautiful. Book recommendations are spot-on. Definitely my go-to eBook platform everyday!",
+      profile_photo:
+        "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&q=80&w=150",
     },
   ];
 
-  // ================================
-  // SCROLL FUNCTION
-  // ================================
+  const checkScroll = () => {
+    if (!scrollRef.current) return;
+    const { scrollLeft, scrollWidth, clientWidth } = scrollRef.current;
+    setCanScrollLeft(scrollLeft > 10);
+    setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
+  };
+
   const scroll = (direction) => {
     if (!scrollRef.current) return;
-
-    const amount = 420;
-
+    const amount = 380;
     scrollRef.current.scrollBy({
       left: direction === "left" ? -amount : amount,
       behavior: "smooth",
     });
+    setTimeout(checkScroll, 350);
   };
 
   return (
-    <section className="w-full bg-white py-10  ">
-      <div className="mx-auto max-w-[1400px] px-5">
+    <section className="w-full bg-white py-8 sm:py-10">
+      <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
         {/* ================= HEADER ================= */}
-        <div className="mb-5 flex items-center justify-between">
+        <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <h2 className="text-2xl font-bold tracking-tight text-slate-900">
+            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900">
               What Our Readers Say
             </h2>
-
             <p className="mt-1 text-sm text-slate-500">
-              Loved by readers around the world
+              Trusted by over 100,000+ avid readers and lifelong learners
             </p>
           </div>
 
-          {/* ================= SCROLL BUTTONS ================= */}
+          {/* ================= ROUND SCROLL BUTTONS (User Reference Style) ================= */}
           <div className="flex items-center gap-2">
-            {/* LEFT */}
             <button
               type="button"
               onClick={() => scroll("left")}
+              disabled={!canScrollLeft}
               aria-label="Previous reviews"
-              className="
-                flex
-                h-9
-                w-9
-                items-center
-                justify-center
-                rounded-full
-                border
-                border-slate-200
-                bg-white
-                text-slate-500
-                shadow-sm
-                transition-all
-                duration-200
-                hover:border-blue-200
-                hover:bg-blue-50
-                hover:text-blue-600
-                active:scale-95
-              "
+              className={`flex h-9 w-9 items-center justify-center rounded-full border bg-white shadow-sm transition-all duration-200 ${
+                canScrollLeft
+                  ? "border-slate-200 text-slate-700 hover:border-blue-500 hover:bg-blue-600 hover:text-white active:scale-95 cursor-pointer"
+                  : "border-slate-200/60 text-slate-300 cursor-not-allowed opacity-40"
+              }`}
             >
-              <FiChevronLeft className="text-xl" />
+              <FiChevronLeft className="text-lg" />
             </button>
 
-            {/* RIGHT */}
             <button
               type="button"
               onClick={() => scroll("right")}
+              disabled={!canScrollRight}
               aria-label="Next reviews"
-              className="
-                flex
-                h-9
-                w-9
-                items-center
-                justify-center
-                rounded-full
-                border
-                border-slate-200
-                bg-white
-                text-slate-700
-                shadow-sm
-                transition-all
-                duration-200
-                hover:border-blue-200
-                hover:bg-blue-50
-                hover:text-blue-600
-                active:scale-95
-              "
+              className={`flex h-9 w-9 items-center justify-center rounded-full border bg-white shadow-sm transition-all duration-200 ${
+                canScrollRight
+                  ? "border-slate-200 text-slate-700 hover:border-blue-500 hover:bg-blue-600 hover:text-white active:scale-95 cursor-pointer"
+                  : "border-slate-200/60 text-slate-300 cursor-not-allowed opacity-40"
+              }`}
             >
-              <FiChevronRight className="text-xl" />
+              <FiChevronRight className="text-lg" />
             </button>
           </div>
         </div>
 
-        {/* ================= REVIEWS ================= */}
-        <div
-          ref={scrollRef}
-          className="
-            flex
-            gap-4
-            overflow-x-auto
-            scroll-smooth
-            pb-3
-            scrollbar-hide
-          "
-        >
+        {/* ================= REVIEWS CAROUSEL WITH UNIFORM HEIGHTS ================= */}
+        <div>
+          <div
+            ref={scrollRef}
+            onScroll={checkScroll}
+            className="flex gap-5 overflow-x-auto pb-4 scroll-smooth scrollbar-hide"
+          >
           {Reviews.map((review, index) => (
-            <article
+            <div
               key={index}
-              className="
-                group
-                flex
-                min-w-[340px]
-                max-w-[380px]
-                flex-1
-                items-center
-                gap-4
-                rounded-2xl
-                border
-                border-slate-200
-                bg-white
-                p-5
-                shadow-sm
-                transition-all
-                duration-300
-                hover:-translate-y-1
-                hover:border-blue-100
-                hover:shadow-md
-                md:min-w-[380px]
-              "
+              className="flex h-[230px] w-[300px] sm:w-[360px] shrink-0 flex-col justify-between rounded-2xl border border-slate-100 bg-slate-50/70 p-5 sm:p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-blue-200 hover:bg-white hover:shadow-lg"
             >
-              {/* ================= PROFILE IMAGE ================= */}
-              <div className="shrink-0">
-                <div
-                  className="
-                    h-[72px]
-                    w-[72px]
-                    overflow-hidden
-                    rounded-full
-                    border-4
-                    border-white
-                    bg-slate-100
-                    shadow-md
-                    ring-1
-                    ring-slate-100
-                  "
-                >
-                  <img
-                    src={review.profile_photo}
-                    alt={review.name}
-                    className="
-                      h-full
-                      w-full
-                      object-cover
-                    "
-                  />
+              <div>
+                {/* Rating Stars */}
+                <div className="flex items-center gap-1 text-amber-400">
+                  {[...Array(review.rattings)].map((_, i) => (
+                    <FaStar key={i} size={14} />
+                  ))}
                 </div>
-              </div>
 
-              {/* ================= REVIEW CONTENT ================= */}
-              <div className="min-w-0 flex-1">
-                {/* Review */}
-                <p
-                  className="
-                    line-clamp-3
-                    text-sm
-                    leading-5
-                    text-slate-600
-                  "
-                >
+                <p className="mt-3 text-xs sm:text-sm text-slate-700 leading-relaxed italic line-clamp-3">
                   "{review.context}"
                 </p>
+              </div>
 
-                {/* User */}
-                <div className="mt-3">
-                  <h3 className="text-sm font-bold text-slate-900">
-                    {review.name}
-                  </h3>
-
-                  <p className="mt-0.5 text-xs text-slate-500">{review.role}</p>
-                </div>
-
-                {/* Stars */}
-                <div className="mt-2 flex items-center gap-1">
-                  {Array.from({ length: review.rattings }).map(
-                
-                    (_, starIndex) => (
-                      <FaStar
-                        key={starIndex}
-                        className="text-sm text-amber-400"
-                      />
-                    ),
-                  )}
+              {/* User Profile */}
+              <div className="flex items-center gap-3 border-t border-slate-200/60 pt-3">
+                <img
+                  src={review.profile_photo}
+                  alt={review.name}
+                  className="h-10 w-10 rounded-full object-cover ring-2 ring-blue-500/20"
+                  loading="lazy"
+                />
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-1.5">
+                    <h3 className="text-xs sm:text-sm font-bold text-slate-900 truncate">{review.name}</h3>
+                    <FiCheckCircle className="text-xs text-blue-600 shrink-0" title="Verified Reader" />
+                  </div>
+                  <p className="text-[11px] text-slate-500 truncate">{review.role}</p>
                 </div>
               </div>
-            </article>
+            </div>
           ))}
+          </div>
         </div>
       </div>
     </section>

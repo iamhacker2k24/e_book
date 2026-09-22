@@ -1,154 +1,94 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { Flame, ArrowRight } from "lucide-react";
-const img ="https://images-platform.99static.com//k9SmlWfF9vou0-2-oO5rFKbYAoU=/1080x0:3777x2697/fit-in/590x590/projects-files/37/3758/375817/6ee72999-2e33-404a-b745-aa1280603179.jpg"
+
 const popularCategories = [
   {
     name: "Fiction",
     books: "1,240 books",
-    image: img,
+    image: "https://images.unsplash.com/photo-1476275466078-4007374efbbe?auto=format&fit=crop&q=80&w=300",
   },
   {
     name: "Self-Help",
     books: "560 books",
-    image: img,
+    image: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&q=80&w=300",
   },
   {
     name: "Technology",
     books: "420 books",
-    image: img,
+    image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&q=80&w=300",
   },
   {
-    name: "Children",
-    books: "680 books",
-    image: img,
+    name: "Science",
+    books: "310 books",
+    image: "https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&q=80&w=300",
   },
   {
-    name: "Business & Finance",
+    name: "Business",
     books: "510 books",
-    image:img,
+    image: "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&q=80&w=300",
   },
   {
-    name: "Comics & Graphic Novels",
+    name: "Academic",
     books: "450 books",
-    image: img,
+    image: "https://images.unsplash.com/photo-1457369804613-52c61a468e7d?auto=format&fit=crop&q=80&w=300",
   },
 ];
 
 const PopularCategories = () => {
   return (
     <section className="w-full px-4 sm:px-6 lg:px-10 py-8 bg-white">
-      
       {/* Header */}
       <div className="flex items-center justify-between mb-5">
-        
         {/* Left */}
         <div className="flex items-center gap-2">
-          <Flame
-            size={25}
-            className="text-orange-500 fill-orange-500"
-          />
-
-          <h2 className="text-[20px] sm:text-[22px] font-bold text-[#07164b]">
+          <Flame size={24} className="text-orange-500 fill-orange-500" />
+          <h2 className="text-xl sm:text-2xl font-bold text-[#07164b]">
             Popular Categories
           </h2>
         </div>
 
         {/* View All */}
-        <button
-          className="
-            flex items-center gap-1.5
-            text-[#0878f9]
-            text-sm
-            font-semibold
-            hover:gap-2.5
-            transition-all
-          "
+        <Link
+          to="/books"
+          className="flex items-center gap-1.5 text-[#0878f9] text-xs sm:text-sm font-semibold hover:gap-2.5 transition-all"
         >
-          View All
-          <ArrowRight size={17} />
-        </button>
+          <span>View All</span>
+          <ArrowRight size={16} />
+        </Link>
       </div>
 
-
       {/* Cards */}
-      <div
-        className="
-          grid
-          grid-cols-2
-          sm:grid-cols-3
-          lg:grid-cols-6
-          gap-4
-        "
-      >
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
         {popularCategories.map((category) => (
-          <div
+          <Link
             key={category.name}
-            className="
-              group
-              bg-white
-              border
-              border-[#e5eaf2]
-              rounded-xl
-              overflow-hidden
-              cursor-pointer
-              transition-all
-              duration-300
-              hover:-translate-y-1
-              hover:shadow-lg
-              hover:border-[#cbd8ed]
-            "
+            to={`/books?category=${encodeURIComponent(category.name)}`}
+            className="group bg-white border border-[#e5eaf2] rounded-xl overflow-hidden cursor-pointer transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:border-[#cbd8ed]"
           >
-
             {/* Image */}
-            <div className="w-full h-[105px] sm:h-[115px] overflow-hidden">
+            <div className="w-full h-[100px] sm:h-[115px] overflow-hidden bg-slate-100">
               <img
                 src={category.image}
                 alt={category.name}
-                className="
-                  w-full
-                  h-full
-                  object-cover
-                  transition-transform
-                  duration-500
-                  group-hover:scale-105
-                "
+                className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+                loading="lazy"
               />
             </div>
 
-
             {/* Content */}
-            <div className="px-3 py-3">
-              
+            <div className="p-3">
               <h3
-                className="
-                  text-[13px]
-                  sm:text-[14px]
-                  font-bold
-                  text-[#07164b]
-                  leading-tight
-                  truncate
-                "
+                className="text-xs sm:text-sm font-bold text-[#07164b] leading-tight truncate group-hover:text-blue-600 transition"
                 title={category.name}
               >
                 {category.name}
               </h3>
-
-              <p
-                className="
-                  mt-1
-                  text-[12px]
-                  sm:text-[13px]
-                  text-[#7180a5]
-                "
-              >
-                {category.books}
-              </p>
-
+              <p className="mt-1 text-xs text-[#7180a5]">{category.books}</p>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
-
     </section>
   );
 };

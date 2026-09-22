@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import { FiArrowRight } from "react-icons/fi";
 
 import categoryBanner from "../Catagories/assets/image.png";
@@ -111,8 +112,8 @@ const CategoryCTA = () => {
             {/* ================= BUTTON ================= */}
 
             <div className="mt-4">
-              <button
-                type="button"
+              <Link
+                to="/books"
                 className="
                   inline-flex
                   items-center
@@ -130,16 +131,14 @@ const CategoryCTA = () => {
                   hover:bg-blue-700
                   hover:shadow-md
                   active:scale-95
-
                   sm:px-5
                   sm:py-2.5
                   sm:text-sm
                 "
               >
-                View All Books
-
+                <span>View All Books</span>
                 <FiArrowRight className="text-sm" />
-              </button>
+              </Link>
             </div>
 
           </div>

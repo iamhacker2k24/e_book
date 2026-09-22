@@ -44,10 +44,10 @@ const WhyChoose = () => {
     <section className="w-full bg-white py-8 md:py-10">
       <div className="mx-auto max-w-[1400px] px-6 lg:px-10">
 
-        <div className="grid items-center gap-8 lg:grid-cols-2">
+        <div className="grid items-stretch gap-8 lg:grid-cols-2">
 
           {/* ================= LEFT ================= */}
-          <div>
+          <div className="flex flex-col justify-center">
 
             <h2 className="text-3xl font-extrabold tracking-tight text-slate-950 md:text-4xl">
               Why Choose{" "}
@@ -69,19 +69,19 @@ const WhyChoose = () => {
                 return (
                   <div
                     key={feature.title}
-                    className="group flex items-center gap-4"
+                    className="group flex items-center gap-4 rounded-xl border border-slate-100 bg-slate-50/50 p-3.5 transition hover:bg-white hover:border-blue-100 hover:shadow-sm"
                   >
 
                     {/* Icon */}
                     <div
                       className={`
                         flex
-                        h-14
-                        w-14
+                        h-12
+                        w-12
                         shrink-0
                         items-center
                         justify-center
-                        rounded-full
+                        rounded-xl
                         ${feature.iconBg}
                         transition-all
                         duration-300
@@ -89,17 +89,17 @@ const WhyChoose = () => {
                       `}
                     >
                       <Icon
-                        className={`text-2xl ${feature.iconColor}`}
+                        className={`text-xl ${feature.iconColor}`}
                       />
                     </div>
 
                     {/* Text */}
-                    <div>
-                      <h3 className="text-sm font-bold text-slate-900 md:text-base">
+                    <div className="min-w-0">
+                      <h3 className="text-sm font-bold text-slate-900">
                         {feature.title}
                       </h3>
 
-                      <p className="mt-1 text-xs text-slate-500 md:text-sm">
+                      <p className="mt-0.5 text-xs text-slate-500">
                         {feature.description}
                       </p>
                     </div>
@@ -111,20 +111,19 @@ const WhyChoose = () => {
             </div>
           </div>
 
-          {/* ================= RIGHT IMAGE ================= */}
-          <div className="relative overflow-hidden rounded-2xl">
+          {/* ================= RIGHT IMAGE WITH MATCHED HEIGHT ================= */}
+          <div className="relative min-h-[300px] sm:min-h-[340px] h-full overflow-hidden rounded-2xl border border-slate-100 shadow-sm">
 
             <img
               src={whyChooseImage}
               alt="Reader enjoying BookNest"
               className="
-                h-[280px]
+                h-full
                 w-full
                 object-cover
                 transition-transform
                 duration-500
-                hover:scale-[1.02]
-                md:h-[330px]
+                hover:scale-105
               "
             />
 
