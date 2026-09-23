@@ -9,6 +9,7 @@ const BookDetails = new Schema(
             required: true,
             trim: true
         },
+        //slug must be unique 
         slug: {
             type: String,
             unique: true,
@@ -28,9 +29,9 @@ const BookDetails = new Schema(
             type: String,
             trim: true
         },
-        // =========================
+        //             =
         // AUTHOR INFORMATION
-        // =========================
+        //             =
 
         author: {
             name: {
@@ -81,9 +82,9 @@ const BookDetails = new Schema(
             min: 0
         },
 
-        // =========================
+        //             =
         // CATEGORY
-        // =========================
+        //             =
 
         category: {
             type: String,
@@ -103,9 +104,9 @@ const BookDetails = new Schema(
             }
         ],
 
-        // =========================
+        //             =
         // COVER IMAGES
-        // =========================
+        //             =
 
         coverPhoto: [
             {
@@ -122,9 +123,9 @@ const BookDetails = new Schema(
             }
         ],
 
-        // =========================
+        //             =
         // PRICE
-        // =========================
+        //             =
 
         price: {
             type: Number,
@@ -150,9 +151,9 @@ const BookDetails = new Schema(
             uppercase: true
         },
 
-        // =========================
+        //             =
         // EBOOK FILE
-        // =========================
+        //             =
 
         ebookFile: {
             url: {
@@ -183,9 +184,9 @@ const BookDetails = new Schema(
         },
 
 
-        // =========================
+        //             =
         // RATING & REVIEWS
-        // =========================
+        //             =
 
         rating: {
             average: {
@@ -202,9 +203,9 @@ const BookDetails = new Schema(
             }
         },
 
-        // =========================
+        //             =
         // SALES
-        // =========================
+        //             =
 
         salesCount: {
             type: Number,
@@ -218,9 +219,9 @@ const BookDetails = new Schema(
             min: 0
         },
 
-        // =========================
+        //             =
         // PRODUCT STATUS
-        // =========================
+        //             =
 
         isActive: {
             type: Boolean,
@@ -242,9 +243,9 @@ const BookDetails = new Schema(
             default: true
         },
 
-        // =========================
+        //             =
         // STOCK / AVAILABILITY
-        // =========================
+        //             =
 
         availability: {
             type: String,
@@ -256,9 +257,9 @@ const BookDetails = new Schema(
             default: "available"
         },
 
-        // =========================
+        //             =
         // SEO
-        // =========================
+        //             =
 
         seo: {
             metaTitle: {
@@ -279,9 +280,9 @@ const BookDetails = new Schema(
             ]
         },
 
-        // =========================
+        //             =
         // ADMIN INFORMATION
-        // =========================
+        //             =
 
         createdBy: {
             type: mongoose.Schema.Types.ObjectId,

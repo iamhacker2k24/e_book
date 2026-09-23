@@ -43,7 +43,7 @@ const Featured_Books = () => {
   return (
     <section className="w-full bg-slate-50/60 py-8 sm:py-10">
       <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
-        {/* ================= SECTION HEADER ================= */}
+        {/*         = SECTION HEADER         = */}
         <div className="mb-6 flex items-center justify-between">
           <div>
             <span className="text-xs font-bold uppercase tracking-wider text-blue-600">
@@ -96,7 +96,7 @@ const Featured_Books = () => {
           </div>
         </div>
 
-        {/* ================= BOOK CAROUSEL WITH UNIFORM HEIGHTS ================= */}
+        {/*         = BOOK CAROUSEL WITH UNIFORM HEIGHTS         = */}
         <div>
           <div
             ref={scrollRef}

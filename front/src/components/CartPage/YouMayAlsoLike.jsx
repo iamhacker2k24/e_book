@@ -45,7 +45,7 @@ const YouMayAlsoLike = () => {
 
   return (
     <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-      {/* ================= HEADER ================= */}
+      {/*         = HEADER         = */}
       <div className="mb-4 flex items-center justify-between">
         <div>
           <h2 className="text-lg font-bold text-[#07144d]">
@@ -87,7 +87,7 @@ const YouMayAlsoLike = () => {
         </div>
       </div>
 
-      {/* ================= SLIDER WITH UNIFORM HEIGHTS ================= */}
+      {/*         = SLIDER WITH UNIFORM HEIGHTS         = */}
       <div>
         <div
           ref={sliderRef}

@@ -72,9 +72,9 @@ const PrivacyContent = () => {
   ];
 
   /*
-  ============================================================
+                                
   DETECT ACTIVE SECTION
-  ============================================================
+                                
   */
 
   useEffect(() => {
@@ -98,9 +98,9 @@ const PrivacyContent = () => {
   }, []);
 
   /*
-  ============================================================
+                                
   SIDEBAR CLICK
-  ============================================================
+                                
   */
 
   const scrollToSection = (id) => {
@@ -123,15 +123,15 @@ const PrivacyContent = () => {
     <section className="w-full bg-white py-10">
       <div className="mx-auto max-w-[1250px] px-5">
 
-        {/* =====================================================
+        {/*                           =
             MAIN LAYOUT
-        ===================================================== */}
+                                  = */}
 
         <div className="grid items-start gap-8 lg:grid-cols-[280px_minmax(0,1fr)]">
 
-          {/* ===================================================
+          {/*                         ===
               LEFT SIDEBAR
-          =================================================== */}
+                                  === */}
 
           <aside className="lg:sticky lg:top-24 lg:self-start">
 
@@ -205,9 +205,9 @@ const PrivacyContent = () => {
 
               </nav>
 
-              {/* =================================================
+              {/*                         =
                   CONTACT BOX
-              ================================================= */}
+                                      = */}
 
               <div className="mt-5 rounded-xl bg-blue-50 p-4">
 
@@ -255,9 +255,9 @@ const PrivacyContent = () => {
           </aside>
 
 
-          {/* ===================================================
+          {/*                         ===
               RIGHT CONTENT
-          =================================================== */}
+                                  === */}
 
           <main className="min-w-0">
 
@@ -266,9 +266,9 @@ const PrivacyContent = () => {
               className="rounded-2xl border border-slate-200 bg-white px-6 py-7 shadow-sm md:px-8"
             >
 
-              {/* =================================================
+              {/*                         =
                   1. INTRODUCTION
-              ================================================= */}
+                                      = */}
 
               <PolicySection
                 id="introduction"
@@ -291,9 +291,9 @@ const PrivacyContent = () => {
               </PolicySection>
 
 
-              {/* =================================================
+              {/*                         =
                   2. INFORMATION WE COLLECT
-              ================================================= */}
+                                      = */}
 
               <PolicySection
                 id="information"
@@ -336,9 +336,9 @@ const PrivacyContent = () => {
               </PolicySection>
 
 
-              {/* =================================================
+              {/*                         =
                   3. HOW WE USE
-              ================================================= */}
+                                      = */}
 
               <PolicySection
                 id="usage"
@@ -377,9 +377,9 @@ const PrivacyContent = () => {
               </PolicySection>
 
 
-              {/* =================================================
+              {/*                         =
                   4. COOKIES
-              ================================================= */}
+                                      = */}
 
               <PolicySection
                 id="cookies"
@@ -403,9 +403,9 @@ const PrivacyContent = () => {
               </PolicySection>
 
 
-              {/* =================================================
+              {/*                         =
                   5. DATA SHARING
-              ================================================= */}
+                                      = */}
 
               <PolicySection
                 id="sharing"
@@ -427,9 +427,9 @@ const PrivacyContent = () => {
               </PolicySection>
 
 
-              {/* =================================================
+              {/*                         =
                   6. SECURITY
-              ================================================= */}
+                                      = */}
 
               <PolicySection
                 id="security"
@@ -453,9 +453,9 @@ const PrivacyContent = () => {
               </PolicySection>
 
 
-              {/* =================================================
+              {/*                         =
                   7. YOUR RIGHTS
-              ================================================= */}
+                                      = */}
 
               <PolicySection
                 id="rights"
@@ -495,9 +495,9 @@ const PrivacyContent = () => {
               </PolicySection>
 
 
-              {/* =================================================
+              {/*                         =
                   8. CHILDREN
-              ================================================= */}
+                                      = */}
 
               <PolicySection
                 id="children"
@@ -515,9 +515,9 @@ const PrivacyContent = () => {
               </PolicySection>
 
 
-              {/* =================================================
+              {/*                         =
                   9. CHANGES
-              ================================================= */}
+                                      = */}
 
               <PolicySection
                 id="changes"
@@ -539,9 +539,9 @@ const PrivacyContent = () => {
               </PolicySection>
 
 
-              {/* =================================================
+              {/*                         =
                   10. CONTACT
-              ================================================= */}
+                                      = */}
 
               <PolicySection
                 id="contact"
@@ -589,9 +589,9 @@ const PrivacyContent = () => {
 
 
 /*
-============================================================
+                              
 REUSABLE POLICY SECTION
-============================================================
+                              
 */
 
 const PolicySection = ({

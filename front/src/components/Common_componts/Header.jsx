@@ -36,7 +36,7 @@ const Header = () => {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-slate-200 bg-white/95 backdrop-blur-md transition-all">
       <div className="mx-auto flex h-[72px] max-w-[1440px] items-center justify-between gap-4 px-4 sm:px-6">
-        {/* ================= LOGO ================= */}
+        {/*         = LOGO         = */}
         <div className="flex shrink-0 items-center gap-3">
           {/* Mobile hamburger button */}
           <button
@@ -64,7 +64,7 @@ const Header = () => {
           </Link>
         </div>
 
-        {/* ================= DESKTOP NAVIGATION ================= */}
+        {/*         = DESKTOP NAVIGATION         = */}
         <nav className="hidden lg:flex items-center gap-7 ml-4">
           {navLinks.map((link) => (
             <NavLink
@@ -90,7 +90,7 @@ const Header = () => {
           ))}
         </nav>
 
-        {/* ================= SEARCH ================= */}
+        {/*         = SEARCH         = */}
         <form
           onSubmit={handleSearchSubmit}
           className="hidden sm:flex min-w-0 flex-1 max-w-[360px] mx-2"
@@ -114,7 +114,7 @@ const Header = () => {
           </div>
         </form>
 
-        {/* ================= ACTIONS ================= */}
+        {/*         = ACTIONS         = */}
         <div className="flex shrink-0 items-center gap-2 sm:gap-3">
           {/* Wishlist */}
           <Link
@@ -229,7 +229,7 @@ const Header = () => {
         </div>
       </div>
 
-      {/* ================= MOBILE SEARCH BAR ================= */}
+      {/*         = MOBILE SEARCH BAR         = */}
       <div className="border-t border-slate-100 px-4 py-2 sm:hidden bg-slate-50/70">
         <form onSubmit={handleSearchSubmit} className="flex h-10 w-full items-center overflow-hidden rounded-full border border-slate-200 bg-white">
           <CiSearch className="ml-3 shrink-0 text-xl text-slate-400" />
@@ -249,7 +249,7 @@ const Header = () => {
         </form>
       </div>
 
-      {/* ================= MOBILE NAVIGATION DRAWER ================= */}
+      {/*         = MOBILE NAVIGATION DRAWER         = */}
       {mobileMenuOpen && (
         <div className="fixed inset-x-0 top-[72px] bottom-0 z-40 bg-black/40 backdrop-blur-sm lg:hidden">
           <div className="h-full w-4/5 max-w-xs bg-white p-6 shadow-2xl overflow-y-auto">

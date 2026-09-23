@@ -50,7 +50,7 @@ const CartSidebar = (props) => {
 
   return (
     <aside className="w-full space-y-4">
-      {/* ================= ORDER SUMMARY ================= */}
+      {/*         = ORDER SUMMARY         = */}
       <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
         <h2 className="text-lg font-bold text-[#07144d]">Order Summary</h2>
 
@@ -112,7 +112,7 @@ const CartSidebar = (props) => {
         </button>
       </section>
 
-      {/* ================= APPLY COUPON ================= */}
+      {/*         = APPLY COUPON         = */}
       <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
         <div className="flex items-center gap-2">
           <Tag size={18} className="text-blue-600" />
@@ -156,7 +156,7 @@ const CartSidebar = (props) => {
         </p>
       </section>
 
-      {/* ================= GUARANTEES ================= */}
+      {/*         = GUARANTEES         = */}
       <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm space-y-3 text-xs text-slate-600">
         <div className="flex items-center gap-2.5">
           <Truck size={16} className="text-blue-600" />

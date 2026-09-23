@@ -3,7 +3,7 @@ const User = require("../models/User");
 const adminRoutes = express.Router()
 const jwt = require("jsonwebtoken")
 const multer = require('multer');
-const { uploadPDF, uploadToCloudinary } = require("../config/cloudinary");
+const { uploadPDF, uploadToCloudinary, uploadImage } = require("../config/cloudinary");
 const bookData = require("../models/Book");
 const newBannerData = require("../models/Banner");
 const storage = multer.memoryStorage();
@@ -48,66 +48,397 @@ adminRoutes.get("/dashboard", async (req, res) => {
 })
 adminRoutes.post(
     "/addproducts",
-    upload.single("pdf"),
+    upload.fields([
+        {
+            name: "pdf",
+            maxCount: 1
+        },
+        {
+            name: "coverPhoto",
+            maxCount: 10
+        },
+        {
+            name: "authorPhoto",
+            maxCount: 1
+        }
+    ]),
     async (req, res) => {
-        const defalutPhoto = "https://img.magnific.com/free-vector/book-cover-template-design_1201-30.jpg?t=st=1789804524~exp=1789808124~hmac=022c5bcc9acd03f238d1f1083d8c4635c780d6972673497a5f2ab28319f20282&w=1480"
-
         try {
-
-
-            const { BookName, Author, publsihingDate } = req.body;
-            // console.log(BookName)
-
-
-            ///need to add if els efor verifier okk 
-            // if ((BookName && Author && publsihingDate)) {
-            //     return res.status(400).json({
-            //         success: false,
-            //         message: "missing some details"
-            //     })
-            // }
-            if (!req.file) {
+            console.log("BODY:");
+            console.log(req.body);
+            console.log("FILES:");
+            console.log(req.files);
+            // GET FILES
+            const pdfFile = req.files?.pdf?.[0];
+            const coverFiles = req.files?.coverPhoto || [];
+            const authorPhotoFile = req.files?.authorPhoto?.[0];
+            // REQUIRED PDF CHECK
+            if (!pdfFile) {
                 return res.status(400).json({
                     success: false,
-                    message: "PDF file is required",
+                    message: "PDF file is required"
+                });
+            }
+            // REQUIRED BOOK INFORMATION  
+            const {
+                bookName,
+                slug,
+                subtitle,
+                description,
+                shortDescription,
+                authorName,
+                authorBio,
+                publisher,
+                publishingDate,
+                language,
+                edition,
+                isbn,
+                pages,
+                category,
+                subCategory,
+                tags,
+                price,
+                originalPrice,
+                discount,
+                currency,
+                availability,
+                metaTitle,
+                metaDescription,
+                keywords
+            } = req.body;
+            // REQUIRED FIELD VALIDATION
+            if (!bookName) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Book name is required"
+                });
+            }
+            if (!description) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Book description is required"
                 });
             }
 
-            // console.log("File name:", req.file.originalname);
-            // console.log("File size:", req.file.size);
-            // console.log("MIME type:", req.file.mimetype);
+            if (!authorName) {
 
-            const pdfUrl = await uploadPDF(
-                req.file.buffer,
-                req.file.originalname
+                return res.status(400).json({
+                    success: false,
+                    message: "Author name is required"
+                });
+
+            }
+
+            if (!category) {
+
+                return res.status(400).json({
+                    success: false,
+                    message: "Category is required"
+                });
+
+            }
+
+            if (
+                price === undefined ||
+                price === null ||
+                price === ""
+            ) {
+
+                return res.status(400).json({
+                    success: false,
+                    message: "Price is required"
+                });
+
+            }
+
+
+
+            // UPLOAD PDF
+
+
+            console.log("Uploading PDF...");
+
+            const pdfResult = await uploadPDF(
+                pdfFile.buffer,
+                pdfFile.originalname
             );
+
+            console.log("PDF uploaded:", pdfResult);
+
+
+
+            // UPLOAD COVER PHOTOS
+
+
+            const coverPhotoUrls = [];
+
+            for (const file of coverFiles) {
+
+                console.log(
+                    "Uploading cover:",
+                    file.originalname
+                );
+
+                const coverUrl = await uploadImage(
+                    file.buffer,
+                    file.originalname
+                );
+
+                coverPhotoUrls.push(coverUrl.url);
+            }
+
+
+
+            // UPLOAD AUTHOR PHOTO
+
+
+            let authorPhotoUrl = "";
+
+            if (authorPhotoFile) {
+
+                console.log(
+                    "Uploading author photo:",
+                    authorPhotoFile.originalname
+                );
+
+                authorPhotoUrl = await uploadImage(
+                    authorPhotoFile.buffer,
+                    authorPhotoFile.originalname
+                );
+
+            }
+
+
+
+            // CONVERT TAGS
+
+
+            let finalTags = [];
+
+            if (tags) {
+
+                if (Array.isArray(tags)) {
+                    finalTags = tags;
+                } else {
+                    finalTags = tags
+                        .split(",")
+                        .map(tag => tag.trim())
+                        .filter(Boolean);
+                }
+
+            }
+
+
+
+            // CONVERT SEO KEYWORDS
+
+
+            let finalKeywords = [];
+
+            if (keywords) {
+
+                if (Array.isArray(keywords)) {
+                    finalKeywords = keywords;
+                } else {
+                    finalKeywords = keywords
+                        .split(",")
+                        .map(keyword => keyword.trim())
+                        .filter(Boolean);
+                }
+
+            }
+
+
+
+            // CREATE BOOK OBJECT
+
+
             const newBook = new bookData({
-                BookName: BookName,
-                Author: Author,
-                publsihingDate: publsihingDate,
-                pdfUrl: pdfUrl,
-                coverPhoto: [{ url: defalutPhoto }]
 
-            })
-            await newBook.save();
 
-            return res.status(200).json({
-                success: true,
-                message: "successfully uploaded ",
-                pdfUrl,
+                // BASIC INFORMATION
+
+
+                bookName: bookName,
+
+                slug: slug || undefined,
+
+                subtitle: subtitle || "",
+
+                description: description,
+
+                shortDescription: shortDescription || "",
+
+
+
+                // AUTHOR
+
+
+                author: {
+
+                    name: authorName,
+
+                    bio: authorBio || "",
+
+                    photo: authorPhotoUrl || ""
+
+                },
+
+
+                // PUBLISHING
+
+                publisher: publisher || "",
+
+                publishingDate:
+                    publishingDate || undefined,
+
+                language:
+                    language || "English",
+
+                edition:
+                    edition || "",
+
+                isbn:
+                    isbn || "",
+
+                pages:
+                    pages ? Number(pages) : undefined,
+
+
+                // CATEGORY
+
+                category: category,
+
+                subCategory:
+                    subCategory || "",
+
+                tags: finalTags,
+
+
+                // COVER IMAGES
+
+                coverPhoto: coverPhotoUrls,
+
+
+                // PRICE
+
+                price: Number(price),
+
+                originalPrice:
+                    originalPrice !== undefined &&
+                        originalPrice !== ""
+                        ? Number(originalPrice)
+                        : undefined,
+
+                discount:
+                    discount !== undefined &&
+                        discount !== ""
+                        ? Number(discount)
+                        : 0,
+
+                currency:
+                    currency || "INR",
+
+
+                // EBOOK
+
+                ebookFile: {
+
+                    url: pdfResult.url || pdfResult,
+
+                    publicId:
+                        pdfResult.publicId || "",
+
+                    fileName:
+                        pdfFile.originalname,
+
+                    fileType:
+                        "pdf",
+
+                    fileSize:
+                        pdfFile.size
+
+                },
+
+
+                // STATUS
+
+                availability: availability
+                    ? availability.trim()
+                    : "available",
+
+
+
+                // SEO
+
+
+                seo: {
+                    metaTitle: metaTitle || "",
+                    metaDescription: metaDescription || "",
+                    keywords: finalKeywords
+                }
+
             });
+
+
+
+            // SAVE BOOK
+
+
+            const savedBook = await newBook.save();
+
+
+
+            // RESPONSE
+
+
+            return res.status(201).json({
+
+                success: true,
+
+                message: "Book successfully uploaded",
+
+                book: savedBook
+
+            });
+
 
         } catch (error) {
-            console.error("Upload error:", error);
+
+            console.error(
+                "Add product error:",
+                error
+            );
+
 
             return res.status(500).json({
+
                 success: false,
-                message: "PDF upload failed",
-                error: error.message,
+
+                message: "Book upload failed",
+
+                error: error.message
+
             });
+
         }
+
     }
 );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 adminRoutes.post(

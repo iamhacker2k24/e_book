@@ -100,7 +100,7 @@ const ReturnRefundPolicy = () => {
                   }
                 `}
               >
-                {/* ================= ICON ================= */}
+                {/*         = ICON         = */}
                 <div
                   className="
                     flex
@@ -116,7 +116,7 @@ const ReturnRefundPolicy = () => {
                   <Icon className="text-2xl text-blue-600" />
                 </div>
 
-                {/* ================= CONTENT ================= */}
+                {/*         = CONTENT         = */}
                 <div className="min-w-0 flex-1">
 
                   {/* Number + Title */}
@@ -146,7 +146,7 @@ const ReturnRefundPolicy = () => {
                     {policy.description}
                   </p>
 
-                  {/* ================= EMAIL ================= */}
+                  {/*         = EMAIL         = */}
                   {policy.email && (
                     <a
                       href={`mailto:${policy.email}`}

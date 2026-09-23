@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
-/* ==========================================================
+/*                             ==
    GLOBAL SMOOTH SCROLL & CLEAN SCROLLBAR UTILITIES
-========================================================== */
+                            == */
 
 html {
   scroll-behavior: smooth;

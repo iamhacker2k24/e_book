@@ -23,7 +23,7 @@ const CartItems = () => {
 
   return (
     <section className="w-full">
-      {/* ================= CART HEADER ================= */}
+      {/*         = CART HEADER         = */}
       <div className="mb-5 flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-100/80 text-blue-600">
@@ -49,7 +49,7 @@ const CartItems = () => {
         </Link>
       </div>
 
-      {/* ================= CART CONTAINER ================= */}
+      {/*         = CART CONTAINER         = */}
       <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
         {/* Empty State */}
         {cartItems.length === 0 ? (

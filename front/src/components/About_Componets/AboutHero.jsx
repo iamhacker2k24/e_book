@@ -11,7 +11,7 @@ const AboutHero = () => {
         {/* Hero Container */}
         <div className="relative min-h-[330px] overflow-hidden bg-gradient-to-r from-blue-50 via-white to-white">
 
-          {/* ================= BACKGROUND IMAGE ================= */}
+          {/*         = BACKGROUND IMAGE         = */}
           <img
             src={aboutHero}
             alt="Books Brighter Lives"
@@ -25,7 +25,7 @@ const AboutHero = () => {
             "
           />
 
-          {/* ================= LEFT WHITE GRADIENT ================= */}
+          {/*         = LEFT WHITE GRADIENT         = */}
           <div
             className="
               absolute
@@ -38,7 +38,7 @@ const AboutHero = () => {
             "
           />
 
-          {/* ================= CONTENT ================= */}
+          {/*         = CONTENT         = */}
           <div
             className="
               relative

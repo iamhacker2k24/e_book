@@ -39,9 +39,9 @@ const BestsellingBooks = () => {
   return (
     <section className="w-full bg-white py-8 sm:py-10">
       <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
-        {/* ================= SECTION CARD ================= */}
+        {/*         = SECTION CARD         = */}
         <div className="overflow-hidden rounded-2xl border border-slate-200/90 bg-white shadow-sm">
-          {/* ================= HEADER ================= */}
+          {/*         = HEADER         = */}
           <div className="flex items-center justify-between border-b border-slate-100 px-5 sm:px-6 py-4 sm:py-5">
             <div>
               <div className="flex items-center gap-2">
@@ -96,7 +96,7 @@ const BestsellingBooks = () => {
             </div>
           </div>
 
-          {/* ================= BOOK LIST WITH MATCHED HEIGHTS ================= */}
+          {/*         = BOOK LIST WITH MATCHED HEIGHTS         = */}
           <div
             ref={scrollRef}
             onScroll={checkScroll}

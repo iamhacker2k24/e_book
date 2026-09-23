@@ -182,7 +182,7 @@ const CategoriesGrid = () => {
     <section className="w-full bg-white py-8 md:py-12">
       <div className="mx-auto max-w-[1250px] px-5">
 
-        {/* ================= SECTION HEADER ================= */}
+        {/*         = SECTION HEADER         = */}
 
         <div className="mb-6 flex items-center justify-between">
           <div>
@@ -214,7 +214,7 @@ const CategoriesGrid = () => {
           </Link>
         </div>
 
-        {/* ================= CATEGORY GRID ================= */}
+        {/*         = CATEGORY GRID         = */}
 
         <div
           className="
@@ -257,7 +257,7 @@ const CategoriesGrid = () => {
                   md:p-5
                 `}
               >
-                {/* ================= ICON ================= */}
+                {/*         = ICON         = */}
 
                 <div
                   className={`
@@ -282,7 +282,7 @@ const CategoriesGrid = () => {
                   />
                 </div>
 
-                {/* ================= TEXT ================= */}
+                {/*         = TEXT         = */}
 
                 <div className="mt-5 pr-7">
                   <h3
@@ -311,7 +311,7 @@ const CategoriesGrid = () => {
                   </p>
                 </div>
 
-                {/* ================= ARROW ================= */}
+                {/*         = ARROW         = */}
 
                 <span
                   className="
@@ -340,7 +340,7 @@ const CategoriesGrid = () => {
           })}
         </div>
 
-        {/* ================= MOBILE VIEW ALL ================= */}
+        {/*         = MOBILE VIEW ALL         = */}
 
         <button
           type="button"

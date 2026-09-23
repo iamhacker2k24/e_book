@@ -42,7 +42,7 @@ const BookDetails = () => {
 
   return (
     <section className="min-h-screen bg-[#f5faff] px-4 py-6 sm:px-6 lg:px-12">
-      {/* ================= BREADCRUMB ================= */}
+      {/*         = BREADCRUMB         = */}
       <div className="mx-auto mb-6 max-w-[1400px]">
         <div className="flex flex-wrap items-center gap-2 text-xs sm:text-sm text-slate-500">
           <Link to="/" className="hover:text-blue-600 transition">
@@ -69,12 +69,12 @@ const BookDetails = () => {
         </div>
       </div>
 
-      {/* ================= MAIN PRODUCT CARD ================= */}
+      {/*         = MAIN PRODUCT CARD         = */}
       <div className="mx-auto max-w-[1400px] rounded-2xl border border-slate-200 bg-white p-4 shadow-sm sm:p-6 lg:p-8">
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-[1.1fr_1.3fr_1fr]">
-          {/* ================================================= */}
+          {/*                         = */}
           {/* LEFT - BOOK COVER & PREVIEWS */}
-          {/* ================================================= */}
+          {/*                         = */}
           <div className="flex flex-col items-center">
             <div className="relative aspect-[3/4] w-full max-w-[340px] overflow-hidden rounded-2xl bg-slate-100 shadow-md">
               <BookCover
@@ -111,9 +111,9 @@ const BookDetails = () => {
             </p>
           </div>
 
-          {/* ================================================= */}
+          {/*                         = */}
           {/* MIDDLE - BOOK METADATA */}
-          {/* ================================================= */}
+          {/*                         = */}
           <div className="flex flex-col justify-between">
             <div>
               <span className="inline-block rounded-full bg-blue-50 px-3 py-1 text-xs font-bold uppercase tracking-wider text-blue-600">
@@ -188,9 +188,9 @@ const BookDetails = () => {
             </div>
           </div>
 
-          {/* ================================================= */}
+          {/*                         = */}
           {/* RIGHT - PURCHASE CARD */}
-          {/* ================================================= */}
+          {/*                         = */}
           <div className="h-fit rounded-2xl border border-slate-200 bg-white p-5 sm:p-6 shadow-sm">
             {/* Price */}
             <div className="flex flex-wrap items-baseline gap-3">

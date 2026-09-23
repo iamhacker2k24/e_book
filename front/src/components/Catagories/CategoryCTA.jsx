@@ -23,7 +23,7 @@ const CategoryCTA = () => {
           "
         >
 
-          {/* ================= RIGHT IMAGE ================= */}
+          {/*         = RIGHT IMAGE         = */}
 
           <div
             className="
@@ -60,7 +60,7 @@ const CategoryCTA = () => {
           </div>
 
 
-          {/* ================= TEXT ================= */}
+          {/*         = TEXT         = */}
 
           <div
             className="
@@ -109,7 +109,7 @@ const CategoryCTA = () => {
               across all categories.
             </p>
 
-            {/* ================= BUTTON ================= */}
+            {/*         = BUTTON         = */}
 
             <div className="mt-4">
               <Link

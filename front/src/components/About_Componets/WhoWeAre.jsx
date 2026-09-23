@@ -8,7 +8,7 @@ const WhoWeAre = () => {
 
         <div className="grid items-center gap-8 lg:grid-cols-[1.6fr_0.9fr]">
 
-          {/* ================= LEFT CONTENT ================= */}
+          {/*         = LEFT CONTENT         = */}
           <div>
             <h2 className="text-3xl font-extrabold leading-tight tracking-tight text-slate-950 md:text-4xl">
               Who We{" "}
@@ -30,7 +30,7 @@ const WhoWeAre = () => {
             </p>
           </div>
 
-          {/* ================= QUOTE ================= */}
+          {/*         = QUOTE         = */}
           <div
             className="
               relative

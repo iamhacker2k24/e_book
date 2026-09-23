@@ -13,10 +13,10 @@ import { FiHeart } from "react-icons/fi";
 const Footer = () => {
   return (
     <footer className="w-full border-t border-slate-200 bg-white">
-      {/* ================= MAIN FOOTER ================= */}
+      {/*         = MAIN FOOTER         = */}
       <div className="mx-auto max-w-[1400px] px-4 py-10 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-5">
-          {/* ================= BRAND ================= */}
+          {/*         = BRAND         = */}
           <div className="lg:col-span-1">
             {/* Logo */}
             <Link to="/" className="flex items-center gap-3 group">
@@ -83,7 +83,7 @@ const Footer = () => {
             </div>
           </div>
 
-          {/* ================= QUICK LINKS ================= */}
+          {/*         = QUICK LINKS         = */}
           <div>
             <h3 className="text-sm font-bold text-slate-900">Quick Links</h3>
             <ul className="mt-4 space-y-2.5">
@@ -107,7 +107,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* ================= CATEGORIES ================= */}
+          {/*         = CATEGORIES         = */}
           <div>
             <h3 className="text-sm font-bold text-slate-900">Categories</h3>
             <ul className="mt-4 space-y-2.5">
@@ -131,7 +131,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* ================= HELP & SUPPORT ================= */}
+          {/*         = HELP & SUPPORT         = */}
           <div>
             <h3 className="text-sm font-bold text-slate-900">Help & Support</h3>
             <ul className="mt-4 space-y-2.5">
@@ -154,7 +154,7 @@ const Footer = () => {
             </ul>
           </div>
 
-          {/* ================= DOWNLOAD APP ================= */}
+          {/*         = DOWNLOAD APP         = */}
           <div>
             <h3 className="text-sm font-bold text-slate-900">Download Our App</h3>
             <p className="mt-1 text-sm text-slate-500">Read on the go anytime!</p>
@@ -195,10 +195,10 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* ================= DIVIDER ================= */}
+        {/*         = DIVIDER         = */}
         <div className="mt-10 border-t border-slate-200" />
 
-        {/* ================= BOTTOM ================= */}
+        {/*         = BOTTOM         = */}
         <div className="flex flex-col items-center justify-between gap-5 pt-5 sm:flex-row text-center sm:text-left">
           {/* Copyright */}
           <p className="text-xs text-slate-500">

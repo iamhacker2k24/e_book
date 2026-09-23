@@ -75,7 +75,7 @@ const Review = () => {
   return (
     <section className="w-full bg-white py-8 sm:py-10">
       <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
-        {/* ================= HEADER ================= */}
+        {/*         = HEADER         = */}
         <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
             <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900">
@@ -86,7 +86,7 @@ const Review = () => {
             </p>
           </div>
 
-          {/* ================= ROUND SCROLL BUTTONS (User Reference Style) ================= */}
+          {/*         = ROUND SCROLL BUTTONS (User Reference Style)         = */}
           <div className="flex items-center gap-2">
             <button
               type="button"
@@ -118,7 +118,7 @@ const Review = () => {
           </div>
         </div>
 
-        {/* ================= REVIEWS CAROUSEL WITH UNIFORM HEIGHTS ================= */}
+        {/*         = REVIEWS CAROUSEL WITH UNIFORM HEIGHTS         = */}
         <div>
           <div
             ref={scrollRef}

@@ -8,15 +8,15 @@ import CartSidebar from "./CartPage/CartSidebar";
 const Cart = () => {
   return (
     <>
-      {/* ================= HEADER ================= */}
+      {/*         = HEADER         = */}
       <Header />
 
-      {/* ================= CART PAGE ================= */}
+      {/*         = CART PAGE         = */}
       <main className="min-h-screen bg-[#f4faff] px-4 py-8 sm:px-6 lg:px-10">
         <div className="mx-auto max-w-[1400px]">
-          {/* ================= MAIN CART AREA ================= */}
+          {/*         = MAIN CART AREA         = */}
           <div className="grid grid-cols-1 gap-6 xl:grid-cols-[1fr_390px]">
-            {/* ================= LEFT SIDE ================= */}
+            {/*         = LEFT SIDE         = */}
             <div className="min-w-0">
               {/* Cart Products */}
               <CartItems />
@@ -27,7 +27,7 @@ const Cart = () => {
               </div>
             </div>
 
-            {/* ================= RIGHT SIDE ================= */}
+            {/*         = RIGHT SIDE         = */}
             <div className="min-w-0">
               <CartSidebar />
             </div>
@@ -35,7 +35,7 @@ const Cart = () => {
         </div>
       </main>
 
-      {/* ================= FOOTER ================= */}
+      {/*         = FOOTER         = */}
       <Footer />
     </>
   );

@@ -15,9 +15,9 @@ import {
 } from "lucide-react";
 
 const CartPage = () => {
-  /* =========================================================
+  /*                             =
      CART DATA
-  ========================================================= */
+                              = */
 
   const [cartItems, setCartItems] = useState([
     {
@@ -55,9 +55,9 @@ const CartPage = () => {
     },
   ]);
 
-  /* =========================================================
+  /*                             =
      RECOMMENDED BOOKS
-  ========================================================= */
+                              = */
 
   const recommendedBooks = [
     {
@@ -98,16 +98,16 @@ const CartPage = () => {
     },
   ];
 
-  /* =========================================================
+  /*                             =
      STATES
-  ========================================================= */
+                              = */
 
   const [coupon, setCoupon] = useState("");
   const [couponApplied, setCouponApplied] = useState(false);
 
-  /* =========================================================
+  /*                             =
      UPDATE QUANTITY
-  ========================================================= */
+                              = */
 
   const updateQuantity = (id, type) => {
     setCartItems((items) =>
@@ -132,9 +132,9 @@ const CartPage = () => {
     );
   };
 
-  /* =========================================================
+  /*                             =
      REMOVE ITEM
-  ========================================================= */
+                              = */
 
   const removeItem = (id) => {
     setCartItems((items) =>
@@ -142,9 +142,9 @@ const CartPage = () => {
     );
   };
 
-  /* =========================================================
+  /*                             =
      CALCULATIONS
-  ========================================================= */
+                              = */
 
   const subtotal = cartItems.reduce(
     (total, item) => total + item.price * item.quantity,
@@ -162,9 +162,9 @@ const CartPage = () => {
 
   const total = subtotal + deliveryCharge;
 
-  /* =========================================================
+  /*                             =
      COUPON
-  ========================================================= */
+                              = */
 
   const applyCoupon = () => {
     if (!coupon.trim()) return;
@@ -172,9 +172,9 @@ const CartPage = () => {
     setCouponApplied(true);
   };
 
-  /* =========================================================
+  /*                             =
      ADD RECOMMENDED BOOK
-  ========================================================= */
+                              = */
 
   const addRecommendedBook = (book) => {
     const alreadyExists = cartItems.find(
@@ -215,15 +215,15 @@ const CartPage = () => {
   return (
     <main className="min-h-screen bg-[#f4faff] px-4 py-6 sm:px-6 lg:px-10">
 
-      {/* =====================================================
+      {/*                           =
           PAGE CONTAINER
-      ====================================================== */}
+                                == */}
 
       <div className="mx-auto max-w-[1400px]">
 
-        {/* ===================================================
+        {/*                         ===
             BREADCRUMB
-        ==================================================== */}
+                                   */}
 
         <div className="mb-5 flex items-center gap-2 text-sm text-slate-500">
 
@@ -240,9 +240,9 @@ const CartPage = () => {
         </div>
 
 
-        {/* ===================================================
+        {/*                         ===
             PAGE TITLE
-        ==================================================== */}
+                                   */}
 
         <div className="mb-5 flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
 
@@ -298,23 +298,23 @@ const CartPage = () => {
         </div>
 
 
-        {/* ===================================================
+        {/*                         ===
             MAIN GRID
-        ==================================================== */}
+                                   */}
 
         <div className="grid grid-cols-1 gap-5 xl:grid-cols-[1fr_390px]">
 
 
-          {/* =================================================
+          {/*                         =
               LEFT SIDE
-          ================================================= */}
+                                  = */}
 
           <div className="min-w-0">
 
 
-            {/* =================================================
+            {/*                         =
                 CART ITEMS
-            ================================================= */}
+                                    = */}
 
             <section className="overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
 
@@ -563,9 +563,9 @@ const CartPage = () => {
             </section>
 
 
-            {/* =================================================
+            {/*                         =
                 YOU MAY ALSO LIKE
-            ================================================= */}
+                                    = */}
 
             <RecommendedBooks
               books={recommendedBooks}
@@ -575,16 +575,16 @@ const CartPage = () => {
           </div>
 
 
-          {/* =================================================
+          {/*                         =
               RIGHT SIDE
-          ================================================= */}
+                                  = */}
 
           <aside className="space-y-5">
 
 
-            {/* =================================================
+            {/*                         =
                 ORDER SUMMARY
-            ================================================= */}
+                                    = */}
 
             <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
 
@@ -700,9 +700,9 @@ const CartPage = () => {
             </section>
 
 
-            {/* =================================================
+            {/*                         =
                 COUPON
-            ================================================= */}
+                                    = */}
 
             <section className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm">
 
@@ -789,9 +789,9 @@ const CartPage = () => {
             </section>
 
 
-            {/* =================================================
+            {/*                         =
                 BENEFITS
-            ================================================= */}
+                                    = */}
 
             <section className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm">
 
@@ -847,9 +847,9 @@ const CartPage = () => {
 };
 
 
-/* =============================================================
+/*                               =
    QUANTITY CONTROL
-============================================================= */
+                              = */
 
 const QuantityControl = ({
   quantity,
@@ -902,9 +902,9 @@ const QuantityControl = ({
 };
 
 
-/* =============================================================
+/*                               =
    RECOMMENDED BOOKS
-============================================================= */
+                              = */
 
 const RecommendedBooks = ({ books, onAdd }) => {
   return (
@@ -1108,9 +1108,9 @@ const RecommendedBooks = ({ books, onAdd }) => {
 };
 
 
-/* =============================================================
+/*                               =
    BENEFIT COMPONENT
-============================================================= */
+                              = */
 
 const Benefit = ({
   icon,

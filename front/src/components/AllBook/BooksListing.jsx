@@ -100,7 +100,7 @@ export default function BooksListing() {
   return (
     <section className="w-full bg-[#f4faff] px-4 py-8 sm:px-6 lg:px-10">
       <div className="mx-auto max-w-[1400px]">
-        {/* ================= BAR: Search, Total & View Toggle ================= */}
+        {/*         = BAR: Search, Total & View Toggle         = */}
         <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <div className="flex items-center gap-3">
             <button
@@ -175,7 +175,7 @@ export default function BooksListing() {
           </div>
         </div>
 
-        {/* ================= MAIN CONTENT ================= */}
+        {/*         = MAIN CONTENT         = */}
         <div className="flex items-start gap-6">
           {/* DESKTOP SIDEBAR */}
           <aside className="hidden w-[240px] shrink-0 rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm lg:block">
@@ -342,7 +342,7 @@ export default function BooksListing() {
             </div>
           )}
 
-          {/* ================= BOOK CARDS ================= */}
+          {/*         = BOOK CARDS         = */}
           <div className="min-w-0 flex-1">
             {filteredBooks.length === 0 ? (
               <div className="rounded-2xl border border-slate-200 bg-white p-12 text-center shadow-sm">

@@ -92,7 +92,7 @@ const ShippingPolecy = () => {
                 `}
               >
 
-                {/* ================= ICON ================= */}
+                {/*         = ICON         = */}
                 <div
                   className="
                     flex
@@ -116,7 +116,7 @@ const ShippingPolecy = () => {
                   />
                 </div>
 
-                {/* ================= CONTENT ================= */}
+                {/*         = CONTENT         = */}
                 <div className="min-w-0 flex-1">
 
                   {/* Title */}

@@ -31,7 +31,7 @@ const Offers = () => {
   return (
     <section className="w-full bg-white py-6">
       <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
-        {/* ================= OFFERS WITH UNIFORM HEIGHTS ================= */}
+        {/*         = OFFERS WITH UNIFORM HEIGHTS         = */}
         <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
           {offers.map((offer) => (
             <article

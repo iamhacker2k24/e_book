@@ -110,9 +110,9 @@ const FAQSection = () => {
     <section className="w-full bg-white py-8 md:py-10">
       <div className="mx-auto max-w-[1150px] px-5">
 
-        {/* ================================================= */}
+        {/*                         = */}
         {/* CATEGORY FILTER */}
-        {/* ================================================= */}
+        {/*                         = */}
 
         <div className="mb-7 flex gap-2 overflow-x-auto pb-2 scrollbar-none">
 
@@ -152,9 +152,9 @@ const FAQSection = () => {
         </div>
 
 
-        {/* ================================================= */}
+        {/*                         = */}
         {/* FAQ CARD */}
-        {/* ================================================= */}
+        {/*                         = */}
 
         <div className="overflow-hidden rounded-xl border border-slate-200 bg-white">
 
@@ -173,9 +173,9 @@ const FAQSection = () => {
                 `}
               >
 
-                {/* ========================================= */}
+                {/*                     = */}
                 {/* QUESTION */}
-                {/* ========================================= */}
+                {/*                     = */}
 
                 <button
                   type="button"
@@ -252,9 +252,9 @@ const FAQSection = () => {
                 </button>
 
 
-                {/* ========================================= */}
+                {/*                     = */}
                 {/* ANSWER */}
-                {/* ========================================= */}
+                {/*                     = */}
 
                 <div
                   className={`

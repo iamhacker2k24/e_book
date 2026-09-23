@@ -46,7 +46,7 @@ const WhyChoose = () => {
 
         <div className="grid items-stretch gap-8 lg:grid-cols-2">
 
-          {/* ================= LEFT ================= */}
+          {/*         = LEFT         = */}
           <div className="flex flex-col justify-center">
 
             <h2 className="text-3xl font-extrabold tracking-tight text-slate-950 md:text-4xl">
@@ -111,7 +111,7 @@ const WhyChoose = () => {
             </div>
           </div>
 
-          {/* ================= RIGHT IMAGE WITH MATCHED HEIGHT ================= */}
+          {/*         = RIGHT IMAGE WITH MATCHED HEIGHT         = */}
           <div className="relative min-h-[300px] sm:min-h-[340px] h-full overflow-hidden rounded-2xl border border-slate-100 shadow-sm">
 
             <img

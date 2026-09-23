@@ -34,7 +34,7 @@ const JoinCommunity = () => {
           <div className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-blue-200/30 blur-3xl" />
           <div className="pointer-events-none absolute -bottom-10 left-20 h-32 w-32 rounded-full bg-purple-200/30 blur-3xl" />
 
-          {/* ================= ICON ================= */}
+          {/*         = ICON         = */}
           <div
             className="
               relative
@@ -54,7 +54,7 @@ const JoinCommunity = () => {
             <FiSend className="text-2xl text-blue-600" />
           </div>
 
-          {/* ================= TEXT ================= */}
+          {/*         = TEXT         = */}
           <div className="relative min-w-0 flex-1 text-center md:text-left">
 
             <h2 className="text-xl font-bold tracking-tight text-slate-900 md:text-2xl">
@@ -67,7 +67,7 @@ const JoinCommunity = () => {
 
           </div>
 
-          {/* ================= SUBSCRIBE FORM ================= */}
+          {/*         = SUBSCRIBE FORM         = */}
           <form
             className="
               relative

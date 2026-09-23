@@ -12,7 +12,7 @@ const BooksHero = () => {
       <div className="mx-auto max-w-[1400px] px-6 sm:px-8 lg:px-14">
         <div className="grid min-h-[300px] grid-cols-1 items-center lg:grid-cols-2">
 
-          {/* ================= LEFT CONTENT ================= */}
+          {/*         = LEFT CONTENT         = */}
           <div className="relative z-10 py-10 lg:py-12">
 
             {/* Breadcrumb */}
@@ -42,7 +42,7 @@ const BooksHero = () => {
             </p>
 
 
-            {/* ================= STATS ================= */}
+            {/*         = STATS         = */}
             <div className="mt-7 flex flex-wrap items-center gap-y-5">
 
               {/* Stat 1 */}
@@ -122,7 +122,7 @@ const BooksHero = () => {
           </div>
 
 
-          {/* ================= RIGHT IMAGE ================= */}
+          {/*         = RIGHT IMAGE         = */}
           <div className="relative flex h-full min-h-[280px] items-end justify-center lg:justify-end">
 
             {/* Soft background glow */}
