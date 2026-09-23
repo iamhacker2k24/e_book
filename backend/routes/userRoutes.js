@@ -13,7 +13,6 @@ const cloudinary = require("../config/cloudinary");
 const uploadToCloudinary = require("../config/cloudinary");
 
 userRouter.post("/login", upload.single("photo"), async (req, res) => {
-
     try {
         let { email, name, methode, otp, role, profileIcon } = req.body;
         // console.log(req.file.buffer);
@@ -24,7 +23,7 @@ userRouter.post("/login", upload.single("photo"), async (req, res) => {
         }
 
         if (role != "user") {
-            req.body.role = "user" // this is going to convert all role to user ,admin alredy set here 
+            req.body.role = "user" // this is going to convert all role to user ,admin alredy set there 
         }
 
 
@@ -35,7 +34,7 @@ userRouter.post("/login", upload.single("photo"), async (req, res) => {
         ).padStart(4, "0");
         const otpExpiresAt = new Date(Date.now() + 5 * 60 * 1000); //3 minits of otp expiry
 
-        // console.log("OTP:", code);
+        console.log("OTP:", code);
 
 
         //send otp 
@@ -52,7 +51,8 @@ userRouter.post("/login", upload.single("photo"), async (req, res) => {
                     }
                 );
 
-                console.log("Existing user - OTP updated");
+
+                console.log("Existing user - resend");
 
             } else {
 
@@ -79,6 +79,7 @@ userRouter.post("/login", upload.single("photo"), async (req, res) => {
             // Resend(email, code)
 
             return res.status(200).json({
+                sucess: true,
                 msg: "OTP sent successfully"
             });
         }
@@ -90,6 +91,7 @@ userRouter.post("/login", upload.single("photo"), async (req, res) => {
 
             if (!otp) {
                 return res.status(400).json({
+                    sucess: false,
                     msg: "OTP is required"
                 });
             }
@@ -98,17 +100,20 @@ userRouter.post("/login", upload.single("photo"), async (req, res) => {
 
             if (!data) {
                 return res.status(404).json({
+                    sucess: false,
                     msg: "User not found"
                 });
             }
 
-            if (data.otp !== otp) {
+            if (data.otp !== Number(otp)) {
                 return res.status(400).json({
+                    sucess: false,
                     msg: "Wrong OTP"
                 });
             }
             if (data.otpExpiresAt < new Date()) {
                 return res.status(400).json({
+                    sucess: false,
                     msg: "OTP expired"
                 });
             }
@@ -135,6 +140,7 @@ userRouter.post("/login", upload.single("photo"), async (req, res) => {
             );
 
             return res.status(200).json({
+                sucess: true,
                 msg: "OTP verified successfully"
             });
         }

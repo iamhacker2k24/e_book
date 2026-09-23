@@ -25,15 +25,17 @@ export const AuthProvider = ({ children }) => {
   }, [user]);
 
   const login = (userData) => {
-    const defaultData = {
-      name: userData.name || userData.email.split("@")[0],
+    const activeUser = {
+      name: userData.name || userData.email?.split("@")[0] || "User",
       email: userData.email,
-      avatar: userData.avatar || `https://api.dicebear.com/7.x/initials/svg?seed=${userData.email}&backgroundColor=2563eb`,
-      token: userData.token || "mock-jwt-token-" + Date.now(),
-      joinedDate: new Date().toLocaleDateString("en-US", { month: "short", year: "numeric" }),
+      role: userData.role || "user",
+      avatar: userData.avatar || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(userData.email || "user")}&backgroundColor=2563eb`,
+      ...(userData.id ? { id: userData.id } : {}),
+      ...(userData._id ? { id: userData._id } : {}),
+      joinedDate: userData.joinedDate || new Date().toLocaleDateString("en-US", { month: "short", year: "numeric" }),
     };
-    setUser(defaultData);
-    return true;
+    setUser(activeUser);
+    return activeUser;
   };
 
   const register = (userData) => {
@@ -42,6 +44,11 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     setUser(null);
+    try {
+      localStorage.removeItem("booknest_user");
+    } catch (e) {
+      console.error("Failed to clear user from storage:", e);
+    }
   };
 
   return (

@@ -1,6 +1,6 @@
 const express = require("express")
-const app = express();
 const cors = require("cors")
+const app = express();
 app.use(cors())
 const limiter = require("./middleware/rateLimmtter")
 const dbConnection = require("./config/db")

@@ -110,38 +110,65 @@ adminRoutes.post(
 );
 
 
-adminRoutes.post("/createbanner", upload.single("banner"), async (req, res) => {
+adminRoutes.post(
+    "/createbanner",
+    upload.single("heroImage"),
+    async (req, res) => {
+        try {
 
+            // Check image
+            if (!req.file) {
+                return res.status(400).json({
+                    success: false,
+                    msg: "Hero image is required"
+                });
+            }
 
-    try {
-        const imgUrl = await uploadToCloudinary(req.file.buffer);
-        const { tittle, isnewPgeredirect, headerText, otherstext, expiry } = req.body;
+            // Upload image
+            const imgUrl = await uploadToCloudinary(req.file.buffer);
+            // console.log(imgUrl.url)
+            // console.log("RAW BODY:", req.body);
+            // console.log("FILE:", req.file);
 
-        // console.log(tittle, isnewPgeredirect, headerText, otherstext, expiry)
-        // console.log(imgUrl.url)
+            // Convert JSON string → JavaScript object
+            const bannerData = JSON.parse(req.body.bannerData);
 
-        const newBanner = new newBannerData({
-            tittle: tittle,
-            isnewPgeredirect: isnewPgeredirect,
-            headerText: headerText,
-            otherstext: otherstext,
-            expiry: expiry,
-            imgUrl: imgUrl.url
-        })
-        await newBanner.save();
-        console.log(newBanner)
-        res.status(200).json({
-            success: true,
-            msg: newBanner
-        })
+            // console.log("PARSED DATA:", bannerData);
+
+            const newBanner = new newBannerData({
+                eyebrow: bannerData.eyebrow,
+                title: bannerData.title,
+                highlightedTitle: bannerData.highlightedTitle,
+                description: bannerData.description,
+                heroImage: imgUrl.url,
+                primaryButton: bannerData.primaryButton,
+                secondaryButton: bannerData.secondaryButton,
+                stats: bannerData.stats,
+                isActive: bannerData.isActive,
+                order: bannerData.order,
+                expireAt: bannerData.expireAt
+            });
+
+            await newBanner.save();
+
+            // console.log(newBanner);
+
+            res.status(200).json({
+                success: true,
+                msg: newBanner
+            });
+
+        } catch (err) {
+
+            console.error(err);
+
+            res.status(400).json({
+                success: false,
+                msg: err.message
+            });
+
+        }
     }
-    catch (err) {
-        res.status(400).json({
-            success: false,
-            msg: err.message
-        })
-    }
-
-})
+);
 
 module.exports = adminRoutes
