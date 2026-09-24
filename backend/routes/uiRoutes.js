@@ -56,5 +56,54 @@ uiRoutes.get("/getCategoryBookData", async (req, res) => {
         msg: data
     })
 })
+uiRoutes.get("/searchBooks", async (req, res) => {
+    try {
+
+        const search = req.query.search?.trim();
+
+        if (!search) {
+            return res.status(400).json({
+                success: false,
+                msg: "Search text is required"
+            });
+        }
+        const books = await bookData
+            .find({
+                $or: [
+                    {
+                        bookName: {
+                            $regex: search,
+                            $options: "i"
+                        }
+                    },
+                    {
+                        "author.name": {
+                            $regex: search,
+                            $options: "i"
+                        }
+                    }
+                ]
+            })
+            .select("_id bookName coverPhoto author.name author.photo")
+            .limit(20);
+        return res.status(200).json({
+            success: true,
+            count: books.length,
+            msg: books
+        });
+
+    } catch (error) {
+
+        console.error("Search books error:", error);
+
+        return res.status(500).json({
+            success: false,
+            msg: "Failed to search books",
+            error: error.message
+        });
+
+    }
+});
+
 
 module.exports = uiRoutes;
