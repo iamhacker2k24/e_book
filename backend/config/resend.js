@@ -23,4 +23,4 @@ async function sendOTP(email, otp) {
     console.log("Email sent:", data);
 }
 
-// sendOTP("mr.debabrtapc2006@gmail.com",56889);
+// sendOTP("mail_address",56889);
