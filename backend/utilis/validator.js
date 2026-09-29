@@ -19,8 +19,6 @@ function vailduser(data) {
         console.log("Name should be at least 3 characters");
         throw new Error("Name should be at least 3 characters");
     }
-
-
    console.log("validator verified");
 }
 

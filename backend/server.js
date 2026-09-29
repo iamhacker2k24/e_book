@@ -17,13 +17,17 @@ app.get("/", (req, res) => {
     res.send("server working ")
 })
 
+//working this routes 
+app.use("/api/user", userRouts)
+// this is also working 
+app.use("/api/admin", adminRouts)
+// this also working
+app.use("/api/users", uiRouts)
 
-app.use("/api", userRouts)
-app.use("/api", adminRouts)
-app.use("/api", uiRouts)
 
-
-
+// users login , login , 
+// admin => login , logout , create banner upload pdf book 
+// for all i have banner,getAllBookData,getCategoryBookData,searchBooks
 
 const dbServer = async () => {
     try {

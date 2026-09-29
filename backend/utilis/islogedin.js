@@ -16,11 +16,9 @@ function isLoggedin(req, res) {
             console.log("Invaild cookies")
             throw new Error("Invaild cookies");
         }
-
         return res.status(400).json({
             msg: "working again"
         })
-
     }
     next();
 
