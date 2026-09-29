@@ -1,6 +1,6 @@
 const { Resend } = require("resend");
-
-const resend = new Resend("process.env.API_KEY");
+require('dotenv').config()
+const resend = new Resend(process.env.RESENT_API_KEY);
 
 async function sendOTP(email, otp) {
     const { data, error } = await resend.emails.send({
@@ -16,11 +16,13 @@ async function sendOTP(email, otp) {
     });
 
     if (error) {
-        console.error("Email error:", error);
+        console.error("Email error:", error.message);
         throw new Error("Failed to send email");
     }
 
     console.log("Email sent:", data);
 }
 
-// sendOTP("mail_address",56889);
+module.exports = sendOTP
+
+// sendOTP("mr.debabrtapc2006@gmail.com", 56889);

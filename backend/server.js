@@ -5,22 +5,22 @@ app.use(cors())
 const limiter = require("./middleware/rateLimmtter")
 const dbConnection = require("./config/db")
 const cookieParser = require('cookie-parser')
-const userRouter=require("./routes/userRoutes")
-const adminRoutes = require ("./routes/adminRoutes");
-const uiRoutes = require("./routes/uiRoutes");
+const userRouter = require("./controlers/userControllers")
+const adminRoutes = require("./controlers/adminRoutes");
+const uiRoutes = require("./controlers/uiRoutes");
 app.use(cookieParser())
 app.use(express.json())
 
 // app.use(limiter)
 
-app.get("/",(req,res)=>{
+app.get("/", (req, res) => {
     res.send("server working ")
 })
 
 
-app.use("/api/user",userRouter)
-app.use("/api/admin",adminRoutes)
-app.use("/api/ui",uiRoutes)
+app.use("/api/user", userRouter)
+app.use("/api/admin", adminRoutes)
+app.use("/api/ui", uiRoutes)
 
 
 const dbServer = async () => {

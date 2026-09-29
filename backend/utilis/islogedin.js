@@ -22,7 +22,7 @@ function isLoggedin(req, res) {
         })
 
     }
-
+    next();
 
 }
 module.exports = isLoggedin;

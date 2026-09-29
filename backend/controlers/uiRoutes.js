@@ -2,6 +2,8 @@ const express = require("express");
 const newBannerData = require("../models/Banner");
 const bookData = require("../models/Book");
 const uiRoutes = express.Router();
+
+// get 
 uiRoutes.get("/banner", async (req, res) => {
     try {
         const banner = await newBannerData.find({});
@@ -18,6 +20,8 @@ uiRoutes.get("/banner", async (req, res) => {
     }
 
 })
+
+//get
 
 
 uiRoutes.get("/getAllBookData", async (req, res) => {
@@ -36,6 +40,8 @@ uiRoutes.get("/getAllBookData", async (req, res) => {
 })
 
 
+
+//get 
 uiRoutes.get("/getCategoryBookData", async (req, res) => {
     const category = req.query.catagory
     console.log(category);
@@ -56,6 +62,8 @@ uiRoutes.get("/getCategoryBookData", async (req, res) => {
         msg: data
     })
 })
+
+//get 
 uiRoutes.get("/searchBooks", async (req, res) => {
     try {
 

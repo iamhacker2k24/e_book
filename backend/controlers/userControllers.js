@@ -1,19 +1,15 @@
 const express = require("express");
-const multer = require('multer')
-const storage = multer.memoryStorage();
-const upload = multer({ storage });
 const User = require("../models/User");
-const vailduser = require("../utilis/validator");
-const { Resend } = require("resend");
-const userRouter = express.Router()
 const jwt = require('jsonwebtoken');
 const Cookies = require('cookies');
-const isLoggedin = require("../utilis/islogedin");
-const cloudinary = require("../config/cloudinary");
-const uploadToCloudinary = require("../config/cloudinary");
+const sendOTP = require("../config/resend");
 
-userRouter.post("/login", upload.single("photo"), async (req, res) => {
+
+
+// login routes
+const login = async (req, res) => {
     try {
+        console.log(req.body)
         let { email, name, methode, otp, role, profileIcon } = req.body;
         // console.log(req.file.buffer);
         if (!methode || !["email", "otpverify"].includes(methode.trim().toLowerCase())) {
@@ -34,14 +30,13 @@ userRouter.post("/login", upload.single("photo"), async (req, res) => {
         ).padStart(4, "0");
         const otpExpiresAt = new Date(Date.now() + 5 * 60 * 1000); //3 minits of otp expiry
 
-        console.log("OTP:", code);
 
 
-        //send otp 
+        // //send otp 
         if (methode.trim().toLowerCase() === "email") {
-
             if (alreadyExists) {
-
+                await sendOTP(email, code)
+                console.log("otp resend ", code);
                 await User.findByIdAndUpdate(
                     alreadyExists._id,
                     {
@@ -50,61 +45,56 @@ userRouter.post("/login", upload.single("photo"), async (req, res) => {
                         otpExpiresAt: otpExpiresAt
                     }
                 );
-
-
                 console.log("Existing user - resend");
+                return res.status(200).json({
+                    sucess: true,
+                    msg: "OTP resent successfully"
+                });
 
             } else {
-
+                await sendOTP(email, code)
+                console.log("new otp sended  ", code);
                 const user = new User({
                     name: name,
                     email: email,
                     otp: code,
                     isOtpVerified: false,
                     otpExpiresAt: otpExpiresAt
-
                 });
-
-                if (req.file.buffer) {
-                    const ans = await uploadToCloudinary(req.file.buffer);
-                    console.log(ans.url);
-                    req.body.profileIcon = ans.url;
-                    console.log(req.body)
-                }
+                // if (req.file.buffer) {
+                //     const ans = await uploadToCloudinary(req.file.buffer);
+                //     console.log(ans.url);
+                //     req.body.profileIcon = ans.url;
+                //     console.log(req.body)
+                // }
                 await user.save();
-
                 console.log("New user created");
+                console.log("new otp sended ")
+                return res.status(200).json({
+                    sucess: true,
+                    msg: "OTP sent successfully"
+                });
             }
+            //     // Resend(email, code)
 
-            // Resend(email, code)
-
-            return res.status(200).json({
-                sucess: true,
-                msg: "OTP sent successfully"
-            });
         }
+        // // verify otp 
 
 
-        // verify otp 
-
-        if (methode.trim().toLowerCase() === "otpverify") {
-
+        else if (methode.trim().toLowerCase() === "otpverify") {
             if (!otp) {
                 return res.status(400).json({
                     sucess: false,
                     msg: "OTP is required"
                 });
             }
-
             const data = await User.findOne({ email });
-
             if (!data) {
                 return res.status(404).json({
                     sucess: false,
                     msg: "User not found"
                 });
             }
-
             if (data.otp !== Number(otp)) {
                 return res.status(400).json({
                     sucess: false,
@@ -141,21 +131,22 @@ userRouter.post("/login", upload.single("photo"), async (req, res) => {
 
             return res.status(200).json({
                 sucess: true,
-                msg: "OTP verified successfully"
+                msg: "OTP verified successfully now login in bro  "
             });
         }
 
     } catch (error) {
-
         return res.status(400).json({
-            msg: error.message
+            msg: ` error from login routes  ${error.message}`
         });
     }
-});
+};
 
-userRouter.get("/logout", async (req, res) => {
-    await isLoggedin(req, res)
 
-})
 
-module.exports = userRouter;
+const logout = async (req, res) => {
+    console.log("logout")
+
+}
+
+module.exports = { login, logout }
