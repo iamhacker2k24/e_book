@@ -4,7 +4,7 @@ const bookData = require("../models/Book");
 const uiRoutes = express.Router();
 
 // get 
-uiRoutes.get("/banner", async (req, res) => {
+const banner = async (req, res) => {
     try {
         const banner = await newBannerData.find({});
 
@@ -19,12 +19,11 @@ uiRoutes.get("/banner", async (req, res) => {
         })
     }
 
-})
+}
 
 //get
 
-
-uiRoutes.get("/getAllBookData", async (req, res) => {
+const getAllBookData = async (req, res) => {
     const pageSize = Math.min(
         Number(req.query.pagesize) || 20,
         100
@@ -37,12 +36,10 @@ uiRoutes.get("/getAllBookData", async (req, res) => {
         msg: totalBooks,
         Data: data
     })
-})
-
-
+}
 
 //get 
-uiRoutes.get("/getCategoryBookData", async (req, res) => {
+const getCategoryBookData = async (req, res) => {
     const category = req.query.catagory
     console.log(category);
     if (!category) {
@@ -61,10 +58,9 @@ uiRoutes.get("/getCategoryBookData", async (req, res) => {
         sucess: true,
         msg: data
     })
-})
-
+}
 //get 
-uiRoutes.get("/searchBooks", async (req, res) => {
+const searchBooks = async (req, res) => {
     try {
 
         const search = req.query.search?.trim();
@@ -111,7 +107,6 @@ uiRoutes.get("/searchBooks", async (req, res) => {
         });
 
     }
-});
+}
 
-
-module.exports = uiRoutes;
+module.exports = { banner, getAllBookData, getCategoryBookData, searchBooks };

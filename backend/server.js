@@ -5,9 +5,9 @@ app.use(cors())
 const limiter = require("./middleware/rateLimmtter")
 const dbConnection = require("./config/db")
 const cookieParser = require('cookie-parser')
-const userRouter = require("./controlers/userControllers")
-const adminRoutes = require("./controlers/adminRoutes");
-const uiRoutes = require("./controlers/uiRoutes");
+const userRouts = require("./routes/userRouts");
+const uiRouts = require("./routes/uiRouts");
+const adminRouts = require("./routes/adminRouts");
 app.use(cookieParser())
 app.use(express.json())
 
@@ -18,13 +18,14 @@ app.get("/", (req, res) => {
 })
 
 
-app.use("/api/user", userRouter)
-app.use("/api/admin", adminRoutes)
-app.use("/api/ui", uiRoutes)
+app.use("/api", userRouts)
+app.use("/api", adminRouts)
+app.use("/api", uiRouts)
+
+
 
 
 const dbServer = async () => {
-
     try {
         await dbConnection().then(() => {
             app.listen(3000, () => {
