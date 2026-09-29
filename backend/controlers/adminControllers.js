@@ -1,7 +1,3 @@
-
-
-
-
 // this is admin page  completed 
 const express = require("express");
 const User = require("../models/User");
