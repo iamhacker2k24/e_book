@@ -64,295 +64,6 @@ const dashboard = async (req, res) => {
 
 // ADD PRODUCT / BOOK
 
-// const addProducts = async (req, res) => {
-//     try {
-//         console.log("BODY:");
-//         console.log(req.body);
-//         console.log("FILES:");
-//         console.log(req.files);
-//         // GET FILES
-//         const pdfFile = req.files?.pdf?.[0];
-//         const coverFiles =
-//             req.files?.coverPhoto || [];
-//         const authorPhotoFile =
-//             req.files?.authorPhoto?.[0];
-
-//         // REQUIRED PDF
-
-//         if (!pdfFile) {
-//             return res.status(400).json({
-//                 success: false,
-//                 message: "PDF file is required"
-//             });
-//         }
-
-//         // GET BODY
-
-//         const {
-//             bookName,
-//             slug,
-//             subtitle,
-//             description,
-//             shortDescription,
-//             authorName,
-//             authorBio,
-//             publisher,
-//             publishingDate,
-//             language,
-//             edition,
-//             isbn,
-//             pages,
-//             category,
-//             subCategory,
-//             tags,
-//             price,
-//             originalPrice,
-//             discount,
-//             currency,
-//             availability,
-//             metaTitle,
-//             metaDescription,
-//             keywords
-//         } = req.body;
-
-//         // VALIDATION
-
-//         if (!bookName) {
-//             return res.status(400).json({
-//                 success: false,
-//                 message: "Book name is required"
-//             });
-//         }
-//         if (!description) {
-//             return res.status(400).json({
-//                 success: false,
-//                 message: "Book description is required"
-//             });
-//         }
-//         if (!authorName) {
-//             return res.status(400).json({
-//                 success: false,
-//                 message: "Author name is required"
-//             });
-//         }
-//         if (!category) {
-//             return res.status(400).json({
-//                 success: false,
-//                 message: "Category is required"
-//             });
-//         }
-//         if (
-//             price === undefined ||
-//             price === null ||
-//             price === ""
-//         ) {
-//             return res.status(400).json({
-//                 success: false,
-//                 message: "Price is required"
-//             });
-//         }
-//         // UPLOAD PDF
-//         console.log("Uploading PDF...");
-//         const pdfResult = await uploadPDF(
-//             pdfFile.buffer,
-//             pdfFile.originalname
-//         );
-
-//         console.log(
-//             "PDF uploaded:",
-//             pdfResult
-//         );
-//         // UPLOAD COVER PHOTOS
-//         const coverPhotoUrls = [];
-//         for (const file of coverFiles) {
-//             console.log(
-//                 "Uploading cover:",
-//                 file.originalname
-//             );
-//             const coverResult =
-//                 await uploadImage(
-//                     file.buffer,
-//                     file.originalname
-//                 );
-//             coverPhotoUrls.push(
-//                 coverResult.url
-//             );
-//         }
-//         // AUTHOR PHOTO
-//         let authorPhotoUrl = "";
-//         if (authorPhotoFile) {
-//             console.log(
-//                 "Uploading author photo:",
-//                 authorPhotoFile.originalname
-//             );
-//             const authorResult =
-//                 await uploadImage(
-//                     authorPhotoFile.buffer,
-//                     authorPhotoFile.originalname
-//                 );
-
-//             authorPhotoUrl =
-//                 authorResult.url;
-//         }
-//         // TAGS
-//         let finalTags = [];
-//         if (tags) {
-
-//             if (Array.isArray(tags)) {
-
-//                 finalTags = tags;
-
-//             } else {
-
-//                 finalTags = tags
-//                     .split(",")
-//                     .map(tag => tag.trim())
-//                     .filter(Boolean);
-//             }
-//         }
-
-//         // SEO KEYWORDS
-//         let finalKeywords = [];
-
-//         if (keywords) {
-
-//             if (Array.isArray(keywords)) {
-
-//                 finalKeywords = keywords;
-
-//             } else {
-//                 finalKeywords = keywords
-//                     .split(",")
-//                     .map(keyword => keyword.trim())
-//                     .filter(Boolean);
-//             }
-//         }
-
-//         // CREATE BOOK
-
-//         const newBook = new bookData({
-//             // BASIC INFORMATION
-//             bookName,
-//             slug:
-//                 slug || undefined,
-//             subtitle:
-//                 subtitle || "",
-//             description,
-//             shortDescription:
-//                 shortDescription || "",
-//             // AUTHOR
-//             author: {
-//                 name: authorName,
-//                 bio:
-//                     authorBio || "",
-//                 photo:
-//                     authorPhotoUrl || ""
-//             },
-//             // PUBLISHING
-//             publisher:
-//                 publisher || "",
-//             publishingDate:
-//                 publishingDate || undefined,
-//             language:
-//                 language || "English",
-//             edition:
-//                 edition || "",
-//             isbn:
-//                 isbn || "",
-//             pages:
-//                 pages
-//                     ? Number(pages)
-//                     : undefined,
-//             // CATEGORY
-//             category,
-//             subCategory:
-//                 subCategory || "",
-//             tags:
-//                 finalTags,
-//             // COVER
-//             coverPhoto:
-//                 coverPhotoUrls,
-//             // PRICE
-//             price:
-//                 Number(price),
-//             originalPrice:
-//                 originalPrice !== undefined &&
-//                     originalPrice !== ""
-//                     ? Number(originalPrice)
-//                     : undefined,
-//             discount:
-//                 discount !== undefined &&
-//                     discount !== ""
-//                     ? Number(discount)
-//                     : 0,
-
-//             currency:
-//                 currency || "INR",
-//             // EBOOK
-//             ebookFile: {
-//                 url:
-//                     pdfResult.url ||
-//                     pdfResult,
-
-//                 publicId:
-//                     pdfResult.publicId ||
-//                     "",
-
-//                 fileName:
-//                     pdfFile.originalname,
-
-//                 fileType:
-//                     "pdf",
-
-//                 fileSize:
-//                     pdfFile.size
-//             },
-//             // STATUS
-
-//             availability:
-//                 availability
-//                     ? availability.trim()
-//                     : "available",
-
-//             // SEO
-//             seo: {
-//                 metaTitle:
-//                     metaTitle || "",
-//                 metaDescription:
-//                     metaDescription || "",
-//                 keywords:
-//                     finalKeywords
-//             }
-//         });
-//         // SAVE
-//         const savedBook =
-//             await newBook.save();
-//         // RESPONSE
-//         return res.status(201).json({
-//             success: true,
-//             message:
-//                 "Book successfully uploaded",
-//             book:
-//                 savedBook
-//         });
-//     } catch (error) {
-//         console.error(
-//             "Add product error:",
-//             error
-//         );
-
-//         return res.status(500).json({
-
-//             success: false,
-
-//             message:
-//                 "Book upload failed",
-
-//             error:
-//                 error.message
-//         });
-//     }
-// };
 
 // CREATE BANNER
 
@@ -395,8 +106,8 @@ const createBanner = async (req, res) => {
                     bannerData.primaryButton,
                 secondaryButton:
                     bannerData.secondaryButton,
-                stats:
-                    bannerData.stats,
+                // stats:
+                //     bannerData.stats,
                 isActive:
                     bannerData.isActive,
                 order:
@@ -425,13 +136,430 @@ const createBanner = async (req, res) => {
     }
 };
 
+const addProducts = async (req, res) => {
+    try {
+
+        console.log("BODY:", req.body);
+        console.log("FILES:", req.files);
+
+        // ==========================================
+        // GET FILES
+        // ==========================================
+
+        const pdfFile = req.files?.pdf?.[0];
+
+        const coverFiles =
+            req.files?.coverPhoto || [];
+
+        const authorPhotoFile =
+            req.files?.authorPhoto?.[0];
+
+
+        // ==========================================
+        // CHECK PDF
+        // ==========================================
+
+        if (!pdfFile) {
+            return res.status(400).json({
+                success: false,
+                message: "PDF file is required"
+            });
+        }
+
+
+        // ==========================================
+        // PARSE BOOK JSON
+        // ==========================================
+
+        if (!req.body.bookData) {
+            return res.status(400).json({
+                success: false,
+                message: "bookData is required"
+            });
+        }
+
+        const bookDataBody =
+            JSON.parse(req.body.bookData);
+
+
+        // ==========================================
+        // GET BOOK DATA
+        // ==========================================
+
+        const {
+            bookName,
+            slug,
+            subtitle,
+            description,
+            shortDescription,
+
+            authorName,
+            authorBio,
+
+            publisher,
+            publishingDate,
+            language,
+            edition,
+            isbn,
+            pages,
+
+            category,
+            subCategory,
+            tags,
+
+            price,
+            originalPrice,
+            discount,
+            currency,
+            availability,
+
+            metaTitle,
+            metaDescription,
+            keywords
+        } = bookDataBody;
+
+
+        // ==========================================
+        // VALIDATION
+        // ==========================================
+
+        if (!bookName) {
+            return res.status(400).json({
+                success: false,
+                message: "Book name is required"
+            });
+        }
+
+        if (!description) {
+            return res.status(400).json({
+                success: false,
+                message: "Book description is required"
+            });
+        }
+
+        if (!authorName) {
+            return res.status(400).json({
+                success: false,
+                message: "Author name is required"
+            });
+        }
+
+        if (!category) {
+            return res.status(400).json({
+                success: false,
+                message: "Category is required"
+            });
+        }
+
+        if (
+            price === undefined ||
+            price === null ||
+            price === ""
+        ) {
+            return res.status(400).json({
+                success: false,
+                message: "Price is required"
+            });
+        }
+
+
+        // ==========================================
+        // UPLOAD PDF
+        // ==========================================
+
+        console.log("Uploading PDF...");
+
+        const pdfResult = await uploadPDF(
+            pdfFile.buffer,
+            pdfFile.originalname
+        );
+
+        console.log(
+            "PDF uploaded:",
+            pdfResult
+        );
+
+
+        // ==========================================
+        // UPLOAD COVER PHOTOS
+        // ==========================================
+
+        const coverPhotoUrls = [];
+
+        for (const file of coverFiles) {
+
+            console.log(
+                "Uploading cover:",
+                file.originalname
+            );
+
+            const coverResult =
+                await uploadImage(
+                    file.buffer,
+                    file.originalname
+                );
+
+            coverPhotoUrls.push(
+                coverResult.url
+            );
+        }
+
+
+        // ==========================================
+        // UPLOAD AUTHOR PHOTO
+        // ==========================================
+
+        let authorPhotoUrl = "";
+
+        if (authorPhotoFile) {
+
+            console.log(
+                "Uploading author photo:",
+                authorPhotoFile.originalname
+            );
+
+            const authorResult =
+                await uploadImage(
+                    authorPhotoFile.buffer,
+                    authorPhotoFile.originalname
+                );
+
+            authorPhotoUrl =
+                authorResult.url;
+        }
+
+
+        // ==========================================
+        // TAGS
+        // ==========================================
+
+        let finalTags = [];
+
+        if (tags) {
+
+            if (Array.isArray(tags)) {
+
+                finalTags = tags;
+
+            } else {
+
+                finalTags = tags
+                    .split(",")
+                    .map(tag => tag.trim())
+                    .filter(Boolean);
+            }
+        }
+
+
+        // ==========================================
+        // SEO KEYWORDS
+        // ==========================================
+
+        let finalKeywords = [];
+
+        if (keywords) {
+
+            if (Array.isArray(keywords)) {
+
+                finalKeywords = keywords;
+
+            } else {
+
+                finalKeywords = keywords
+                    .split(",")
+                    .map(keyword => keyword.trim())
+                    .filter(Boolean);
+            }
+        }
+
+
+        // ==========================================
+        // CREATE BOOK
+        // ==========================================
+
+        const newBook = new bookData({
+
+            // BASIC
+            bookName,
+
+            slug:
+                slug || undefined,
+
+            subtitle:
+                subtitle || "",
+
+            description,
+
+            shortDescription:
+                shortDescription || "",
+
+
+            // AUTHOR
+            author: {
+
+                name:
+                    authorName,
+
+                bio:
+                    authorBio || "",
+
+                photo:
+                    authorPhotoUrl || ""
+            },
+
+
+            // PUBLISHING
+            publisher:
+                publisher || "",
+
+            publishingDate:
+                publishingDate || undefined,
+
+            language:
+                language || "English",
+
+            edition:
+                edition || "",
+
+            isbn:
+                isbn || "",
+
+            pages:
+                pages
+                    ? Number(pages)
+                    : undefined,
+
+
+            // CATEGORY
+            category,
+
+            subCategory:
+                subCategory || "",
+
+            tags:
+                finalTags,
+
+
+            // COVERS
+            coverPhoto:
+                coverPhotoUrls,
+
+
+            // PRICE
+            price:
+                Number(price),
+
+            originalPrice:
+                originalPrice !== undefined &&
+                    originalPrice !== ""
+                    ? Number(originalPrice)
+                    : undefined,
+
+            discount:
+                discount !== undefined &&
+                    discount !== ""
+                    ? Number(discount)
+                    : 0,
+
+            currency:
+                currency || "INR",
+
+
+            // EBOOK
+            ebookFile: {
+
+                url:
+                    pdfResult.url ||
+                    pdfResult,
+
+                publicId:
+                    pdfResult.publicId ||
+                    "",
+
+                fileName:
+                    pdfFile.originalname,
+
+                fileType:
+                    "pdf",
+
+                fileSize:
+                    pdfFile.size
+            },
+
+
+            // STATUS
+            availability:
+                availability
+                    ? availability.trim()
+                    : "available",
+
+
+            // SEO
+            seo: {
+
+                metaTitle:
+                    metaTitle || "",
+
+                metaDescription:
+                    metaDescription || "",
+
+                keywords:
+                    finalKeywords
+            }
+        });
+
+
+        // ==========================================
+        // SAVE
+        // ==========================================
+
+        const savedBook =
+            await newBook.save();
+
+
+        // ==========================================
+        // RESPONSE
+        // ==========================================
+
+        return res.status(201).json({
+
+            success: true,
+
+            message:
+                "Book successfully uploaded",
+
+            book:
+                savedBook
+        });
+
+    } catch (error) {
+
+        console.error(
+            "Add product error:",
+            error
+        );
+
+        return res.status(500).json({
+
+            success: false,
+
+            message:
+                "Book upload failed",
+
+            error:
+                error.message
+        });
+    }
+};
+
+
 // EXPORT
 
 module.exports = {
     login,
     dashboard,
-    // addProducts,
-    createBanner
+    createBanner,
+    addProducts
 };
 
 

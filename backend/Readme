@@ -1,0 +1,74 @@
+// /api
+// │
+// ├── /auth                                   //Done
+// │   ├── POST   /register
+// │   ├── POST   /login
+// │   ├── POST   /logout
+// │   ├── POST   /send-otp
+// │   ├── POST   /verify-otp
+// │   ├── POST   /forgot-password
+// │   ├── POST   /reset-password
+// │   └── GET    /me
+// │
+// ├── /admin                              //done login 
+// │   ├── POST   /login
+// │   ├── POST   /logout
+// │   ├── GET    /dashboard
+// 
+// ├── /banners                                 //done 
+// │   ├── GET    /
+// │   └── GET    /active
+// │
+// │   ├── GET    /books
+// │   ├── GET    /books/:id
+// │   ├── PUT    /books/:id
+// │   ├── DELETE /books/:id
+// │   ├── POST   /banners
+// │   ├── GET    /banners
+// │   ├── PUT    /banners/:id
+// │   ├── DELETE /banners/:id
+// │   │
+// │   ├── GET    /orders
+// │   ├── GET    /orders/:id
+// │   │
+// │   └── GET    /users
+// │
+// ├── /books  
+// │   ├── GET    /
+// │   ├── GET    /:id
+// │   ├── GET    /slug/:slug
+// │   ├── GET    /category/:category
+// │   ├── GET    /subcategory/:subcategory
+// │   ├── GET    /search
+// │   ├── GET    /featured
+// │   ├── GET    /latest
+// │   ├── GET    /popular
+// │   └── GET    /related/:id
+// │
+// ├── /categories
+// │   ├── GET    /
+// │   ├── GET    /:slug
+// │   └── GET    /:slug/books
+// │
+
+// ├── /orders
+// │   ├── POST   /
+// │   ├── GET    /
+// │   ├── GET    /:id
+// │   └── POST   /:id/payment
+// │
+// ├── /library
+// │   ├── GET    /
+// │   ├── GET    /:bookId
+// │   └── GET    /:bookId/download
+// │
+// ├── /wishlist
+// │   ├── GET    /
+// │   ├── POST   /:bookId
+// │   └── DELETE /:bookId
+// │
+// └── /reviews
+//     ├── GET    /book/:bookId
+//     ├── POST   /book/:bookId
+//     ├── PUT    /:id
+//     └── DELETE /:id
