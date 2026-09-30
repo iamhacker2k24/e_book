@@ -5,11 +5,11 @@ import aboutHero from "../About_hero.png";
 
 const AboutHero = () => {
   return (
-    <section className="w-full bg-white">
+    <section className="w-full bg-white dark:bg-slate-950 transition-colors duration-200">
       <div className="mx-auto max-w-[1400px]">
 
         {/* Hero Container */}
-        <div className="relative min-h-[330px] overflow-hidden bg-gradient-to-r from-blue-50 via-white to-white">
+        <div className="relative min-h-[330px] overflow-hidden bg-gradient-to-r from-blue-50 via-white to-white dark:from-slate-950 dark:via-slate-900 dark:to-slate-950">
 
           {/*         = BACKGROUND IMAGE         = */}
           <img
@@ -35,6 +35,9 @@ const AboutHero = () => {
               via-white/95
               via-45%
               to-transparent
+              dark:from-slate-950
+              dark:via-slate-950/95
+              dark:to-transparent
             "
           />
 
@@ -55,31 +58,35 @@ const AboutHero = () => {
             <div className="max-w-[500px]">
 
               {/* Breadcrumb */}
-              <div className="mb-5 flex items-center gap-1 text-xs text-slate-500">
+              <div className="mb-5 flex items-center gap-1 text-xs text-slate-500 dark:text-slate-400">
 
                 <span
                   className="
                     rounded-full
                     bg-blue-50
+                    dark:bg-blue-900/40
                     px-3
                     py-1.5
                     font-medium
                     text-blue-600
+                    dark:text-blue-400
                   "
                 >
                   Home
                 </span>
 
-                <FiChevronRight className="text-slate-400" />
+                <FiChevronRight className="text-slate-400 dark:text-slate-600" />
 
                 <span
                   className="
                     rounded-full
                     bg-blue-50
+                    dark:bg-blue-900/40
                     px-3
                     py-1.5
                     font-medium
                     text-blue-600
+                    dark:text-blue-400
                   "
                 >
                   About
@@ -95,6 +102,7 @@ const AboutHero = () => {
                   leading-tight
                   tracking-tight
                   text-slate-950
+                  dark:text-white
                   md:text-5xl
                 "
               >
@@ -120,6 +128,7 @@ const AboutHero = () => {
                   text-sm
                   leading-6
                   text-slate-600
+                  dark:text-slate-300
                   md:text-base
                 "
               >

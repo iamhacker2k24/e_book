@@ -120,7 +120,7 @@ const PrivacyContent = () => {
   };
 
   return (
-    <section className="w-full bg-white py-10">
+    <section className="w-full bg-white dark:bg-slate-950 py-10 transition-colors duration-200">
       <div className="mx-auto max-w-[1250px] px-5">
 
         {/*                           =
@@ -135,9 +135,9 @@ const PrivacyContent = () => {
 
           <aside className="lg:sticky lg:top-24 lg:self-start">
 
-            <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+            <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm">
 
-              <h2 className="mb-4 px-3 text-sm font-bold text-slate-900">
+              <h2 className="mb-4 px-3 text-sm font-bold text-slate-900 dark:text-white">
                 Privacy Policy
               </h2>
 
@@ -172,8 +172,8 @@ const PrivacyContent = () => {
 
                         ${
                           isActive
-                            ? "bg-blue-50 font-semibold text-blue-600"
-                            : "text-slate-600 hover:bg-slate-50 hover:text-blue-600"
+                            ? "bg-blue-50 dark:bg-blue-900/30 font-semibold text-blue-600 dark:text-blue-400"
+                            : "text-slate-600 dark:text-slate-400 hover:bg-slate-50 dark:hover:bg-slate-800 hover:text-blue-600 dark:hover:text-blue-400"
                         }
                       `}
                     >
@@ -185,8 +185,8 @@ const PrivacyContent = () => {
 
                           ${
                             isActive
-                              ? "text-blue-600"
-                              : "text-slate-400 group-hover:text-blue-500"
+                              ? "text-blue-600 dark:text-blue-400"
+                              : "text-slate-400 dark:text-slate-500 group-hover:text-blue-500"
                           }
                         `}
                       />
@@ -209,13 +209,13 @@ const PrivacyContent = () => {
                   CONTACT BOX
                                       = */}
 
-              <div className="mt-5 rounded-xl bg-blue-50 p-4">
+              <div className="mt-5 rounded-xl bg-blue-50 dark:bg-slate-800/80 p-4">
 
-                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-blue-100">
-                  <FiLock className="text-blue-600" />
+                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-blue-100 dark:bg-slate-700">
+                  <FiLock className="text-blue-600 dark:text-blue-400" />
                 </div>
 
-                <p className="mt-3 text-xs leading-5 text-slate-600">
+                <p className="mt-3 text-xs leading-5 text-slate-600 dark:text-slate-300">
                   Your privacy is important to us. If you have
                   any questions, feel free to contact us.
                 </p>
@@ -263,7 +263,7 @@ const PrivacyContent = () => {
 
             <div
               id="privacy-content"
-              className="rounded-2xl border border-slate-200 bg-white px-6 py-7 shadow-sm md:px-8"
+              className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-6 py-7 shadow-sm md:px-8"
             >
 
               {/*                         =
@@ -554,9 +554,9 @@ const PrivacyContent = () => {
                   Privacy Policy, please contact us.
                 </p>
 
-                <div className="mt-4 rounded-xl bg-blue-50 p-4">
+                <div className="mt-4 rounded-xl bg-blue-50 dark:bg-slate-800/80 p-4">
 
-                  <p className="text-sm font-semibold text-slate-900">
+                  <p className="text-sm font-semibold text-slate-900 dark:text-white">
                     BookNest Support
                   </p>
 
@@ -567,6 +567,7 @@ const PrivacyContent = () => {
                       inline-block
                       text-sm
                       text-blue-600
+                      dark:text-blue-400
                       hover:underline
                     "
                   >
@@ -607,6 +608,7 @@ const PolicySection = ({
         scroll-mt-5
         border-b
         border-slate-100
+        dark:border-slate-800
         py-8
         first:pt-0
         last:border-b-0
@@ -626,9 +628,11 @@ const PolicySection = ({
             justify-center
             rounded-full
             bg-blue-50
+            dark:bg-slate-800
             text-sm
             font-bold
             text-blue-600
+            dark:text-blue-400
           "
         >
           {number}
@@ -643,6 +647,7 @@ const PolicySection = ({
               font-bold
               tracking-tight
               text-slate-900
+              dark:text-white
               md:text-2xl
             "
           >
@@ -655,6 +660,7 @@ const PolicySection = ({
               text-sm
               leading-6
               text-slate-600
+              dark:text-slate-300
               md:text-base
             "
           >

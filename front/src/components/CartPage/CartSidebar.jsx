@@ -55,16 +55,16 @@ const CartSidebar = (props) => {
   return (
     <aside className="w-full space-y-4">
       {/*         = ORDER SUMMARY         = */}
-      <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-        <h2 className="text-lg font-bold text-[#07144d]">Order Summary</h2>
+      <section className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm">
+        <h2 className="text-lg font-bold text-[#07144d] dark:text-white">Order Summary</h2>
 
         <div className="mt-5 space-y-3 text-sm">
           {/* Subtotal */}
           <div className="flex items-center justify-between">
-            <span className="text-slate-500">
+            <span className="text-slate-500 dark:text-slate-400">
               Subtotal ({itemCount} {itemCount === 1 ? "item" : "items"})
             </span>
-            <span className="font-semibold text-slate-800">
+            <span className="font-semibold text-slate-800 dark:text-white">
               ₹{subtotal.toLocaleString("en-IN")}
             </span>
           </div>
@@ -72,8 +72,8 @@ const CartSidebar = (props) => {
           {/* Discount */}
           {discount > 0 && (
             <div className="flex items-center justify-between">
-              <span className="text-slate-500">Discount</span>
-              <span className="font-semibold text-green-600">
+              <span className="text-slate-500 dark:text-slate-400">Discount</span>
+              <span className="font-semibold text-green-600 dark:text-green-400">
                 - ₹{discount.toLocaleString("en-IN")}
               </span>
             </div>
@@ -81,25 +81,25 @@ const CartSidebar = (props) => {
 
           {/* Delivery */}
           <div className="flex items-center justify-between">
-            <span className="text-slate-500">Delivery Fee</span>
-            <span className="font-semibold text-green-600">
+            <span className="text-slate-500 dark:text-slate-400">Delivery Fee</span>
+            <span className="font-semibold text-green-600 dark:text-green-400">
               {deliveryCharge === 0 ? "FREE (Instant Download)" : `₹${deliveryCharge}`}
             </span>
           </div>
         </div>
 
-        <div className="my-4 h-px bg-slate-200" />
+        <div className="my-4 h-px bg-slate-200 dark:bg-slate-800" />
 
         {/* Total */}
         <div className="flex items-center justify-between">
-          <span className="text-base font-bold text-slate-900">Total Amount</span>
-          <span className="text-2xl font-extrabold text-blue-600">
+          <span className="text-base font-bold text-slate-900 dark:text-white">Total Amount</span>
+          <span className="text-2xl font-extrabold text-blue-600 dark:text-blue-400">
             ₹{total.toLocaleString("en-IN")}
           </span>
         </div>
 
         {discount > 0 && (
-          <p className="mt-2 text-right text-xs font-semibold text-green-600">
+          <p className="mt-2 text-right text-xs font-semibold text-green-600 dark:text-green-400">
             You saved ₹{discount.toLocaleString("en-IN")} on this order 🎉
           </p>
         )}
@@ -109,7 +109,7 @@ const CartSidebar = (props) => {
           type="button"
           disabled={itemCount === 0 || checkingOut}
           onClick={handleCheckout}
-          className="mt-5 flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-sm font-bold text-white shadow-lg shadow-blue-200 transition hover:from-blue-700 hover:to-indigo-700 active:scale-98 disabled:opacity-50 disabled:pointer-events-none"
+          className="mt-5 flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 text-sm font-bold text-white shadow-lg shadow-blue-200 dark:shadow-none transition hover:from-blue-700 hover:to-indigo-700 active:scale-98 disabled:opacity-50 disabled:pointer-events-none"
         >
           <Lock size={16} />
           <span>{checkingOut ? "Processing Payment..." : "Proceed to Checkout"}</span>
@@ -117,10 +117,10 @@ const CartSidebar = (props) => {
       </section>
 
       {/*         = APPLY COUPON         = */}
-      <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+      <section className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm">
         <div className="flex items-center gap-2">
-          <Tag size={18} className="text-blue-600" />
-          <h2 className="text-sm font-bold text-[#07144d]">Promo / Coupon Code</h2>
+          <Tag size={18} className="text-blue-600 dark:text-blue-400" />
+          <h2 className="text-sm font-bold text-[#07144d] dark:text-white">Promo / Coupon Code</h2>
         </div>
 
         <form onSubmit={handleApplyCoupon} className="mt-3 flex gap-2">
@@ -129,11 +129,11 @@ const CartSidebar = (props) => {
             value={couponInput}
             onChange={(e) => setCouponInput(e.target.value)}
             placeholder="e.g. BOOK20"
-            className="h-10 flex-1 uppercase rounded-xl border border-slate-200 bg-slate-50 px-3 text-xs font-semibold text-slate-800 outline-none transition focus:border-blue-500 focus:bg-white"
+            className="h-10 flex-1 uppercase rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 px-3 text-xs font-semibold text-slate-800 dark:text-white outline-none transition focus:border-blue-500 focus:bg-white dark:focus:bg-slate-800"
           />
           <button
             type="submit"
-            className="rounded-xl bg-slate-900 px-4 text-xs font-bold text-white transition hover:bg-blue-600 active:scale-95"
+            className="rounded-xl bg-slate-900 dark:bg-blue-600 px-4 text-xs font-bold text-white transition hover:bg-blue-600 dark:hover:bg-blue-700 active:scale-95"
           >
             Apply
           </button>
@@ -142,7 +142,7 @@ const CartSidebar = (props) => {
         {couponFeedback && (
           <div
             className={`mt-2 flex items-center gap-1.5 text-xs font-medium ${
-              couponFeedback.success ? "text-green-600" : "text-red-500"
+              couponFeedback.success ? "text-green-600 dark:text-green-400" : "text-red-500 dark:text-red-400"
             }`}
           >
             {couponFeedback.success ? (
@@ -154,24 +154,24 @@ const CartSidebar = (props) => {
           </div>
         )}
 
-        <p className="mt-3 text-[11px] text-slate-400">
-          Try promo code <span className="font-bold text-blue-600">BOOK20</span> or{" "}
-          <span className="font-bold text-blue-600">READMORE</span> for discounts.
+        <p className="mt-3 text-[11px] text-slate-400 dark:text-slate-500">
+          Try promo code <span className="font-bold text-blue-600 dark:text-blue-400">BOOK20</span> or{" "}
+          <span className="font-bold text-blue-600 dark:text-blue-400">READMORE</span> for discounts.
         </p>
       </section>
 
       {/*         = GUARANTEES         = */}
-      <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm space-y-3 text-xs text-slate-600">
+      <section className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5 shadow-sm space-y-3 text-xs text-slate-600 dark:text-slate-300">
         <div className="flex items-center gap-2.5">
-          <Truck size={16} className="text-blue-600" />
+          <Truck size={16} className="text-blue-600 dark:text-blue-400" />
           <span>Instant cloud delivery & reading on any device</span>
         </div>
         <div className="flex items-center gap-2.5">
-          <ShieldCheck size={16} className="text-blue-600" />
+          <ShieldCheck size={16} className="text-blue-600 dark:text-blue-400" />
           <span>Guaranteed DRM safe & verified publisher files</span>
         </div>
         <div className="flex items-center gap-2.5">
-          <Award size={16} className="text-blue-600" />
+          <Award size={16} className="text-blue-600 dark:text-blue-400" />
           <span>7-day money-back satisfaction guarantee</span>
         </div>
       </section>

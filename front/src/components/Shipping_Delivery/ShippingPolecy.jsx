@@ -65,11 +65,11 @@ const ShippingPolecy = () => {
   ];
 
   return (
-    <section className="w-full bg-white py-8 md:py-10">
+    <section className="w-full bg-white dark:bg-slate-950 py-8 md:py-10 transition-colors duration-200">
       <div className="mx-auto max-w-[1150px] px-5">
 
         {/* Main Container */}
-        <div className="overflow-hidden rounded-xl border border-slate-200 bg-white">
+        <div className="overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900">
 
           {shippingData.map((item, index) => {
             const Icon = item.icon;
@@ -86,7 +86,7 @@ const ShippingPolecy = () => {
                   md:py-6
                   ${
                     index !== shippingData.length - 1
-                      ? "border-b border-slate-200"
+                      ? "border-b border-slate-200 dark:border-slate-800"
                       : ""
                   }
                 `}
@@ -103,6 +103,7 @@ const ShippingPolecy = () => {
                     justify-center
                     rounded-full
                     bg-blue-50
+                    dark:bg-slate-800
                     md:h-14
                     md:w-14
                   "
@@ -111,6 +112,7 @@ const ShippingPolecy = () => {
                     className="
                       text-xl
                       text-blue-600
+                      dark:text-blue-400
                       md:text-2xl
                     "
                   />
@@ -126,6 +128,7 @@ const ShippingPolecy = () => {
                       font-extrabold
                       leading-5
                       text-slate-900
+                      dark:text-white
                       md:text-base
                     "
                   >
@@ -140,6 +143,7 @@ const ShippingPolecy = () => {
                       text-[11px]
                       leading-4
                       text-slate-500
+                      dark:text-slate-400
                       md:text-xs
                       md:leading-5
                     "
@@ -158,13 +162,16 @@ const ShippingPolecy = () => {
                         gap-2
                         rounded-md
                         bg-blue-50
+                        dark:bg-slate-800
                         px-3
                         py-1.5
                         text-[11px]
                         font-semibold
                         text-blue-600
+                        dark:text-blue-400
                         transition
                         hover:bg-blue-100
+                        dark:hover:bg-slate-700
                       "
                     >
                       <FiMail className="text-xs" />

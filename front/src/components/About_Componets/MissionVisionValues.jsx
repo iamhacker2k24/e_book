@@ -58,7 +58,7 @@ const MissionVisionValues = () => {
   ];
 
   return (
-    <section className="w-full bg-white py-8 md:py-10">
+    <section className="w-full bg-white dark:bg-slate-950 py-8 md:py-10 transition-colors duration-200">
       <div className="mx-auto max-w-[1400px] px-4 sm:px-6 lg:px-10">
         <div className="grid grid-cols-1 gap-6 md:grid-cols-3 items-stretch">
           {cards.map((card) => {
@@ -69,6 +69,7 @@ const MissionVisionValues = () => {
                 key={card.title}
                 className={`
                   ${card.bg}
+                  dark:!bg-slate-900
                   group
                   flex
                   h-full
@@ -77,6 +78,7 @@ const MissionVisionValues = () => {
                   rounded-2xl
                   border
                   border-slate-100
+                  dark:border-slate-800
                   p-6
                   shadow-sm
                   transition-all
@@ -91,6 +93,7 @@ const MissionVisionValues = () => {
                     <div
                       className={`
                         ${card.iconBg}
+                        dark:!bg-slate-800
                         flex
                         h-12
                         w-12
@@ -106,24 +109,24 @@ const MissionVisionValues = () => {
                       <Icon className={`text-xl ${card.iconColor}`} />
                     </div>
 
-                    <h3 className="text-lg font-extrabold text-slate-900">
+                    <h3 className="text-lg font-extrabold text-slate-900 dark:text-white">
                       {card.title}
                     </h3>
                   </div>
 
                   {/* Description */}
-                  <p className="text-xs sm:text-sm leading-relaxed text-slate-600 mb-4">
+                  <p className="text-xs sm:text-sm leading-relaxed text-slate-600 dark:text-slate-300 mb-4">
                     {card.description}
                   </p>
                 </div>
 
                 {/* Structured Points */}
-                <div className="border-t border-slate-200/50 pt-3.5 mt-2">
+                <div className="border-t border-slate-200/50 dark:border-slate-800 pt-3.5 mt-2">
                   <ul className="space-y-2">
                     {card.points.map((point) => (
                       <li
                         key={point}
-                        className="flex items-start gap-2.5 text-xs text-slate-700"
+                        className="flex items-start gap-2.5 text-xs text-slate-700 dark:text-slate-300"
                       >
                         <FaCheckCircle className={`shrink-0 mt-0.5 text-xs ${card.checkColor}`} />
                         <span className="font-medium">{point}</span>

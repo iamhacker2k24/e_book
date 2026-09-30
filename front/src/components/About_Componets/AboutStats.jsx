@@ -31,7 +31,7 @@ const AboutStats = () => {
   ];
 
   return (
-    <section className="w-full bg-white py-6 md:py-8">
+    <section className="w-full bg-white dark:bg-slate-950 py-6 md:py-8 transition-colors duration-200">
       <div className="mx-auto max-w-[1400px] px-6 lg:px-10">
 
         <div
@@ -42,10 +42,14 @@ const AboutStats = () => {
             rounded-2xl
             border
             border-blue-50
+            dark:border-slate-800
             bg-gradient-to-r
             from-blue-50
             via-indigo-50
             to-blue-50
+            dark:from-slate-900
+            dark:via-slate-900/90
+            dark:to-slate-950
             shadow-sm
             md:grid-cols-4
           "
@@ -69,22 +73,23 @@ const AboutStats = () => {
                   transition-all
                   duration-300
                   hover:bg-white/50
+                  dark:hover:bg-slate-800/50
 
                   ${
                     index !== stats.length - 1
-                      ? "border-r border-blue-100"
+                      ? "border-r border-blue-100 dark:border-slate-800"
                       : ""
                   }
 
                   ${
                     index === 1
-                      ? "md:border-r md:border-blue-100"
+                      ? "md:border-r md:border-blue-100 dark:md:border-slate-800"
                       : ""
                   }
 
                   ${
                     index === 0 || index === 1
-                      ? "border-b border-blue-100 md:border-b-0"
+                      ? "border-b border-blue-100 dark:border-slate-800 md:border-b-0"
                       : ""
                   }
                 `}
@@ -100,13 +105,15 @@ const AboutStats = () => {
                     justify-center
                     rounded-full
                     bg-blue-100
+                    dark:bg-slate-800
                     transition-all
                     duration-300
                     group-hover:-translate-y-1
                     group-hover:bg-blue-200
+                    dark:group-hover:bg-slate-700
                   "
                 >
-                  <Icon className="text-xl text-blue-600" />
+                  <Icon className="text-xl text-blue-600 dark:text-blue-400" />
                 </div>
 
                 {/* Number */}
@@ -117,6 +124,7 @@ const AboutStats = () => {
                     font-extrabold
                     tracking-tight
                     text-slate-950
+                    dark:text-white
                     md:text-3xl
                   "
                 >
@@ -124,7 +132,7 @@ const AboutStats = () => {
                 </h3>
 
                 {/* Label */}
-                <p className="mt-0.5 text-xs font-medium text-slate-500 md:text-sm">
+                <p className="mt-0.5 text-xs font-medium text-slate-500 dark:text-slate-400 md:text-sm">
                   {stat.label}
                 </p>
 

@@ -6,7 +6,7 @@ import categoryBanner from "../Catagories/assets/image.png";
 
 const CategoryCTA = () => {
   return (
-    <section className="w-full bg-white py-6 md:py-8">
+    <section className="w-full bg-white dark:bg-slate-950 py-6 md:py-8 transition-colors duration-200">
       <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
 
         <div
@@ -17,7 +17,9 @@ const CategoryCTA = () => {
             rounded-2xl
             border
             border-blue-100
+            dark:border-slate-800
             bg-[#eef7ff]
+            dark:bg-slate-900
             shadow-sm
             md:min-h-[170px]
           "
@@ -54,6 +56,7 @@ const CategoryCTA = () => {
                 w-1/3
                 bg-gradient-to-r
                 from-[#eef7ff]
+                dark:from-slate-900
                 to-transparent
               "
             />
@@ -86,7 +89,7 @@ const CategoryCTA = () => {
                 font-extrabold
                 leading-tight
                 text-[#07194f]
-
+                dark:text-white
                 sm:text-2xl
                 md:text-3xl
               "
@@ -101,7 +104,7 @@ const CategoryCTA = () => {
                 text-xs
                 leading-5
                 text-slate-500
-
+                dark:text-slate-400
                 sm:text-sm
               "
             >

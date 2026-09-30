@@ -62,7 +62,7 @@ const ReturnRefundPolicy = () => {
   ];
 
   return (
-    <section className="w-full bg-white py-8 md:py-12">
+    <section className="w-full bg-white dark:bg-slate-950 py-8 md:py-12 transition-colors duration-200">
       <div className="mx-auto max-w-[1150px] px-5">
 
         {/* Main Card */}
@@ -72,7 +72,9 @@ const ReturnRefundPolicy = () => {
             rounded-2xl
             border
             border-slate-200
+            dark:border-slate-800
             bg-white
+            dark:bg-slate-900
             shadow-sm
           "
         >
@@ -90,12 +92,13 @@ const ReturnRefundPolicy = () => {
                   transition-colors
                   duration-200
                   hover:bg-slate-50/70
+                  dark:hover:bg-slate-800/60
                   md:px-8
                   md:py-8
 
                   ${
                     index !== policies.length - 1
-                      ? "border-b border-slate-200"
+                      ? "border-b border-slate-200 dark:border-slate-800"
                       : ""
                   }
                 `}
@@ -111,9 +114,10 @@ const ReturnRefundPolicy = () => {
                     justify-center
                     rounded-full
                     bg-blue-50
+                    dark:bg-slate-800
                   "
                 >
-                  <Icon className="text-2xl text-blue-600" />
+                  <Icon className="text-2xl text-blue-600 dark:text-blue-400" />
                 </div>
 
                 {/*         = CONTENT         = */}
@@ -125,6 +129,7 @@ const ReturnRefundPolicy = () => {
                       text-base
                       font-extrabold
                       text-slate-900
+                      dark:text-white
                       md:text-lg
                     "
                   >
@@ -139,6 +144,7 @@ const ReturnRefundPolicy = () => {
                       text-sm
                       leading-6
                       text-slate-600
+                      dark:text-slate-300
                       md:text-base
                       md:leading-7
                     "
@@ -157,13 +163,16 @@ const ReturnRefundPolicy = () => {
                         gap-2
                         rounded-lg
                         bg-blue-50
+                        dark:bg-slate-800
                         px-4
                         py-2
                         text-sm
                         font-semibold
                         text-blue-600
+                        dark:text-blue-400
                         transition
                         hover:bg-blue-100
+                        dark:hover:bg-slate-700
                       "
                     >
                       <FiMail className="text-base" />

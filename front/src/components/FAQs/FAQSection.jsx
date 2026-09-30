@@ -107,7 +107,7 @@ const FAQSection = () => {
   };
 
   return (
-    <section className="w-full bg-white py-8 md:py-10">
+    <section className="w-full bg-white dark:bg-slate-950 py-8 md:py-10 transition-colors duration-200">
       <div className="mx-auto max-w-[1150px] px-5">
 
         {/*                         = */}
@@ -140,7 +140,7 @@ const FAQSection = () => {
                   ${
                     active
                       ? "bg-blue-600 text-white shadow-sm"
-                      : "bg-slate-50 text-slate-600 hover:bg-blue-50 hover:text-blue-600"
+                      : "bg-slate-50 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-blue-50 dark:hover:bg-slate-700 hover:text-blue-600 dark:hover:text-blue-400"
                   }
                 `}
               >
@@ -156,7 +156,7 @@ const FAQSection = () => {
         {/* FAQ CARD */}
         {/*                         = */}
 
-        <div className="overflow-hidden rounded-xl border border-slate-200 bg-white">
+        <div className="overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
 
           {filteredFAQs.map((faq, index) => {
             const isOpen = openFAQ === faq.id;
@@ -167,7 +167,7 @@ const FAQSection = () => {
                 className={`
                   ${
                     index !== filteredFAQs.length - 1
-                      ? "border-b border-slate-200"
+                      ? "border-b border-slate-200 dark:border-slate-800"
                       : ""
                   }
                 `}
@@ -190,6 +190,7 @@ const FAQSection = () => {
                     text-left
                     transition-colors
                     hover:bg-slate-50
+                    dark:hover:bg-slate-800/60
                     md:px-6
                     md:py-5
                   "
@@ -206,9 +207,11 @@ const FAQSection = () => {
                       justify-center
                       rounded-full
                       bg-blue-50
+                      dark:bg-blue-950/60
                       text-xs
                       font-bold
                       text-blue-600
+                      dark:text-blue-400
                       md:h-9
                       md:w-9
                       md:text-sm
@@ -225,6 +228,7 @@ const FAQSection = () => {
                       text-sm
                       font-bold
                       text-slate-900
+                      dark:text-white
                       md:text-base
                     "
                   >
@@ -238,6 +242,7 @@ const FAQSection = () => {
                       shrink-0
                       text-lg
                       text-slate-900
+                      dark:text-white
                       transition-transform
                       duration-300
 
@@ -278,6 +283,7 @@ const FAQSection = () => {
                         mb-4
                         rounded-xl
                         bg-blue-50
+                        dark:bg-slate-800/80
                         px-5
                         py-4
                         md:mx-6
@@ -289,6 +295,7 @@ const FAQSection = () => {
                           text-sm
                           leading-6
                           text-slate-600
+                          dark:text-slate-300
                           md:text-base
                           md:leading-7
                         "
@@ -308,7 +315,7 @@ const FAQSection = () => {
           {/* No Results */}
           {filteredFAQs.length === 0 && (
             <div className="px-6 py-12 text-center">
-              <p className="text-sm text-slate-500">
+              <p className="text-sm text-slate-500 dark:text-slate-400">
                 No FAQs found for this category.
               </p>
             </div>

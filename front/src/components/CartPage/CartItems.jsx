@@ -26,15 +26,15 @@ const CartItems = () => {
       {/*         = CART HEADER         = */}
       <div className="mb-5 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-100/80 text-blue-600">
+          <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-blue-100/80 dark:bg-blue-950/60 text-blue-600 dark:text-blue-400">
             <ShoppingCart size={24} strokeWidth={2} />
           </div>
 
           <div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-[#07144d]">
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-[#07144d] dark:text-white">
               Your Cart
             </h1>
-            <p className="mt-0.5 text-xs sm:text-sm text-slate-500">
+            <p className="mt-0.5 text-xs sm:text-sm text-slate-500 dark:text-slate-400">
               {cartItems.length} {cartItems.length === 1 ? "eBook" : "eBooks"} in your bag
             </p>
           </div>
@@ -42,7 +42,7 @@ const CartItems = () => {
 
         <Link
           to="/books"
-          className="hidden sm:inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 hover:underline"
+          className="hidden sm:inline-flex items-center gap-1.5 text-xs font-bold text-blue-600 dark:text-blue-400 hover:underline"
         >
           <ArrowLeft size={14} />
           <span>Continue Shopping</span>
@@ -50,25 +50,25 @@ const CartItems = () => {
       </div>
 
       {/*         = CART CONTAINER         = */}
-      <div className="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
+      <div className="overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
         {/* Empty State */}
         {cartItems.length === 0 ? (
           <div className="flex min-h-[350px] flex-col items-center justify-center p-8 text-center">
-            <div className="flex h-20 w-20 items-center justify-center rounded-full bg-blue-50 text-blue-400 mb-4">
+            <div className="flex h-20 w-20 items-center justify-center rounded-full bg-blue-50 dark:bg-slate-800 text-blue-400 dark:text-blue-400 mb-4">
               <ShoppingCart size={38} strokeWidth={1.5} />
             </div>
 
-            <h2 className="text-xl font-bold text-slate-900">
+            <h2 className="text-xl font-bold text-slate-900 dark:text-white">
               Your cart is empty
             </h2>
 
-            <p className="mt-1.5 max-w-sm text-sm text-slate-500">
+            <p className="mt-1.5 max-w-sm text-sm text-slate-500 dark:text-slate-400">
               Explore thousands of bestselling eBooks across technology, self-help, business and fiction.
             </p>
 
             <Link
               to="/books"
-              className="mt-6 inline-flex items-center gap-2 rounded-xl bg-blue-600 px-6 py-3 text-xs font-bold text-white shadow-md shadow-blue-200 transition hover:bg-blue-700 active:scale-95"
+              className="mt-6 inline-flex items-center gap-2 rounded-xl bg-blue-600 px-6 py-3 text-xs font-bold text-white shadow-md shadow-blue-200 dark:shadow-none transition hover:bg-blue-700 active:scale-95"
             >
               <span>Browse All eBooks</span>
               <ArrowRight size={14} />
@@ -77,7 +77,7 @@ const CartItems = () => {
         ) : (
           <>
             {/* Table Header (Desktop) */}
-            <div className="hidden grid-cols-[1fr_110px_140px_100px_70px] items-center gap-4 bg-slate-50/80 px-6 py-3.5 text-xs font-bold uppercase tracking-wider text-slate-500 md:grid border-b border-slate-100">
+            <div className="hidden grid-cols-[1fr_110px_140px_100px_70px] items-center gap-4 bg-slate-50/80 dark:bg-slate-800/80 px-6 py-3.5 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 md:grid border-b border-slate-100 dark:border-slate-800">
               <div>Product</div>
               <div>Price</div>
               <div className="text-center">Quantity</div>
@@ -86,7 +86,7 @@ const CartItems = () => {
             </div>
 
             {/* Cart Items List */}
-            <div className="divide-y divide-slate-100">
+            <div className="divide-y divide-slate-100 dark:divide-slate-800">
               {cartItems.map((item) => {
                 const isWish = isWishlisted(item.id);
                 const title = item.title || item.name;
@@ -113,14 +113,14 @@ const CartItems = () => {
 
                         <div className="min-w-0 flex-1">
                           <Link to={`/book/${item.id}`}>
-                            <h3 className="truncate text-sm font-bold text-slate-900 hover:text-blue-600 transition">
+                            <h3 className="truncate text-sm font-bold text-slate-900 dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition">
                               {title}
                             </h3>
                           </Link>
-                          <p className="text-xs text-slate-500 mt-0.5 truncate">
+                          <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5 truncate">
                             {item.author}
                           </p>
-                          <span className="mt-1 inline-block rounded-md bg-green-50 px-2 py-0.5 text-[10px] font-bold text-green-700">
+                          <span className="mt-1 inline-block rounded-md bg-green-50 dark:bg-green-950/60 px-2 py-0.5 text-[10px] font-bold text-green-700 dark:text-green-400">
                             Instant Access
                           </span>
                         </div>
@@ -128,11 +128,11 @@ const CartItems = () => {
 
                       {/* Price */}
                       <div>
-                        <span className="text-sm font-bold text-slate-900">
+                        <span className="text-sm font-bold text-slate-900 dark:text-white">
                           ₹{item.price}
                         </span>
                         {item.oldPrice && (
-                          <p className="text-xs text-slate-400 line-through">
+                          <p className="text-xs text-slate-400 dark:text-slate-500 line-through">
                             ₹{item.oldPrice}
                           </p>
                         )}
@@ -140,21 +140,21 @@ const CartItems = () => {
 
                       {/* Quantity */}
                       <div className="flex justify-center">
-                        <div className="flex h-9 items-center rounded-xl border border-slate-200 bg-slate-50">
+                        <div className="flex h-9 items-center rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800">
                           <button
                             type="button"
                             onClick={() => decreaseQuantity(item.id)}
-                            className="flex h-full w-8 items-center justify-center text-sm font-bold text-slate-600 hover:bg-slate-200 rounded-l-xl transition"
+                            className="flex h-full w-8 items-center justify-center text-sm font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-l-xl transition"
                           >
                             -
                           </button>
-                          <span className="w-9 text-center text-xs font-bold text-slate-800">
+                          <span className="w-9 text-center text-xs font-bold text-slate-800 dark:text-white">
                             {item.quantity}
                           </span>
                           <button
                             type="button"
                             onClick={() => increaseQuantity(item.id)}
-                            className="flex h-full w-8 items-center justify-center text-sm font-bold text-slate-600 hover:bg-slate-200 rounded-r-xl transition"
+                            className="flex h-full w-8 items-center justify-center text-sm font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 rounded-r-xl transition"
                           >
                             +
                           </button>
@@ -163,7 +163,7 @@ const CartItems = () => {
 
                       {/* Line Total */}
                       <div className="text-right">
-                        <span className="text-sm font-extrabold text-blue-600">
+                        <span className="text-sm font-extrabold text-blue-600 dark:text-blue-400">
                           ₹{(item.price * item.quantity).toLocaleString("en-IN")}
                         </span>
                       </div>
@@ -196,7 +196,7 @@ const CartItems = () => {
                     <div className="flex gap-3 md:hidden">
                       <Link
                         to={`/book/${item.id}`}
-                        className="h-24 w-16 shrink-0 overflow-hidden rounded-lg bg-slate-100 shadow-sm"
+                        className="h-24 w-16 shrink-0 overflow-hidden rounded-lg bg-slate-100 dark:bg-slate-800 shadow-sm"
                       >
                         <BookCover
                           src={item.image}
@@ -212,11 +212,11 @@ const CartItems = () => {
                         <div className="flex items-start justify-between gap-2">
                           <div>
                             <Link to={`/book/${item.id}`}>
-                              <h3 className="line-clamp-1 text-sm font-bold text-slate-900">
+                              <h3 className="line-clamp-1 text-sm font-bold text-slate-900 dark:text-white">
                                 {title}
                               </h3>
                             </Link>
-                            <p className="text-xs text-slate-500 truncate">{item.author}</p>
+                            <p className="text-xs text-slate-500 dark:text-slate-400 truncate">{item.author}</p>
                           </div>
                           <button
                             type="button"
@@ -229,29 +229,29 @@ const CartItems = () => {
 
                         <div className="mt-3 flex items-center justify-between">
                           <div className="flex items-center gap-1.5">
-                            <span className="text-sm font-bold text-blue-600">
+                            <span className="text-sm font-bold text-blue-600 dark:text-blue-400">
                               ₹{(item.price * item.quantity).toLocaleString("en-IN")}
                             </span>
-                            <span className="text-[11px] text-slate-400">
+                            <span className="text-[11px] text-slate-400 dark:text-slate-500">
                               (₹{item.price} ea)
                             </span>
                           </div>
 
-                          <div className="flex h-8 items-center rounded-lg border border-slate-200 bg-slate-50">
+                          <div className="flex h-8 items-center rounded-lg border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800">
                             <button
                               type="button"
                               onClick={() => decreaseQuantity(item.id)}
-                              className="w-7 text-xs font-bold text-slate-600 hover:bg-slate-200 h-full rounded-l-lg"
+                              className="w-7 text-xs font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 h-full rounded-l-lg"
                             >
                               -
                             </button>
-                            <span className="w-7 text-center text-xs font-bold text-slate-800">
+                            <span className="w-7 text-center text-xs font-bold text-slate-800 dark:text-white">
                               {item.quantity}
                             </span>
                             <button
                               type="button"
                               onClick={() => increaseQuantity(item.id)}
-                              className="w-7 text-xs font-bold text-slate-600 hover:bg-slate-200 h-full rounded-r-lg"
+                              className="w-7 text-xs font-bold text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 h-full rounded-r-lg"
                             >
                               +
                             </button>

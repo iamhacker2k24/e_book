@@ -42,7 +42,7 @@ const PageLoader = ({ text = "Loading your reading experience...", fullScreen = 
         <div className="absolute -inset-8 rounded-full bg-indigo-500/15 blur-3xl animate-pulse delay-300" />
 
         {/* ANIMATED BOOK CONTAINER */}
-        <div className="relative flex h-24 w-24 items-center justify-center rounded-3xl bg-gradient-to-tr from-blue-600 to-indigo-600 shadow-2xl shadow-blue-500/40 ring-4 ring-white">
+        <div className="relative flex h-24 w-24 items-center justify-center rounded-3xl bg-gradient-to-tr from-blue-600 to-indigo-600 shadow-2xl shadow-blue-500/40 ring-4 ring-white dark:ring-slate-800">
           <FiBookOpen className="text-4xl text-white animate-bounce" />
 
           {/* Orbiting Sparkles */}
@@ -59,17 +59,17 @@ const PageLoader = ({ text = "Loading your reading experience...", fullScreen = 
           BookNest
         </span>
       </h2>
-      <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-400 mt-0.5">
+      <p className="text-[11px] font-bold uppercase tracking-[0.2em] text-slate-400 dark:text-slate-500 mt-0.5">
         Read • Learn • Grow
       </p>
 
       {/* DYNAMIC LOADING TEXT */}
-      <p className="mt-4 text-xs font-semibold text-slate-600 animate-pulse">
+      <p className="mt-4 text-xs font-semibold text-slate-600 dark:text-slate-300 animate-pulse">
         {text}
       </p>
 
       {/* PROGRESS BAR */}
-      <div className="mt-4 h-1.5 w-48 overflow-hidden rounded-full bg-slate-100 ring-1 ring-slate-200">
+      <div className="mt-4 h-1.5 w-48 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800 ring-1 ring-slate-200 dark:ring-slate-700">
         <div
           className="h-full rounded-full bg-gradient-to-r from-blue-600 via-indigo-500 to-purple-600 transition-all duration-300 ease-out shadow-sm shadow-blue-500/50"
           style={{ width: `${progress}%` }}
@@ -78,7 +78,7 @@ const PageLoader = ({ text = "Loading your reading experience...", fullScreen = 
 
       {/* ROTATING QUOTE */}
       <div className="mt-5 max-w-xs h-8 flex items-center justify-center">
-        <p className="text-xs italic text-slate-400 transition-opacity duration-500">
+        <p className="text-xs italic text-slate-400 dark:text-slate-400 transition-opacity duration-500">
           {QUOTES[quoteIndex]}
         </p>
       </div>
@@ -87,14 +87,14 @@ const PageLoader = ({ text = "Loading your reading experience...", fullScreen = 
 
   if (!fullScreen) {
     return (
-      <div className="flex min-h-[350px] w-full items-center justify-center rounded-2xl bg-white/70 backdrop-blur-sm">
+      <div className="flex min-h-[350px] w-full items-center justify-center rounded-2xl bg-white/70 dark:bg-slate-900/70 backdrop-blur-sm">
         {content}
       </div>
     );
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/95 backdrop-blur-md transition-all duration-500">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/95 dark:bg-slate-950/95 backdrop-blur-md transition-all duration-500">
       {content}
     </div>
   );

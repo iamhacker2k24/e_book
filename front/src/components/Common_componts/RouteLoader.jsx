@@ -49,13 +49,13 @@ const RouteLoader = ({ children }) => {
 
       {/* FULLSCREEN ANIMATED LOADING OVERLAY ON ROUTE TRANSITION */}
       {loading && (
-        <div className="fixed inset-0 z-[9990] flex items-center justify-center bg-white/80 backdrop-blur-sm transition-opacity duration-300 animate-in fade-in">
+        <div className="fixed inset-0 z-[9990] flex items-center justify-center bg-white/80 dark:bg-slate-950/80 backdrop-blur-sm transition-opacity duration-300 animate-in fade-in">
           <PageLoader fullScreen={false} text="Opening page..." />
         </div>
       )}
 
       {/* PAGE CONTENT WITH SMOOTH MOUNT TRANSITION */}
-      <div key={location.pathname} className="min-h-screen animate-in fade-in duration-300">
+      <div key={location.pathname} className="min-h-screen bg-transparent animate-in fade-in duration-300">
         {children}
       </div>
     </>

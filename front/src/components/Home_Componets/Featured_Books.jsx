@@ -83,10 +83,10 @@ const Featured_Books = () => {
                 onClick={() => scroll("right")}
                 disabled={!canScrollRight}
                 aria-label="Next books"
-                className={`flex h-9 w-9 items-center justify-center rounded-full border bg-white shadow-sm transition-all duration-200 ${
+                className={`flex h-9 w-9 items-center justify-center rounded-full border bg-white dark:bg-slate-900 shadow-sm transition-all duration-200 ${
                   canScrollRight
-                    ? "border-slate-200 text-slate-700 hover:border-blue-500 hover:bg-blue-600 hover:text-white active:scale-95 cursor-pointer"
-                    : "border-slate-200/60 text-slate-300 cursor-not-allowed opacity-40"
+                    ? "border-slate-200 text-slate-700 hover:border-blue-500 hover:bg-blue-600 hover:text-white dark:border-slate-700 dark:text-slate-200 dark:hover:bg-blue-600 active:scale-95 cursor-pointer"
+                    : "border-slate-200/60 dark:border-slate-800 text-slate-300 dark:text-slate-700 cursor-not-allowed opacity-40"
                 }`}
               >
                 <FiChevronRight className="text-lg" />

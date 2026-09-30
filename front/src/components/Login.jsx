@@ -172,24 +172,24 @@ const Login = () => {
   };
 
   return (
-    <div className="flex min-h-screen flex-col bg-[#f5f9fd]">
+    <div className="flex min-h-screen flex-col bg-[#f5f9fd] dark:bg-slate-950 transition-colors duration-200">
       <Header />
 
       <main className="flex flex-1 items-center justify-center px-4 py-12 sm:px-6 lg:px-8">
-        <div className="w-full max-w-md overflow-hidden rounded-2xl border border-slate-200 bg-white p-6 shadow-xl shadow-blue-100/50 sm:p-8">
+        <div className="w-full max-w-md overflow-hidden rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-xl shadow-blue-100/50 dark:shadow-none sm:p-8">
           {/* Logo & Header */}
           <div className="text-center">
-            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-600 shadow-md shadow-blue-200">
+            <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-600 to-indigo-600 shadow-md shadow-blue-200 dark:shadow-none">
               {step === "email" ? (
                 <span className="text-2xl text-white">📖</span>
               ) : (
                 <FiShield className="text-2xl text-white" />
               )}
             </div>
-            <h1 className="mt-4 text-2xl font-extrabold tracking-tight text-slate-900 sm:text-3xl">
+            <h1 className="mt-4 text-2xl font-extrabold tracking-tight text-slate-900 dark:text-white sm:text-3xl">
               {step === "email" ? "Sign In to BookNest" : "Verify Your Email"}
             </h1>
-            <p className="mt-2 text-sm text-slate-500">
+            <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
               {step === "email"
                 ? "Enter your details to receive a one-time verification code"
                 : `We've sent a one-time passcode to ${email}`}
@@ -198,13 +198,13 @@ const Login = () => {
 
           {/* Feedback Messages */}
           {error && (
-            <div className="mt-5 rounded-xl border border-red-200 bg-red-50 p-3.5 text-xs font-semibold text-red-600">
+            <div className="mt-5 rounded-xl border border-red-200 dark:border-red-900/50 bg-red-50 dark:bg-red-950/40 p-3.5 text-xs font-semibold text-red-600 dark:text-red-400">
               {error}
             </div>
           )}
 
           {successMsg && (
-            <div className="mt-5 flex items-center gap-2 rounded-xl border border-green-200 bg-green-50 p-3.5 text-xs font-semibold text-green-700">
+            <div className="mt-5 flex items-center gap-2 rounded-xl border border-green-200 dark:border-green-900/50 bg-green-50 dark:bg-green-950/40 p-3.5 text-xs font-semibold text-green-700 dark:text-green-400">
               <FiCheck className="shrink-0 text-base" />
               <span>{successMsg}</span>
             </div>
@@ -214,11 +214,11 @@ const Login = () => {
           {step === "email" && (
             <form onSubmit={handleSendOtp} className="mt-6 space-y-4">
               <div>
-                <label className="block text-xs font-semibold text-slate-700">
+                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300">
                   Full Name
                 </label>
                 <div className="relative mt-1 flex items-center">
-                  <FiUser className="absolute left-3.5 text-slate-400" />
+                  <FiUser className="absolute left-3.5 text-slate-400 dark:text-slate-500" />
                   <input
                     type="text"
                     required
@@ -226,17 +226,17 @@ const Login = () => {
                     onChange={(e) => setName(e.target.value)}
                     placeholder="e.g. Dev"
                     disabled={loading}
-                    className="w-full rounded-xl border border-slate-200 bg-slate-50 py-2.5 pl-10 pr-3 text-sm text-slate-800 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-100 disabled:opacity-60"
+                    className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 py-2.5 pl-10 pr-3 text-sm text-slate-800 dark:text-slate-100 outline-none transition focus:border-blue-500 focus:bg-white dark:focus:bg-slate-800 focus:ring-4 focus:ring-blue-100 dark:focus:ring-blue-900/30 disabled:opacity-60"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-700">
+                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300">
                   Email Address
                 </label>
                 <div className="relative mt-1 flex items-center">
-                  <FiMail className="absolute left-3.5 text-slate-400" />
+                  <FiMail className="absolute left-3.5 text-slate-400 dark:text-slate-500" />
                   <input
                     type="email"
                     required
@@ -244,7 +244,7 @@ const Login = () => {
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="e.g. dev@example.com"
                     disabled={loading}
-                    className="w-full rounded-xl border border-slate-200 bg-slate-50 py-2.5 pl-10 pr-3 text-sm text-slate-800 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-100 disabled:opacity-60"
+                    className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 py-2.5 pl-10 pr-3 text-sm text-slate-800 dark:text-slate-100 outline-none transition focus:border-blue-500 focus:bg-white dark:focus:bg-slate-800 focus:ring-4 focus:ring-blue-100 dark:focus:ring-blue-900/30 disabled:opacity-60"
                   />
                 </div>
               </div>
@@ -252,7 +252,7 @@ const Login = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 py-3 text-sm font-bold text-white shadow-lg shadow-blue-200 transition hover:from-blue-700 hover:to-indigo-700 active:scale-98 disabled:opacity-70 disabled:cursor-not-allowed"
+                className="mt-2 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 py-3 text-sm font-bold text-white shadow-lg shadow-blue-200 dark:shadow-none transition hover:from-blue-700 hover:to-indigo-700 active:scale-98 disabled:opacity-70 disabled:cursor-not-allowed"
               >
                 {loading ? (
                   <>
@@ -273,25 +273,25 @@ const Login = () => {
           {step === "otp" && (
             <form onSubmit={handleVerifyOtp} className="mt-6 space-y-4">
               {/* Target Email indicator & Change option */}
-              <div className="flex items-center justify-between rounded-xl bg-slate-50 px-3.5 py-2.5 border border-slate-200 text-xs">
-                <span className="font-medium text-slate-600 truncate max-w-[200px]">
+              <div className="flex items-center justify-between rounded-xl bg-slate-50 dark:bg-slate-800 px-3.5 py-2.5 border border-slate-200 dark:border-slate-700 text-xs">
+                <span className="font-medium text-slate-600 dark:text-slate-300 truncate max-w-[200px]">
                   {email}
                 </span>
                 <button
                   type="button"
                   onClick={handleBackToEmail}
-                  className="font-semibold text-blue-600 hover:text-blue-700 hover:underline"
+                  className="font-semibold text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 hover:underline"
                 >
                   Change Email
                 </button>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-slate-700">
+                <label className="block text-xs font-semibold text-slate-700 dark:text-slate-300">
                   Verification Code (OTP)
                 </label>
                 <div className="relative mt-1 flex items-center">
-                  <FiKey className="absolute left-3.5 text-slate-400" />
+                  <FiKey className="absolute left-3.5 text-slate-400 dark:text-slate-500" />
                   <input
                     type="text"
                     required
@@ -301,7 +301,7 @@ const Login = () => {
                     onChange={(e) => setOtp(e.target.value)}
                     placeholder="Enter OTP"
                     disabled={loading}
-                    className="w-full rounded-xl border border-slate-200 bg-slate-50 py-2.5 pl-10 pr-3 text-center text-lg font-bold tracking-widest text-slate-800 outline-none transition focus:border-blue-500 focus:bg-white focus:ring-4 focus:ring-blue-100 disabled:opacity-60"
+                    className="w-full rounded-xl border border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-800 py-2.5 pl-10 pr-3 text-center text-lg font-bold tracking-widest text-slate-800 dark:text-slate-100 outline-none transition focus:border-blue-500 focus:bg-white dark:focus:bg-slate-800 focus:ring-4 focus:ring-blue-100 dark:focus:ring-blue-900/30 disabled:opacity-60"
                   />
                 </div>
               </div>
@@ -309,7 +309,7 @@ const Login = () => {
               <button
                 type="submit"
                 disabled={loading}
-                className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 py-3 text-sm font-bold text-white shadow-lg shadow-blue-200 transition hover:from-blue-700 hover:to-indigo-700 active:scale-98 disabled:opacity-70 disabled:cursor-not-allowed"
+                className="flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 py-3 text-sm font-bold text-white shadow-lg shadow-blue-200 dark:shadow-none transition hover:from-blue-700 hover:to-indigo-700 active:scale-98 disabled:opacity-70 disabled:cursor-not-allowed"
               >
                 {loading ? (
                   <>
@@ -329,7 +329,7 @@ const Login = () => {
                 <button
                   type="button"
                   onClick={handleBackToEmail}
-                  className="inline-flex items-center gap-1.5 font-medium text-slate-500 hover:text-slate-800"
+                  className="inline-flex items-center gap-1.5 font-medium text-slate-500 dark:text-slate-400 hover:text-slate-800 dark:hover:text-slate-200"
                 >
                   <FiArrowLeft />
                   <span>Back</span>
@@ -341,8 +341,8 @@ const Login = () => {
                   disabled={resendTimer > 0 || loading}
                   className={`font-semibold ${
                     resendTimer > 0
-                      ? "text-slate-400 cursor-not-allowed"
-                      : "text-blue-600 hover:underline"
+                      ? "text-slate-400 dark:text-slate-500 cursor-not-allowed"
+                      : "text-blue-600 dark:text-blue-400 hover:underline"
                   }`}
                 >
                   {resendTimer > 0
@@ -354,10 +354,10 @@ const Login = () => {
           )}
 
           {/* Footer note */}
-          <div className="mt-8 border-t border-slate-100 pt-4 text-center">
-            <p className="text-xs text-slate-400">
+          <div className="mt-8 border-t border-slate-100 dark:border-slate-800 pt-4 text-center">
+            <p className="text-xs text-slate-400 dark:text-slate-500">
               By continuing, you agree to BookNest's{" "}
-              <Link to="/privacy" className="text-blue-600 hover:underline">
+              <Link to="/privacy" className="text-blue-600 dark:text-blue-400 hover:underline">
                 Privacy Policy
               </Link>
               .

@@ -22,19 +22,19 @@ const BookOverview = () => {
     .slice(0, 3);
 
   return (
-    <section className="w-full bg-[#f4faff] px-4 py-6 sm:px-6 lg:px-10">
+    <section className="w-full bg-[#f4faff] dark:bg-slate-950 px-4 py-6 sm:px-6 lg:px-10 transition-colors duration-200">
 
       {/*                           = */}
       {/* MAIN CONTAINER */}
       {/*                           = */}
 
-      <div className="mx-auto max-w-[1400px] overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
+      <div className="mx-auto max-w-[1400px] overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 shadow-sm">
 
         {/*                         = */}
         {/* TABS */}
         {/*                         = */}
 
-        <div className="border-b border-slate-200">
+        <div className="border-b border-slate-200 dark:border-slate-800">
 
           <div className="flex w-full overflow-x-auto">
 
@@ -54,8 +54,8 @@ const BookOverview = () => {
                   md:text-base
                   ${
                     activeTab === tab
-                      ? "text-blue-600"
-                      : "text-[#18234f] hover:text-blue-600"
+                      ? "text-blue-600 dark:text-blue-400"
+                      : "text-[#18234f] dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400"
                   }
                 `}
               >
@@ -63,7 +63,7 @@ const BookOverview = () => {
 
                 {/* ACTIVE BLUE LINE */}
                 {activeTab === tab && (
-                  <span className="absolute bottom-0 left-0 h-[3px] w-full rounded-t-full bg-blue-600" />
+                  <span className="absolute bottom-0 left-0 h-[3px] w-full rounded-t-full bg-blue-600 dark:bg-blue-400" />
                 )}
               </button>
             ))}
@@ -89,15 +89,15 @@ const BookOverview = () => {
 
             <div>
 
-              <h2 className="text-xl font-bold text-[#101b50] sm:text-2xl">
+              <h2 className="text-xl font-bold text-[#101b50] dark:text-white sm:text-2xl">
                 Book Description
               </h2>
 
 
               {/* FIRST PARAGRAPH */}
 
-              <p className="mt-5 text-sm leading-7 text-slate-600 sm:text-base">
-                <span className="font-semibold text-[#101b50]">
+              <p className="mt-5 text-sm leading-7 text-slate-600 dark:text-slate-300 sm:text-base">
+                <span className="font-semibold text-[#101b50] dark:text-white">
                   Atomic Habits
                 </span>{" "}
                 offers a proven framework for improving every day. James
@@ -110,7 +110,7 @@ const BookOverview = () => {
 
               {/* SECOND PARAGRAPH */}
 
-              <p className="mt-5 text-sm leading-7 text-slate-600 sm:text-base">
+              <p className="mt-5 text-sm leading-7 text-slate-600 dark:text-slate-300 sm:text-base">
                 Learn how to make time for new habits, overcome a lack of
                 motivation, and design an environment that makes success
                 easier. Whether you want to get in shape, advance your
@@ -126,7 +126,7 @@ const BookOverview = () => {
             {/* QUOTE BOX */}
             {/*                         = */}
 
-            <div className="mt-7 rounded-lg bg-[#edf7ff] px-6 py-6 sm:px-8">
+            <div className="mt-7 rounded-lg bg-[#edf7ff] dark:bg-slate-800/80 px-6 py-6 sm:px-8">
 
               <div className="flex gap-4">
 
@@ -134,7 +134,7 @@ const BookOverview = () => {
 
                 <div className="flex-shrink-0">
 
-                  <span className="text-5xl font-bold leading-none text-blue-600">
+                  <span className="text-5xl font-bold leading-none text-blue-600 dark:text-blue-400">
                     “
                   </span>
 
@@ -145,11 +145,11 @@ const BookOverview = () => {
 
                 <div>
 
-                  <p className="font-serif text-lg italic leading-8 text-[#263258] sm:text-xl">
+                  <p className="font-serif text-lg italic leading-8 text-[#263258] dark:text-slate-200 sm:text-xl">
                     “A supremely practical and useful book.”
                   </p>
 
-                  <p className="mt-4 text-sm font-semibold text-[#18234f] sm:text-base">
+                  <p className="mt-4 text-sm font-semibold text-[#18234f] dark:text-white sm:text-base">
                     — Mark Manson, author of The Subtle Art of Not Giving
                     a F*ck
                   </p>
@@ -167,19 +167,19 @@ const BookOverview = () => {
           {/* RIGHT - YOU MAY ALSO LIKE */}
           {/*                         = */}
 
-          <aside className="h-fit rounded-xl border border-slate-200 bg-white p-5">
+          <aside className="h-fit rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-5">
 
             {/* HEADER */}
 
             <div className="mb-5 flex items-center justify-between">
 
-              <h2 className="text-lg font-bold text-[#101b50] sm:text-xl">
+              <h2 className="text-lg font-bold text-[#101b50] dark:text-white sm:text-xl">
                 You May Also Like
               </h2>
 
-              <button className="text-sm font-semibold text-blue-600 hover:underline">
+              <Link to="/books" className="text-sm font-semibold text-blue-600 dark:text-blue-400 hover:underline">
                 View All
-              </button>
+              </Link>
 
             </div>
 
@@ -199,7 +199,7 @@ const BookOverview = () => {
 
                   {/* BOOK IMAGE */}
 
-                  <Link to={`/book/${book.id}`} className="h-[105px] w-[72px] flex-shrink-0 overflow-hidden rounded-md bg-slate-100 shadow-sm">
+                  <Link to={`/book/${book.id}`} className="h-[105px] w-[72px] flex-shrink-0 overflow-hidden rounded-md bg-slate-100 dark:bg-slate-800 shadow-sm">
 
                     <BookCover
                       src={book.image}
@@ -222,15 +222,18 @@ const BookOverview = () => {
                     <div className="flex items-start justify-between gap-2">
 
                       <Link to={`/book/${book.id}`}>
-                        <h3 className="line-clamp-2 text-sm font-bold leading-5 text-[#101b50] hover:text-blue-600 transition">
+                        <h3 className="line-clamp-2 text-sm font-bold leading-5 text-[#101b50] dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition">
                           {book.title}
                         </h3>
                       </Link>
 
                       <button
+                        type="button"
+                        aria-label="Wishlist"
                         className="
                           flex-shrink-0
                           text-[#101b50]
+                          dark:text-slate-400
                           transition
                           hover:text-red-500
                         "
@@ -243,7 +246,7 @@ const BookOverview = () => {
 
                     {/* AUTHOR */}
 
-                    <p className="mt-1 truncate text-sm text-slate-500">
+                    <p className="mt-1 truncate text-sm text-slate-500 dark:text-slate-400">
                       {book.author}
                     </p>
 
@@ -258,7 +261,7 @@ const BookOverview = () => {
                         className="text-[#ffb000]"
                       />
 
-                      <span className="text-sm font-medium text-slate-600">
+                      <span className="text-sm font-medium text-slate-600 dark:text-slate-300">
                         {book.rating}
                       </span>
 
@@ -269,11 +272,11 @@ const BookOverview = () => {
 
                     <div className="mt-1 flex items-center gap-3">
 
-                      <span className="text-base font-bold text-blue-600">
+                      <span className="text-base font-bold text-blue-600 dark:text-blue-400">
                         {book.price}
                       </span>
 
-                      <span className="text-sm text-slate-400 line-through">
+                      <span className="text-sm text-slate-400 dark:text-slate-500 line-through">
                         {book.oldPrice}
                       </span>
 

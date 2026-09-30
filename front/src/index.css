@@ -20,66 +20,132 @@ html.dark {
   color-scheme: dark;
 }
 
-html.dark body {
-  background-color: #0b0f19;
-  color: #f1f5f9;
+html.dark,
+html.dark body,
+body.dark,
+html.dark #root {
+  background-color: #0b0f19 !important;
+  color: #f1f5f9 !important;
 }
 
-/* ========================================================
+/* 
    GLOBAL COMPREHENSIVE DARK MODE OVERRIDES
    Ensures ALL screens, sections, cards, inputs & text convert to dark mode
-   ======================================================== */
+    */
 
-/* Background surfaces */
-html.dark .bg-white {
+/* Surface cards, modals, header & elevated containers */
+html.dark .bg-white,
+html.dark [class*="bg-white/"],
+html.dark .bg-slate-50,
+html.dark [class*="bg-slate-50/"],
+html.dark .bg-slate-100,
+html.dark [class*="bg-slate-100/"],
+html.dark .bg-gray-50,
+html.dark .bg-gray-100,
+html.dark .bg-blue-50,
+html.dark [class*="bg-blue-50/"],
+html.dark .bg-blue-100,
+html.dark [class*="bg-blue-100/"],
+html.dark .bg-indigo-50,
+html.dark .bg-purple-50,
+html.dark [class*="bg-purple-50/"],
+html.dark .bg-pink-50,
+html.dark [class*="bg-pink-50/"],
+html.dark .bg-emerald-50,
+html.dark [class*="bg-emerald-50/"],
+html.dark .bg-orange-50,
+html.dark [class*="bg-orange-50/"],
+html.dark .bg-sky-50,
+html.dark [class*="bg-sky-50/"] {
   background-color: #0f172a !important;
 }
 
-html.dark .bg-slate-50,
-html.dark .bg-slate-50\/70,
-html.dark .bg-slate-50\/60,
-html.dark .bg-slate-100,
-html.dark .bg-gray-50,
-html.dark .bg-gray-100,
+/* Page wrapper backgrounds (the outer whole-screen background) */
 html.dark [class*="bg-[#f4faff]"],
+html.dark [class*="bg-[#f5faff]"],
+html.dark [class*="bg-[#f5f9fd]"],
 html.dark [class*="bg-[#f4f5f7]"],
 html.dark [class*="bg-[#f8fafc]"],
 html.dark [class*="bg-[#f2f9ff]"],
 html.dark [class*="bg-[#edf7ff]"],
-html.dark [class*="bg-[#eaf6ff]"] {
+html.dark [class*="bg-[#eef7ff]"],
+html.dark [class*="bg-[#eef8ff]"],
+html.dark [class*="bg-[#eaf6ff]"],
+html.dark [class*="bg-[#e2f3ff]"],
+html.dark [class*="bg-[#cbdcf0]"],
+html.dark [class*="bg-[#d9efff]"] {
   background-color: #0b0f19 !important;
 }
 
-/* Hero and gradient sections */
-html.dark [class*="from-[#f2f9ff]"],
-html.dark [class*="from-[#f4faff]"] {
+/* Gradients and image hero overlays (replaces white fade overlays with dark midnight fades) */
+html.dark [class*="from-white"] {
   --tw-gradient-from: #0b0f19 var(--tw-gradient-from-position, ) !important;
   --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-from) 0%, var(--tw-gradient-to) 100%) !important;
 }
-html.dark [class*="via-[#edf7ff]"] {
+
+html.dark [class*="via-white"] {
   --tw-gradient-via: #0e1526 var(--tw-gradient-via-position, ) !important;
 }
+
+html.dark [class*="to-white"] {
+  --tw-gradient-to: #0b0f19 var(--tw-gradient-to-position, ) !important;
+}
+
+html.dark [class*="from-blue-50"] {
+  --tw-gradient-from: #0b0f19 var(--tw-gradient-from-position, ) !important;
+  --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-from) 0%, var(--tw-gradient-to) 100%) !important;
+}
+
+html.dark [class*="via-indigo-50"],
+html.dark [class*="via-blue-50"] {
+  --tw-gradient-via: #0e1526 var(--tw-gradient-via-position, ) !important;
+}
+
+html.dark [class*="to-blue-50"],
+html.dark [class*="to-indigo-50"],
+html.dark [class*="to-purple-50"] {
+  --tw-gradient-to: #0f172a var(--tw-gradient-to-position, ) !important;
+}
+
+html.dark [class*="from-[#f2f9ff]"],
+html.dark [class*="from-[#f4faff]"],
+html.dark [class*="from-[#eef5ff]"],
+html.dark [class*="from-[#eef7ff]"] {
+  --tw-gradient-from: #0b0f19 var(--tw-gradient-from-position, ) !important;
+  --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-from) 0%, var(--tw-gradient-to) 100%) !important;
+}
+
+html.dark [class*="via-[#edf7ff]"],
+html.dark [class*="via-[#eef5ff]"] {
+  --tw-gradient-via: #0e1526 var(--tw-gradient-via-position, ) !important;
+}
+
 html.dark [class*="to-[#eaf6ff]"],
-html.dark [class*="to-[#f0f9ff]"] {
+html.dark [class*="to-[#f0f9ff]"],
+html.dark [class*="to-[#eef7ff]"] {
   --tw-gradient-to: #0f172a var(--tw-gradient-to-position, ) !important;
 }
 
 /* Card surfaces & panels */
 html.dark .shadow-sm,
 html.dark .shadow-md,
-html.dark .shadow-xl {
+html.dark .shadow-lg,
+html.dark .shadow-xl,
+html.dark .shadow-2xl {
   box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.6) !important;
 }
 
 /* Borders */
 html.dark .border-slate-100,
 html.dark .border-slate-200,
-html.dark .border-slate-200\/80,
-html.dark .border-slate-200\/90,
+html.dark [class*="border-slate-200/"],
 html.dark .border-gray-100,
 html.dark .border-gray-200,
+html.dark .border-blue-50,
 html.dark .border-blue-100,
-html.dark .border-blue-200 {
+html.dark .border-blue-200,
+html.dark [class*="border-[#e0f0fc]"],
+html.dark [class*="border-[#cbdff0]"] {
   border-color: #1e293b !important;
 }
 
@@ -90,7 +156,12 @@ html.dark .text-slate-800,
 html.dark .text-gray-900,
 html.dark .text-gray-800,
 html.dark [class*="text-[#07164b]"],
-html.dark [class*="text-[#07174b]"] {
+html.dark [class*="text-[#07144d]"],
+html.dark [class*="text-[#07174b]"],
+html.dark [class*="text-[#07194f]"],
+html.dark [class*="text-[#101b50]"],
+html.dark [class*="text-[#18234f]"],
+html.dark [class*="text-[#263258]"] {
   color: #f8fafc !important;
 }
 
@@ -100,7 +171,8 @@ html.dark .text-slate-600,
 html.dark .text-gray-700,
 html.dark .text-gray-600,
 html.dark [class*="text-[#61739d]"],
-html.dark [class*="text-[#63759e]"] {
+html.dark [class*="text-[#63759e]"],
+html.dark [class*="text-[#65769e]"] {
   color: #cbd5e1 !important;
 }
 
@@ -151,8 +223,10 @@ html.dark textarea::placeholder {
 
 .scrollbar-hide,
 .scrollbar-none {
-  -ms-overflow-style: none !important;  /* IE and Edge */
-  scrollbar-width: none !important;  /* Firefox */
+  -ms-overflow-style: none !important;
+  /* IE and Edge */
+  scrollbar-width: none !important;
+  /* Firefox */
 }
 
 /* Custom sleek modern scrollbar for the document */

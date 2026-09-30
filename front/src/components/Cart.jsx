@@ -12,7 +12,7 @@ const Cart = () => {
       <Header />
 
       {/*         = CART PAGE         = */}
-      <main className="min-h-screen bg-[#f4faff] px-4 py-8 sm:px-6 lg:px-10">
+      <main className="min-h-screen bg-[#f4faff] dark:bg-slate-950 px-4 py-8 sm:px-6 lg:px-10 transition-colors duration-200">
         <div className="mx-auto max-w-[1400px]">
           {/*         = MAIN CART AREA         = */}
           <div className="grid grid-cols-1 gap-6 xl:grid-cols-[1fr_390px]">
