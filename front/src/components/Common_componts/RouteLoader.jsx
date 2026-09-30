@@ -11,9 +11,11 @@ const RouteLoader = ({ children }) => {
     // Reset window scroll position on every page change
     window.scrollTo({ top: 0, left: 0, behavior: "instant" });
 
-    // Trigger loading animation on route transition
-    setLoading(true);
-    setProgress(20);
+    // Trigger loading animation on route transition asynchronously
+    const t0 = setTimeout(() => {
+      setLoading(true);
+      setProgress(20);
+    }, 0);
 
     const t1 = setTimeout(() => setProgress(65), 100);
     const t2 = setTimeout(() => setProgress(100), 280);
@@ -23,6 +25,7 @@ const RouteLoader = ({ children }) => {
     }, 450);
 
     return () => {
+      clearTimeout(t0);
       clearTimeout(t1);
       clearTimeout(t2);
       clearTimeout(t3);

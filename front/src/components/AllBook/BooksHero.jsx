@@ -8,7 +8,7 @@ import {
 
 const BooksHero = () => {
   return (
-    <section className="relative w-full overflow-hidden bg-gradient-to-r from-[#f2f9ff] via-[#edf7ff] to-[#eaf6ff]">
+    <section className="relative w-full overflow-hidden bg-gradient-to-r from-[#f2f9ff] via-[#edf7ff] to-[#eaf6ff] dark:from-slate-950 dark:via-slate-900 dark:to-slate-950 border-b border-slate-200/60 dark:border-slate-800 transition-colors duration-200">
       <div className="mx-auto max-w-[1400px] px-6 sm:px-8 lg:px-14">
         <div className="grid min-h-[300px] grid-cols-1 items-center lg:grid-cols-2">
 
@@ -16,27 +16,27 @@ const BooksHero = () => {
           <div className="relative z-10 py-10 lg:py-12">
 
             {/* Breadcrumb */}
-            <div className="mb-4 flex items-center gap-2 text-sm text-[#61739d]">
-              <a href="/" className="hover:text-[#0878f9] transition">Home</a>
+            <div className="mb-4 flex items-center gap-2 text-sm text-[#61739d] dark:text-slate-400">
+              <a href="/" className="hover:text-[#0878f9] dark:hover:text-blue-400 transition">Home</a>
               <ChevronRight
                 size={15}
-                className="text-[#8da0c4]"
+                className="text-[#8da0c4] dark:text-slate-600"
               />
-              <span className="font-semibold text-[#07164b]">Books</span>
+              <span className="font-semibold text-[#07164b] dark:text-slate-200">Books</span>
             </div>
 
 
             {/* Heading */}
-            <h1 className="text-4xl font-extrabold leading-tight tracking-tight text-[#07164b] sm:text-5xl lg:text-[48px]">
+            <h1 className="text-4xl font-extrabold leading-tight tracking-tight text-[#07164b] dark:text-white sm:text-5xl lg:text-[48px]">
               Explore Our{" "}
-              <span className="text-[#0878f9]">
+              <span className="text-[#0878f9] dark:text-blue-400">
                 Books
               </span>
             </h1>
 
 
             {/* Description */}
-            <p className="mt-3 max-w-[600px] text-[15px] leading-6 text-[#63759e] sm:text-base">
+            <p className="mt-3 max-w-[600px] text-[15px] leading-6 text-[#63759e] dark:text-slate-300 sm:text-base">
               Discover a world of stories, knowledge, and inspiration.
               Find your next favorite book from our wide collection.
             </p>
@@ -47,20 +47,20 @@ const BooksHero = () => {
 
               {/* Stat 1 */}
               <div className="flex items-center gap-3 pr-6 sm:pr-7">
-                <div className="flex h-11 w-11 items-center justify-center rounded-full bg-white shadow-sm">
+                <div className="flex h-11 w-11 items-center justify-center rounded-full bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-sm">
                   <BookOpen
                     size={22}
                     strokeWidth={2}
-                    className="text-[#0878f9]"
+                    className="text-[#0878f9] dark:text-blue-400"
                   />
                 </div>
 
                 <div>
-                  <p className="text-[17px] font-bold leading-5 text-[#07164b]">
+                  <p className="text-[17px] font-bold leading-5 text-[#07164b] dark:text-white">
                     10,000+
                   </p>
 
-                  <p className="mt-1 text-[12px] text-[#63759e]">
+                  <p className="mt-1 text-[12px] text-[#63759e] dark:text-slate-400">
                     Books Available
                   </p>
                 </div>
@@ -68,25 +68,25 @@ const BooksHero = () => {
 
 
               {/* Divider */}
-              <div className="hidden h-10 w-px bg-[#cbdcf0] sm:block" />
+              <div className="hidden h-10 w-px bg-[#cbdcf0] dark:bg-slate-800 sm:block" />
 
 
               {/* Stat 2 */}
               <div className="flex items-center gap-3 px-0 sm:px-7">
-                <div className="flex h-11 w-11 items-center justify-center rounded-full bg-white shadow-sm">
+                <div className="flex h-11 w-11 items-center justify-center rounded-full bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-sm">
                   <Tag
                     size={22}
                     strokeWidth={2}
-                    className="text-[#0878f9]"
+                    className="text-[#0878f9] dark:text-blue-400"
                   />
                 </div>
 
                 <div>
-                  <p className="text-[17px] font-bold leading-5 text-[#07164b]">
+                  <p className="text-[17px] font-bold leading-5 text-[#07164b] dark:text-white">
                     50+
                   </p>
 
-                  <p className="mt-1 text-[12px] text-[#63759e]">
+                  <p className="mt-1 text-[12px] text-[#63759e] dark:text-slate-400">
                     Categories
                   </p>
                 </div>
@@ -94,25 +94,25 @@ const BooksHero = () => {
 
 
               {/* Divider */}
-              <div className="hidden h-10 w-px bg-[#cbdcf0] sm:block" />
+              <div className="hidden h-10 w-px bg-[#cbdcf0] dark:bg-slate-800 sm:block" />
 
 
               {/* Stat 3 */}
               <div className="flex items-center gap-3 pl-0 sm:pl-7">
-                <div className="flex h-11 w-11 items-center justify-center rounded-full bg-white shadow-sm">
+                <div className="flex h-11 w-11 items-center justify-center rounded-full bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700 shadow-sm">
                   <Users
                     size={22}
                     strokeWidth={2}
-                    className="text-[#0878f9]"
+                    className="text-[#0878f9] dark:text-blue-400"
                   />
                 </div>
 
                 <div>
-                  <p className="text-[17px] font-bold leading-5 text-[#07164b]">
+                  <p className="text-[17px] font-bold leading-5 text-[#07164b] dark:text-white">
                     100K+
                   </p>
 
-                  <p className="mt-1 text-[12px] text-[#63759e]">
+                  <p className="mt-1 text-[12px] text-[#63759e] dark:text-slate-400">
                     Happy Readers
                   </p>
                 </div>
@@ -126,7 +126,7 @@ const BooksHero = () => {
           <div className="relative flex h-full min-h-[280px] items-end justify-center lg:justify-end">
 
             {/* Soft background glow */}
-            <div className="absolute right-[15%] top-[15%] h-64 w-64 rounded-full bg-[#d9efff] blur-3xl" />
+            <div className="absolute right-[15%] top-[15%] h-64 w-64 rounded-full bg-[#d9efff] dark:bg-blue-900/20 blur-3xl" />
 
             <img
               src="/images/books/books-hero.png"

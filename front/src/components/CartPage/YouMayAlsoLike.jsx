@@ -1,18 +1,22 @@
-import React, { useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import { ChevronLeft, ChevronRight, ShoppingCart, Star, Check } from "lucide-react";
-import { ALL_BOOKS } from "../../data/booksData";
+import { ChevronLeft, ChevronRight, Star, Check } from "lucide-react";
+import { useBooks } from "../../context/BooksContext";
 import { useCart } from "../../context/CartContext";
 import BookCover from "../Common_componts/BookCover";
 
 const YouMayAlsoLike = () => {
   const sliderRef = useRef(null);
-  const { addToCart } = useCart();
+  const { books: allBooks, loading } = useBooks();
+  const { cartItems, addToCart } = useCart();
   const [addedId, setAddedId] = useState(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
 
-  const books = ALL_BOOKS.slice(3, 8);
+  // Exclude books already in cart
+  const books = allBooks
+    .filter((b) => !cartItems.some((c) => String(c.id) === String(b.id)))
+    .slice(0, 6);
 
   const checkScroll = () => {
     if (!sliderRef.current) return;
@@ -43,9 +47,13 @@ const YouMayAlsoLike = () => {
     setTimeout(() => setAddedId(null), 1800);
   };
 
+  if (!loading && books.length === 0) {
+    return null;
+  }
+
   return (
     <section className="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-      {/*         = HEADER         = */}
+      {/* HEADER */}
       <div className="mb-4 flex items-center justify-between">
         <div>
           <h2 className="text-lg font-bold text-[#07144d]">
@@ -56,7 +64,7 @@ const YouMayAlsoLike = () => {
           </p>
         </div>
 
-        {/* SLEEK CONTROLS BESIDE TITLE (User Reference Style) */}
+        {/* CONTROLS */}
         <div className="flex items-center gap-2">
           <button
             type="button"
@@ -87,87 +95,108 @@ const YouMayAlsoLike = () => {
         </div>
       </div>
 
-      {/*         = SLIDER WITH UNIFORM HEIGHTS         = */}
-      <div>
-        <div
-          ref={sliderRef}
-          onScroll={checkScroll}
-          className="flex gap-4 overflow-x-auto pb-2 scroll-smooth scrollbar-hide"
-        >
-        {books.map((book) => {
-          const isAdded = addedId === book.id;
-
-          return (
+      {/* SKELETON OR SLIDER */}
+      {loading ? (
+        <div className="flex gap-4 overflow-x-auto pb-2 scrollbar-hide">
+          {[1, 2, 3, 4].map((i) => (
             <div
-              key={book.id}
-              className="flex h-[320px] w-[190px] sm:w-[200px] shrink-0 flex-col justify-between rounded-xl border border-slate-100 bg-slate-50/50 p-3 transition hover:bg-white hover:border-blue-200 hover:shadow-md"
+              key={i}
+              className="h-[320px] w-[190px] sm:w-[200px] shrink-0 animate-pulse rounded-xl border border-slate-100 bg-slate-50 p-3"
             >
-              <div>
-                <Link
-                  to={`/book/${book.id}`}
-                  className="block h-[160px] w-full overflow-hidden rounded-lg bg-slate-100 shadow-sm"
+              <div className="h-[160px] w-full rounded-lg bg-slate-200 mb-3" />
+              <div className="h-4 w-3/4 rounded bg-slate-200 mb-2" />
+              <div className="h-3 w-1/2 rounded bg-slate-200 mb-4" />
+              <div className="h-7 w-full rounded-lg bg-slate-200 mt-6" />
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div>
+          <div
+            ref={sliderRef}
+            onScroll={checkScroll}
+            className="flex gap-4 overflow-x-auto pb-2 scroll-smooth scrollbar-hide"
+          >
+            {books.map((book) => {
+              const isAdded = addedId === book.id;
+
+              return (
+                <div
+                  key={book.id}
+                  className="flex h-[320px] w-[190px] sm:w-[200px] shrink-0 flex-col justify-between rounded-xl border border-slate-100 bg-slate-50/50 p-3 transition hover:bg-white hover:border-blue-200 hover:shadow-md"
                 >
-                  <BookCover
-                    src={book.image}
-                    alt={book.title}
-                    title={book.title}
-                    author={book.author}
-                    coverColor={book.coverColor}
-                    className="h-full w-full object-cover transition duration-300 hover:scale-105"
-                  />
-                </Link>
+                  <div>
+                    <Link
+                      to={`/book/${book.id}`}
+                      className="block h-[160px] w-full overflow-hidden rounded-lg bg-slate-100 shadow-sm"
+                    >
+                      <BookCover
+                        src={book.image}
+                        alt={book.title}
+                        title={book.title}
+                        author={book.author}
+                        coverColor={book.coverColor}
+                        className="h-full w-full object-cover transition duration-300 hover:scale-105"
+                      />
+                    </Link>
 
-                <div className="mt-2.5">
-                  <Link to={`/book/${book.id}`}>
-                    <h3 className="line-clamp-1 text-xs font-bold text-slate-900 hover:text-blue-600 transition" title={book.title}>
-                      {book.title}
-                    </h3>
-                  </Link>
-                  <p className="truncate text-[11px] text-slate-500">
-                    {book.author}
-                  </p>
+                    <div className="mt-2.5">
+                      <Link to={`/book/${book.id}`}>
+                        <h3 className="line-clamp-1 text-xs font-bold text-[#07144d] hover:text-blue-600 transition" title={book.title}>
+                          {book.title}
+                        </h3>
+                      </Link>
 
-                  <div className="mt-1 flex items-center gap-1">
-                    <Star size={11} className="fill-amber-400 text-amber-400" />
-                    <span className="text-xs font-semibold text-slate-700">
-                      {book.rating}
-                    </span>
+                      <p className="mt-0.5 truncate text-[11px] text-slate-500">
+                        {book.author}
+                      </p>
+
+                      <div className="mt-1 flex items-center gap-1 text-[11px]">
+                        <Star size={12} className="fill-amber-400 text-amber-400" />
+                        <span className="font-semibold text-slate-700">{book.rating}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="mt-2 border-t border-slate-100 pt-2">
+                    <div className="flex items-center justify-between mb-2">
+                      <span className="text-sm font-bold text-slate-900">
+                        ₹{book.price}
+                      </span>
+                      {book.oldPrice > book.price && (
+                        <span className="text-[10px] text-slate-400 line-through">
+                          ₹{book.oldPrice}
+                        </span>
+                      )}
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={() => handleAddToCart(book)}
+                      className={`flex w-full items-center justify-center gap-1.5 rounded-lg py-1.5 text-xs font-bold text-white transition active:scale-95 ${
+                        isAdded
+                          ? "bg-green-600 shadow-green-200"
+                          : "bg-blue-600 hover:bg-blue-700 shadow-sm"
+                      }`}
+                    >
+                      {isAdded ? (
+                        <>
+                          <Check size={12} />
+                          <span>Added</span>
+                        </>
+                      ) : (
+                        <span>Add</span>
+                      )}
+                    </button>
                   </div>
                 </div>
-              </div>
-
-              <div className="mt-2 border-t border-slate-200/60 pt-2">
-                <div className="flex items-center justify-between mb-2">
-                  <span className="text-xs font-bold text-blue-600">
-                    ₹{book.price}
-                  </span>
-                  {book.oldPrice && (
-                    <span className="text-[10px] text-slate-400 line-through">
-                      ₹{book.oldPrice}
-                    </span>
-                  )}
-                </div>
-
-                <button
-                  type="button"
-                  onClick={() => handleAddToCart(book)}
-                  className={`flex w-full items-center justify-center gap-1 rounded-lg py-1.5 text-xs font-bold text-white transition active:scale-95 ${
-                    isAdded
-                      ? "bg-green-600"
-                      : "bg-blue-600 hover:bg-blue-700"
-                  }`}
-                >
-                  {isAdded ? <Check size={13} /> : <ShoppingCart size={13} />}
-                  <span>{isAdded ? "Added!" : "Add to Cart"}</span>
-                </button>
-              </div>
-            </div>
-          );
-        })}
+              );
+            })}
           </div>
         </div>
-      </section>
-    );
-  };
+      )}
+    </section>
+  );
+};
 
 export default YouMayAlsoLike;

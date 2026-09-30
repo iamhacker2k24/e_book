@@ -1,11 +1,137 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:where(.dark, .dark *));
+
 /*                             ==
    GLOBAL SMOOTH SCROLL & CLEAN SCROLLBAR UTILITIES
                             == */
 
 html {
   scroll-behavior: smooth;
+}
+
+body {
+  background-color: #ffffff;
+  color: #0f172a;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+html.dark body {
+  background-color: #0b0f19;
+  color: #f1f5f9;
+}
+
+/* ========================================================
+   GLOBAL COMPREHENSIVE DARK MODE OVERRIDES
+   Ensures ALL screens, sections, cards, inputs & text convert to dark mode
+   ======================================================== */
+
+/* Background surfaces */
+html.dark .bg-white {
+  background-color: #0f172a !important;
+}
+
+html.dark .bg-slate-50,
+html.dark .bg-slate-50\/70,
+html.dark .bg-slate-50\/60,
+html.dark .bg-slate-100,
+html.dark .bg-gray-50,
+html.dark .bg-gray-100,
+html.dark [class*="bg-[#f4faff]"],
+html.dark [class*="bg-[#f4f5f7]"],
+html.dark [class*="bg-[#f8fafc]"],
+html.dark [class*="bg-[#f2f9ff]"],
+html.dark [class*="bg-[#edf7ff]"],
+html.dark [class*="bg-[#eaf6ff]"] {
+  background-color: #0b0f19 !important;
+}
+
+/* Hero and gradient sections */
+html.dark [class*="from-[#f2f9ff]"],
+html.dark [class*="from-[#f4faff]"] {
+  --tw-gradient-from: #0b0f19 var(--tw-gradient-from-position, ) !important;
+  --tw-gradient-stops: var(--tw-gradient-via-stops, var(--tw-gradient-from) 0%, var(--tw-gradient-to) 100%) !important;
+}
+html.dark [class*="via-[#edf7ff]"] {
+  --tw-gradient-via: #0e1526 var(--tw-gradient-via-position, ) !important;
+}
+html.dark [class*="to-[#eaf6ff]"],
+html.dark [class*="to-[#f0f9ff]"] {
+  --tw-gradient-to: #0f172a var(--tw-gradient-to-position, ) !important;
+}
+
+/* Card surfaces & panels */
+html.dark .shadow-sm,
+html.dark .shadow-md,
+html.dark .shadow-xl {
+  box-shadow: 0 4px 20px -2px rgba(0, 0, 0, 0.6) !important;
+}
+
+/* Borders */
+html.dark .border-slate-100,
+html.dark .border-slate-200,
+html.dark .border-slate-200\/80,
+html.dark .border-slate-200\/90,
+html.dark .border-gray-100,
+html.dark .border-gray-200,
+html.dark .border-blue-100,
+html.dark .border-blue-200 {
+  border-color: #1e293b !important;
+}
+
+/* Headings & dark titles */
+html.dark .text-slate-900,
+html.dark .text-slate-950,
+html.dark .text-slate-800,
+html.dark .text-gray-900,
+html.dark .text-gray-800,
+html.dark [class*="text-[#07164b]"],
+html.dark [class*="text-[#07174b]"] {
+  color: #f8fafc !important;
+}
+
+/* Body & secondary text */
+html.dark .text-slate-700,
+html.dark .text-slate-600,
+html.dark .text-gray-700,
+html.dark .text-gray-600,
+html.dark [class*="text-[#61739d]"],
+html.dark [class*="text-[#63759e]"] {
+  color: #cbd5e1 !important;
+}
+
+/* Muted text & captions */
+html.dark .text-slate-500,
+html.dark .text-slate-400,
+html.dark .text-gray-500,
+html.dark .text-gray-400,
+html.dark [class*="text-[#8da0c4]"] {
+  color: #64748b !important;
+}
+
+/* Interactive subtle hovers */
+html.dark .hover\:bg-slate-50:hover,
+html.dark .hover\:bg-gray-50:hover,
+html.dark .hover\:bg-blue-50:hover {
+  background-color: #1e293b !important;
+}
+
+/* Form inputs & selects in dark mode */
+html.dark input:not([type="checkbox"]):not([type="radio"]),
+html.dark select,
+html.dark textarea {
+  background-color: #0f172a !important;
+  color: #f8fafc !important;
+  border-color: #334155 !important;
+}
+
+html.dark input::placeholder,
+html.dark textarea::placeholder {
+  color: #64748b !important;
 }
 
 /* Hide native Windows stepper arrow buttons completely on all scrollbars */
@@ -47,4 +173,13 @@ html {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
+}
+
+html.dark ::-webkit-scrollbar-thumb {
+  background: #334155;
+  border: 1px solid rgba(15, 23, 42, 0.6);
+}
+
+html.dark ::-webkit-scrollbar-thumb:hover {
+  background: #475569;
 }

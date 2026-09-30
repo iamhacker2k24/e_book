@@ -1,25 +1,25 @@
 import React, { useState } from "react";
-import {
-  Heart,
-  Star,
-} from "lucide-react";
-
-import { Link } from "react-router-dom";
-import { ALL_BOOKS } from "../../data/booksData";
+import { useParams, Link } from "react-router-dom";
+import { Heart, Star } from "lucide-react";
+import { useBooks } from "../../context/BooksContext";
 import BookCover from "../Common_componts/BookCover";
 
 const BookOverview = () => {
+  const { id } = useParams();
+  const { books } = useBooks();
   const [activeTab, setActiveTab] = useState("Overview");
 
   const tabs = [
     "Overview",
     "Product Details",
-    "Reviews (12.4K)",
+    "Reviews",
     "About the Author",
     "Shipping & Returns",
   ];
 
-  const relatedBooks = ALL_BOOKS.slice(1, 4);
+  const relatedBooks = books
+    .filter((b) => String(b.id) !== String(id) && String(b._id) !== String(id))
+    .slice(0, 3);
 
   return (
     <section className="w-full bg-[#f4faff] px-4 py-6 sm:px-6 lg:px-10">

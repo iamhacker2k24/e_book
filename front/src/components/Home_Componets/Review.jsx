@@ -73,15 +73,15 @@ const Review = () => {
   };
 
   return (
-    <section className="w-full bg-white py-8 sm:py-10">
+    <section className="w-full bg-white dark:bg-slate-950 py-8 sm:py-10 transition-colors duration-200">
       <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
         {/*         = HEADER         = */}
         <div className="mb-6 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900">
+            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">
               What Our Readers Say
             </h2>
-            <p className="mt-1 text-sm text-slate-500">
+            <p className="mt-1 text-sm text-slate-500 dark:text-slate-400">
               Trusted by over 100,000+ avid readers and lifelong learners
             </p>
           </div>
@@ -93,10 +93,10 @@ const Review = () => {
               onClick={() => scroll("left")}
               disabled={!canScrollLeft}
               aria-label="Previous reviews"
-              className={`flex h-9 w-9 items-center justify-center rounded-full border bg-white shadow-sm transition-all duration-200 ${
+              className={`flex h-9 w-9 items-center justify-center rounded-full border bg-white dark:bg-slate-800 shadow-sm transition-all duration-200 ${
                 canScrollLeft
-                  ? "border-slate-200 text-slate-700 hover:border-blue-500 hover:bg-blue-600 hover:text-white active:scale-95 cursor-pointer"
-                  : "border-slate-200/60 text-slate-300 cursor-not-allowed opacity-40"
+                  ? "border-slate-200 text-slate-700 hover:border-blue-500 hover:bg-blue-600 hover:text-white dark:border-slate-700 dark:text-slate-200 dark:hover:bg-blue-600 active:scale-95 cursor-pointer"
+                  : "border-slate-200/60 dark:border-slate-800 text-slate-300 dark:text-slate-700 cursor-not-allowed opacity-40"
               }`}
             >
               <FiChevronLeft className="text-lg" />
@@ -107,10 +107,10 @@ const Review = () => {
               onClick={() => scroll("right")}
               disabled={!canScrollRight}
               aria-label="Next reviews"
-              className={`flex h-9 w-9 items-center justify-center rounded-full border bg-white shadow-sm transition-all duration-200 ${
+              className={`flex h-9 w-9 items-center justify-center rounded-full border bg-white dark:bg-slate-800 shadow-sm transition-all duration-200 ${
                 canScrollRight
-                  ? "border-slate-200 text-slate-700 hover:border-blue-500 hover:bg-blue-600 hover:text-white active:scale-95 cursor-pointer"
-                  : "border-slate-200/60 text-slate-300 cursor-not-allowed opacity-40"
+                  ? "border-slate-200 text-slate-700 hover:border-blue-500 hover:bg-blue-600 hover:text-white dark:border-slate-700 dark:text-slate-200 dark:hover:bg-blue-600 active:scale-95 cursor-pointer"
+                  : "border-slate-200/60 dark:border-slate-800 text-slate-300 dark:text-slate-700 cursor-not-allowed opacity-40"
               }`}
             >
               <FiChevronRight className="text-lg" />
@@ -128,7 +128,7 @@ const Review = () => {
           {Reviews.map((review, index) => (
             <div
               key={index}
-              className="flex h-[230px] w-[300px] sm:w-[360px] shrink-0 flex-col justify-between rounded-2xl border border-slate-100 bg-slate-50/70 p-5 sm:p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-blue-200 hover:bg-white hover:shadow-lg"
+              className="flex h-[230px] w-[300px] sm:w-[360px] shrink-0 flex-col justify-between rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50/70 dark:bg-slate-900/90 p-5 sm:p-6 shadow-sm transition duration-300 hover:-translate-y-1 hover:border-blue-200 dark:hover:border-slate-700 hover:bg-white dark:hover:bg-slate-900 hover:shadow-lg"
             >
               <div>
                 {/* Rating Stars */}
@@ -138,13 +138,13 @@ const Review = () => {
                   ))}
                 </div>
 
-                <p className="mt-3 text-xs sm:text-sm text-slate-700 leading-relaxed italic line-clamp-3">
+                <p className="mt-3 text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed italic line-clamp-3">
                   "{review.context}"
                 </p>
               </div>
 
               {/* User Profile */}
-              <div className="flex items-center gap-3 border-t border-slate-200/60 pt-3">
+              <div className="flex items-center gap-3 border-t border-slate-200/60 dark:border-slate-800 pt-3">
                 <img
                   src={review.profile_photo}
                   alt={review.name}
@@ -153,10 +153,10 @@ const Review = () => {
                 />
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-1.5">
-                    <h3 className="text-xs sm:text-sm font-bold text-slate-900 truncate">{review.name}</h3>
-                    <FiCheckCircle className="text-xs text-blue-600 shrink-0" title="Verified Reader" />
+                    <h3 className="text-xs sm:text-sm font-bold text-slate-900 dark:text-white truncate">{review.name}</h3>
+                    <FiCheckCircle className="text-xs text-blue-600 dark:text-blue-400 shrink-0" title="Verified Reader" />
                   </div>
-                  <p className="text-[11px] text-slate-500 truncate">{review.role}</p>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400 truncate">{review.role}</p>
                 </div>
               </div>
             </div>

@@ -107,7 +107,7 @@ const Category = () => {
   };
 
   return (
-    <section className="w-full bg-white py-6 sm:py-8">
+    <section className="w-full bg-white dark:bg-slate-950 py-6 sm:py-8 transition-colors duration-200">
       <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
         <div className="relative group/category">
           {canScrollLeft && (
@@ -115,7 +115,7 @@ const Category = () => {
               type="button"
               onClick={() => scroll("left")}
               aria-label="Scroll categories left"
-              className="hidden md:flex absolute -left-3 top-1/2 -translate-y-1/2 z-20 h-9 w-9 items-center justify-center rounded-full bg-white/95 text-slate-700 shadow-md border border-slate-200 backdrop-blur-sm transition hover:scale-110 hover:bg-blue-600 hover:text-white active:scale-95 cursor-pointer"
+              className="hidden md:flex absolute -left-3 top-1/2 -translate-y-1/2 z-20 h-9 w-9 items-center justify-center rounded-full bg-white/95 text-slate-700 shadow-md border border-slate-200 backdrop-blur-sm transition hover:scale-110 hover:bg-blue-600 hover:text-white dark:bg-slate-800/95 dark:text-slate-200 dark:border-slate-700 active:scale-95 cursor-pointer"
             >
               <FiChevronLeft className="text-lg" />
             </button>
@@ -126,7 +126,7 @@ const Category = () => {
               type="button"
               onClick={() => scroll("right")}
               aria-label="Scroll categories right"
-              className="hidden md:flex absolute -right-3 top-1/2 -translate-y-1/2 z-20 h-9 w-9 items-center justify-center rounded-full bg-white/95 text-slate-700 shadow-md border border-slate-200 backdrop-blur-sm transition hover:scale-110 hover:bg-blue-600 hover:text-white active:scale-95 cursor-pointer"
+              className="hidden md:flex absolute -right-3 top-1/2 -translate-y-1/2 z-20 h-9 w-9 items-center justify-center rounded-full bg-white/95 text-slate-700 shadow-md border border-slate-200 backdrop-blur-sm transition hover:scale-110 hover:bg-blue-600 hover:text-white dark:bg-slate-800/95 dark:text-slate-200 dark:border-slate-700 active:scale-95 cursor-pointer"
             >
               <FiChevronRight className="text-lg" />
             </button>
@@ -135,7 +135,7 @@ const Category = () => {
           <ul
             ref={scrollRef}
             onScroll={checkScroll}
-            className="flex items-center justify-between gap-3 overflow-x-auto rounded-2xl border border-slate-100 bg-white px-4 py-4 shadow-sm scrollbar-hide scroll-smooth"
+            className="flex items-center justify-between gap-3 overflow-x-auto rounded-2xl border border-slate-100 bg-white dark:border-slate-800 dark:bg-slate-900 px-4 py-4 shadow-sm scrollbar-hide scroll-smooth"
           >
             {categories.map((category) => (
               <li key={category.name}>
@@ -148,6 +148,7 @@ const Category = () => {
                       flex h-13 w-13 sm:h-14 sm:w-14 items-center justify-center
                       rounded-full
                       ${category.bg}
+                      dark:bg-slate-800
                       ${category.hover}
                       transition-all duration-300
                       group-hover:-translate-y-1
@@ -161,7 +162,7 @@ const Category = () => {
                     />
                   </div>
 
-                  <span className="whitespace-nowrap text-xs font-semibold text-slate-700 transition-colors group-hover:text-blue-600">
+                  <span className="whitespace-nowrap text-xs font-semibold text-slate-700 dark:text-slate-300 transition-colors group-hover:text-blue-600 dark:group-hover:text-blue-400">
                     {category.name}
                   </span>
                 </Link>

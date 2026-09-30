@@ -12,9 +12,9 @@ const Offers_Section = () => {
   };
 
   return (
-    <section className="w-full bg-white py-6">
+    <section className="w-full bg-white dark:bg-slate-950 py-6 transition-colors duration-200">
       <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
-        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-blue-700 via-indigo-700 to-purple-800 p-6 sm:p-8 text-white shadow-xl shadow-blue-200/50">
+        <div className="relative overflow-hidden rounded-2xl bg-gradient-to-r from-blue-700 via-indigo-700 to-purple-800 p-6 sm:p-8 text-white shadow-xl shadow-blue-200/50 dark:shadow-none">
           {/* Subtle Background Glow */}
           <div className="absolute -right-16 -top-16 h-64 w-64 rounded-full bg-white/10 blur-2xl pointer-events-none" />
           <div className="absolute -left-16 -bottom-16 h-64 w-64 rounded-full bg-purple-500/20 blur-2xl pointer-events-none" />
@@ -46,7 +46,7 @@ const Offers_Section = () => {
 
               <Link
                 to="/books"
-                className="flex items-center gap-2 rounded-xl bg-white px-6 py-3 text-xs font-bold text-blue-700 shadow-md transition hover:bg-blue-50 active:scale-95"
+                className="flex items-center gap-2 rounded-xl bg-white dark:bg-slate-900 px-6 py-3 text-xs font-bold text-blue-700 dark:text-blue-400 shadow-md transition hover:bg-blue-50 dark:hover:bg-slate-800 active:scale-95"
               >
                 <span>Browse Deals</span>
                 <FiArrowRight />

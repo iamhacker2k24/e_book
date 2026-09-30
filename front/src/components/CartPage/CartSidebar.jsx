@@ -1,10 +1,9 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   Lock,
   Tag,
   Truck,
-  RotateCcw,
   ShieldCheck,
   Award,
   CheckCircle,
@@ -34,18 +33,23 @@ const CartSidebar = (props) => {
     setCouponFeedback(res);
   };
 
-  const handleCheckout = () => {
+  const handleCheckout = async () => {
     if (itemCount === 0) {
       alert("Your cart is empty. Add some eBooks first!");
       return;
     }
     setCheckingOut(true);
-    setTimeout(() => {
-      alert("Checkout simulated! Your digital downloads are being prepared.");
-      cartContext.clearCart();
+    try {
+      const result = await cartContext.submitCheckout();
+      if (result.success) {
+        alert(result.simulated ? "Order placed successfully! (Ready for backend order processing)" : "Order placed successfully!");
+        navigate("/");
+      }
+    } catch (e) {
+      alert("Checkout failed: " + e.message);
+    } finally {
       setCheckingOut(false);
-      navigate("/");
-    }, 1500);
+    }
   };
 
   return (

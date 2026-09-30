@@ -7,7 +7,7 @@ import categoryBanner from "../Catagories/assets/image.png";
 const CategoryCTA = () => {
   return (
     <section className="w-full bg-white py-6 md:py-8">
-      <div className="mx-auto max-w-[1250px] px-5">
+      <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
 
         <div
           className="

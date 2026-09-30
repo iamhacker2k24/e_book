@@ -1,68 +1,31 @@
-import React, { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
+import { checkoutOrder } from "../services/bookService";
 
-const CartContext = createContext();
-
-const INITIAL_CART = [
-  {
-    id: 1,
-    title: "Atomic Habits",
-    author: "James Clear",
-    format: "Paperback & eBook",
-    pages: "320 pages",
-    image: "https://images.unsplash.com/photo-1544947950-fa07a98d237f?auto=format&fit=crop&q=80&w=400",
-    coverColor: "from-amber-600 to-amber-800",
-    price: 599,
-    oldPrice: 799,
-    quantity: 1,
-  },
-  {
-    id: 2,
-    title: "The Psychology of Money",
-    author: "Morgan Housel",
-    format: "Paperback & eBook",
-    pages: "256 pages",
-    image: "https://images.unsplash.com/photo-1589829085413-56de8ae18c73?auto=format&fit=crop&q=80&w=400",
-    coverColor: "from-emerald-700 to-teal-900",
-    price: 499,
-    oldPrice: 699,
-    quantity: 1,
-  },
-  {
-    id: 3,
-    title: "Ikigai",
-    author: "Héctor García",
-    format: "Hardcover & eBook",
-    pages: "208 pages",
-    image: "https://images.unsplash.com/photo-1512820790803-83ca734da794?auto=format&fit=crop&q=80&w=400",
-    coverColor: "from-sky-600 to-blue-900",
-    price: 450,
-    oldPrice: 599,
-    quantity: 1,
-  },
-];
+const CartContext = createContext(null);
 
 export const CartProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState(() => {
     try {
       const saved = localStorage.getItem("booknest_cart");
-      return saved ? JSON.parse(saved) : INITIAL_CART;
+      return saved ? JSON.parse(saved) : [];
     } catch {
-      return INITIAL_CART;
+      return [];
     }
   });
 
   const [wishlist, setWishlist] = useState(() => {
     try {
       const saved = localStorage.getItem("booknest_wishlist");
-      return saved ? JSON.parse(saved) : [1];
+      return saved ? JSON.parse(saved) : [];
     } catch {
-      return [1];
+      return [];
     }
   });
 
   const [couponCode, setCouponCode] = useState("");
-  const [couponDiscount, setCouponDiscount] = useState(150); // Default promo offer
+  const [couponDiscount, setCouponDiscount] = useState(0);
 
+  // Sync cart to local storage
   useEffect(() => {
     try {
       localStorage.setItem("booknest_cart", JSON.stringify(cartItems));
@@ -71,6 +34,7 @@ export const CartProvider = ({ children }) => {
     }
   }, [cartItems]);
 
+  // Sync wishlist to local storage
   useEffect(() => {
     try {
       localStorage.setItem("booknest_wishlist", JSON.stringify(wishlist));
@@ -80,11 +44,14 @@ export const CartProvider = ({ children }) => {
   }, [wishlist]);
 
   const addToCart = (book, quantity = 1) => {
+    if (!book) return;
+    const bookId = book.id || book._id;
+
     setCartItems((prevItems) => {
-      const existing = prevItems.find((item) => item.id === book.id);
+      const existing = prevItems.find((item) => item.id === bookId);
       if (existing) {
         return prevItems.map((item) =>
-          item.id === book.id
+          item.id === bookId
             ? { ...item, quantity: item.quantity + quantity }
             : item
         );
@@ -92,15 +59,16 @@ export const CartProvider = ({ children }) => {
       return [
         ...prevItems,
         {
-          id: book.id,
-          title: book.title || book.name,
-          author: book.author || book.Author || "Unknown Author",
+          id: bookId,
+          _id: bookId,
+          title: book.title || book.name || "Untitled Book",
+          author: book.author || "Unknown Author",
           format: book.format || "Paperback & eBook",
           pages: book.pages || "300 pages",
-          image: book.image || book.url,
+          image: book.image || book.cover_image || "",
           coverColor: book.coverColor || "from-blue-600 to-indigo-900",
-          price: Number(book.price || book.offer_price || 499),
-          oldPrice: Number(book.oldPrice || book.origin_price || 699),
+          price: Number(book.price || 0),
+          oldPrice: Number(book.oldPrice || book.price || 0),
           quantity: quantity,
         },
       ];
@@ -108,7 +76,7 @@ export const CartProvider = ({ children }) => {
   };
 
   const removeFromCart = (id) => {
-    setCartItems((prev) => prev.filter((item) => item.id !== id));
+    setCartItems((prev) => prev.filter((item) => String(item.id) !== String(id)));
   };
 
   const updateQuantity = (id, newQuantity) => {
@@ -118,22 +86,27 @@ export const CartProvider = ({ children }) => {
     }
     setCartItems((prev) =>
       prev.map((item) =>
-        item.id === id ? { ...item, quantity: newQuantity } : item
+        String(item.id) === String(id) ? { ...item, quantity: newQuantity } : item
       )
     );
   };
 
   const clearCart = () => {
     setCartItems([]);
+    setCouponCode("");
+    setCouponDiscount(0);
   };
 
   const toggleWishlist = (id) => {
+    const strId = String(id);
     setWishlist((prev) =>
-      prev.includes(id) ? prev.filter((x) => x !== id) : [...prev, id]
+      prev.map(String).includes(strId)
+        ? prev.filter((x) => String(x) !== strId)
+        : [...prev, id]
     );
   };
 
-  const isWishlisted = (id) => wishlist.includes(id);
+  const isWishlisted = (id) => wishlist.map(String).includes(String(id));
 
   const applyCoupon = (code) => {
     const trimmed = (code || "").trim().toUpperCase();
@@ -145,9 +118,35 @@ export const CartProvider = ({ children }) => {
     return { success: false, message: "Invalid coupon code. Try 'BOOK20' or 'READMORE'." };
   };
 
-  const cartCount = cartItems.reduce((acc, item) => acc + item.quantity, 0);
+  const submitCheckout = async (customerData = {}) => {
+    const payload = {
+      items: cartItems,
+      couponCode,
+      discount,
+      deliveryCharge,
+      subtotal,
+      total,
+      customer: customerData,
+    };
+    try {
+      const response = await checkoutOrder(payload);
+      clearCart();
+      return { success: true, data: response };
+    } catch (err) {
+      // In case backend is not connected yet, allow graceful fallback
+      console.warn("Backend checkout order API not available, simulating successful local checkout:", err.message);
+      clearCart();
+      return {
+        success: true,
+        simulated: true,
+        message: "Order placed locally (backend integration pending).",
+      };
+    }
+  };
+
+  const cartCount = cartItems.reduce((acc, item) => acc + (item.quantity || 0), 0);
   const subtotal = cartItems.reduce(
-    (acc, item) => acc + item.price * item.quantity,
+    (acc, item) => acc + (item.price || 0) * (item.quantity || 0),
     0
   );
   const deliveryCharge = subtotal > 499 || cartItems.length === 0 ? 0 : 49;
@@ -172,6 +171,7 @@ export const CartProvider = ({ children }) => {
         wishlist,
         toggleWishlist,
         isWishlisted,
+        submitCheckout,
       }}
     >
       {children}

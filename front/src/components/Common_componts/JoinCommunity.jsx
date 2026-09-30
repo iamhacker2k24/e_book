@@ -3,7 +3,7 @@ import { FiSend, FiArrowRight } from "react-icons/fi";
 
 const JoinCommunity = () => {
   return (
-    <section className="w-full bg-white py-8">
+    <section className="w-full bg-white dark:bg-slate-950 py-8 transition-colors duration-200">
       <div className="mx-auto max-w-[1400px] px-5">
 
         <div
@@ -17,10 +17,14 @@ const JoinCommunity = () => {
             rounded-2xl
             border
             border-blue-100
+            dark:border-slate-800
             bg-gradient-to-r
             from-blue-50
             via-indigo-50
             to-purple-50
+            dark:from-slate-900
+            dark:via-slate-900/90
+            dark:to-slate-950
             px-6
             py-7
             shadow-sm
@@ -31,8 +35,8 @@ const JoinCommunity = () => {
         >
 
           {/* Decorative background */}
-          <div className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-blue-200/30 blur-3xl" />
-          <div className="pointer-events-none absolute -bottom-10 left-20 h-32 w-32 rounded-full bg-purple-200/30 blur-3xl" />
+          <div className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-blue-200/30 dark:bg-blue-600/10 blur-3xl" />
+          <div className="pointer-events-none absolute -bottom-10 left-20 h-32 w-32 rounded-full bg-purple-200/30 dark:bg-purple-600/10 blur-3xl" />
 
           {/*         = ICON         = */}
           <div
@@ -46,22 +50,24 @@ const JoinCommunity = () => {
               justify-center
               rounded-full
               bg-white
+              dark:bg-slate-800
               shadow-md
               ring-1
               ring-blue-100
+              dark:ring-slate-700
             "
           >
-            <FiSend className="text-2xl text-blue-600" />
+            <FiSend className="text-2xl text-blue-600 dark:text-blue-400" />
           </div>
 
           {/*         = TEXT         = */}
           <div className="relative min-w-0 flex-1 text-center md:text-left">
 
-            <h2 className="text-xl font-bold tracking-tight text-slate-900 md:text-2xl">
+            <h2 className="text-xl font-bold tracking-tight text-slate-900 dark:text-white md:text-2xl">
               Join Our Reading Community
             </h2>
 
-            <p className="mt-1 text-sm leading-6 text-slate-600">
+            <p className="mt-1 text-sm leading-6 text-slate-600 dark:text-slate-300">
               Get the latest updates, new arrivals and exclusive offers.
             </p>
 
@@ -78,12 +84,15 @@ const JoinCommunity = () => {
               rounded-xl
               border
               border-slate-200
+              dark:border-slate-700
               bg-white
+              dark:bg-slate-900
               p-1
               shadow-sm
               focus-within:border-blue-400
               focus-within:ring-4
               focus-within:ring-blue-100
+              dark:focus-within:ring-blue-900/30
               md:w-[430px]
             "
           >
@@ -100,8 +109,10 @@ const JoinCommunity = () => {
                 px-4
                 text-sm
                 text-slate-700
+                dark:text-slate-100
                 outline-none
                 placeholder:text-slate-400
+                dark:placeholder:text-slate-500
               "
             />
 
@@ -121,6 +132,7 @@ const JoinCommunity = () => {
                 text-white
                 shadow-sm
                 shadow-blue-200
+                dark:shadow-none
                 transition-all
                 duration-200
                 hover:bg-blue-700

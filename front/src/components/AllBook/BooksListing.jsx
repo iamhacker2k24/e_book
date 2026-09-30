@@ -3,69 +3,60 @@ import { Link, useSearchParams } from "react-router-dom";
 import {
   Heart,
   ShoppingCart,
-  ChevronDown,
-  ChevronUp,
   Grid2X2,
   List,
-  ChevronLeft,
-  ChevronRight,
   SlidersHorizontal,
   Star,
   Check,
-  Search,
 } from "lucide-react";
-import { ALL_BOOKS } from "../../data/booksData";
+import { useBooks } from "../../context/BooksContext";
 import { useCart } from "../../context/CartContext";
 import BookCover from "../Common_componts/BookCover";
 
-const categories = [
-  ["All Categories", ALL_BOOKS.length],
-  ["Self-Help", ALL_BOOKS.filter((b) => b.category === "Self-Help").length],
-  ["Business", ALL_BOOKS.filter((b) => b.category === "Business").length],
-  ["Technology", ALL_BOOKS.filter((b) => b.category === "Technology").length],
-  ["Fiction", ALL_BOOKS.filter((b) => b.category === "Fiction").length],
-  ["Science", ALL_BOOKS.filter((b) => b.category === "Science").length],
-];
-
 export default function BooksListing() {
+  const { books, loading, error, categories: contextCategories, refetchBooks } = useBooks();
+
+  const categories = useMemo(() => {
+    if (contextCategories && contextCategories.length > 0) {
+      return contextCategories;
+    }
+    return [["All Categories", books.length]];
+  }, [contextCategories, books]);
+
   const [searchParams, setSearchParams] = useSearchParams();
-  const initialCategory = searchParams.get("category") || "All Categories";
-  const initialSearch = searchParams.get("search") || "";
+  const urlCategory = searchParams.get("category");
+  const urlSearch = searchParams.get("search");
   const initialBadge = searchParams.get("badge") || "";
 
   const [view, setView] = useState("grid");
   const [mobileFilters, setMobileFilters] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState(initialCategory);
+  const [selectedCategory, setSelectedCategory] = useState(urlCategory || "All Categories");
   const [maxPrice, setMaxPrice] = useState(1000);
   const [minRating, setMinRating] = useState(0);
   const [sortBy, setSortBy] = useState("featured");
-  const [searchQuery, setSearchQuery] = useState(initialSearch);
+  const [searchQuery, setSearchQuery] = useState(urlSearch || "");
 
-  // Sync state if URL search parameters change
-  React.useEffect(() => {
-    const cat = searchParams.get("category");
-    if (cat) setSelectedCategory(cat);
-    const q = searchParams.get("search");
-    if (q !== null) setSearchQuery(q);
-  }, [searchParams]);
+  // Keep state updated if URL query parameters change externally
+  const activeCategory = urlCategory || selectedCategory;
+  const activeSearch = urlSearch !== null && urlSearch !== undefined ? urlSearch : searchQuery;
 
   // Filtered & Sorted books
   const filteredBooks = useMemo(() => {
-    return ALL_BOOKS.filter((book) => {
+    return books.filter((book) => {
       // Category filter
       if (
-        selectedCategory !== "All Categories" &&
-        book.category.toLowerCase() !== selectedCategory.toLowerCase()
+        activeCategory !== "All Categories" &&
+        book.category?.toLowerCase() !== activeCategory.toLowerCase()
       ) {
         return false;
       }
 
       // Search query filter
-      if (searchQuery.trim()) {
-        const query = searchQuery.toLowerCase();
+      if (activeSearch.trim()) {
+        const query = activeSearch.toLowerCase();
         const matchesTitle = book.title.toLowerCase().includes(query);
         const matchesAuthor = book.author.toLowerCase().includes(query);
-        const matchesCat = book.category.toLowerCase().includes(query);
+        const matchesCat = book.category?.toLowerCase().includes(query);
         if (!matchesTitle && !matchesAuthor && !matchesCat) return false;
       }
 
@@ -85,9 +76,9 @@ export default function BooksListing() {
       if (sortBy === "price-low") return a.price - b.price;
       if (sortBy === "price-high") return b.price - a.price;
       if (sortBy === "rating") return b.rating - a.rating;
-      return a.id - b.id; // default featured
+      return String(a.id).localeCompare(String(b.id)); // default featured
     });
-  }, [selectedCategory, searchQuery, initialBadge, maxPrice, minRating, sortBy]);
+  }, [books, activeCategory, activeSearch, initialBadge, maxPrice, minRating, sortBy]);
 
   const clearAllFilters = () => {
     setSelectedCategory("All Categories");
@@ -98,7 +89,7 @@ export default function BooksListing() {
   };
 
   return (
-    <section className="w-full bg-[#f4faff] px-4 py-8 sm:px-6 lg:px-10">
+    <section className="w-full bg-[#f4faff] dark:bg-slate-950 px-4 py-8 sm:px-6 lg:px-10 transition-colors duration-200">
       <div className="mx-auto max-w-[1400px]">
         {/*         = BAR: Search, Total & View Toggle         = */}
         <div className="mb-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -106,23 +97,23 @@ export default function BooksListing() {
             <button
               type="button"
               onClick={() => setMobileFilters(true)}
-              className="flex items-center gap-2 rounded-xl border border-blue-200 bg-white px-4 py-2 text-xs font-bold text-blue-600 shadow-sm transition hover:bg-blue-50 lg:hidden"
+              className="flex items-center gap-2 rounded-xl border border-blue-200 bg-white px-4 py-2 text-xs font-bold text-blue-600 shadow-sm transition hover:bg-blue-50 dark:border-slate-700 dark:bg-slate-900 dark:text-blue-400 dark:hover:bg-slate-800 lg:hidden"
             >
               <SlidersHorizontal size={16} />
               <span>Filters</span>
             </button>
 
             <div>
-              <h1 className="text-xl sm:text-2xl font-extrabold text-[#07164b]">
+              <h1 className="text-xl sm:text-2xl font-extrabold text-[#07164b] dark:text-white">
                 All Books
               </h1>
-              <p className="text-xs text-slate-500">
-                Showing {filteredBooks.length} of {ALL_BOOKS.length} books
-                {selectedCategory !== "All Categories" && (
-                  <span className="font-semibold text-blue-600"> • {selectedCategory}</span>
+              <p className="text-xs text-slate-500 dark:text-slate-400">
+                Showing {filteredBooks.length} of {books.length} books
+                {activeCategory !== "All Categories" && (
+                  <span className="font-semibold text-blue-600 dark:text-blue-400"> • {activeCategory}</span>
                 )}
-                {searchQuery && (
-                  <span className="font-semibold text-slate-700"> • Matching "{searchQuery}"</span>
+                {activeSearch && (
+                  <span className="font-semibold text-slate-700 dark:text-slate-300"> • Matching "{activeSearch}"</span>
                 )}
               </p>
             </div>
@@ -131,12 +122,12 @@ export default function BooksListing() {
           <div className="flex flex-wrap items-center gap-3">
             {/* Sort By */}
             <div className="flex items-center gap-2">
-              <span className="text-xs text-slate-500 hidden sm:inline">Sort:</span>
+              <span className="text-xs text-slate-500 dark:text-slate-400 hidden sm:inline">Sort:</span>
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
                 aria-label="Sort books"
-                className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 outline-none transition focus:border-blue-500"
+                className="rounded-xl border border-slate-200 bg-white px-3 py-2 text-xs font-semibold text-slate-700 outline-none transition focus:border-blue-500 dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200"
               >
                 <option value="featured">Featured</option>
                 <option value="price-low">Price: Low to High</option>
@@ -146,14 +137,14 @@ export default function BooksListing() {
             </div>
 
             {/* View Mode */}
-            <div className="flex items-center rounded-xl border border-slate-200 bg-white p-1">
+            <div className="flex items-center rounded-xl border border-slate-200 bg-white p-1 dark:border-slate-700 dark:bg-slate-900">
               <button
                 type="button"
                 onClick={() => setView("grid")}
                 className={`flex h-8 w-8 items-center justify-center rounded-lg transition ${
                   view === "grid"
                     ? "bg-blue-600 text-white shadow-sm"
-                    : "text-slate-500 hover:text-slate-900"
+                    : "text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
                 }`}
                 aria-label="Grid view"
               >
@@ -165,7 +156,7 @@ export default function BooksListing() {
                 className={`flex h-8 w-8 items-center justify-center rounded-lg transition ${
                   view === "list"
                     ? "bg-blue-600 text-white shadow-sm"
-                    : "text-slate-500 hover:text-slate-900"
+                    : "text-slate-500 hover:text-slate-900 dark:text-slate-400 dark:hover:text-white"
                 }`}
                 aria-label="List view"
               >
@@ -178,21 +169,21 @@ export default function BooksListing() {
         {/*         = MAIN CONTENT         = */}
         <div className="flex items-start gap-6">
           {/* DESKTOP SIDEBAR */}
-          <aside className="hidden w-[240px] shrink-0 rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm lg:block">
-            <div className="mb-4 flex items-center justify-between border-b border-slate-100 pb-3">
-              <h2 className="text-sm font-bold text-[#07164b]">Filters</h2>
+          <aside className="hidden w-[240px] shrink-0 rounded-2xl border border-slate-200/80 bg-white p-5 shadow-sm dark:border-slate-800 dark:bg-slate-900 lg:block">
+            <div className="mb-4 flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
+              <h2 className="text-sm font-bold text-[#07164b] dark:text-white">Filters</h2>
               <button
                 type="button"
                 onClick={clearAllFilters}
-                className="text-xs font-semibold text-blue-600 hover:underline"
+                className="text-xs font-semibold text-blue-600 dark:text-blue-400 hover:underline"
               >
                 Reset All
               </button>
             </div>
 
             {/* Categories */}
-            <div className="py-3 border-b border-slate-100">
-              <h3 className="mb-2.5 text-xs font-bold uppercase tracking-wider text-slate-500">
+            <div className="py-3 border-b border-slate-100 dark:border-slate-800">
+              <h3 className="mb-2.5 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                 Categories
               </h3>
               <div className="space-y-1">
@@ -203,24 +194,24 @@ export default function BooksListing() {
                     onClick={() => setSelectedCategory(name)}
                     className={`flex w-full items-center justify-between rounded-lg px-2.5 py-1.5 text-xs font-medium transition ${
                       selectedCategory === name
-                        ? "bg-blue-50 text-blue-600 font-bold"
-                        : "text-slate-600 hover:bg-slate-50 hover:text-slate-900"
+                        ? "bg-blue-50 text-blue-600 font-bold dark:bg-blue-900/40 dark:text-blue-400"
+                        : "text-slate-600 hover:bg-slate-50 hover:text-slate-900 dark:text-slate-300 dark:hover:bg-slate-800 dark:hover:text-white"
                     }`}
                   >
                     <span>{name}</span>
-                    <span className="text-[11px] text-slate-400">({count})</span>
+                    <span className="text-[11px] text-slate-400 dark:text-slate-500">({count})</span>
                   </button>
                 ))}
               </div>
             </div>
 
             {/* Price Filter */}
-            <div className="py-4 border-b border-slate-100">
+            <div className="py-4 border-b border-slate-100 dark:border-slate-800">
               <div className="flex items-center justify-between text-xs mb-2">
-                <span className="font-bold uppercase tracking-wider text-slate-500">
+                <span className="font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                   Max Price
                 </span>
-                <span className="font-bold text-blue-600">₹{maxPrice}</span>
+                <span className="font-bold text-blue-600 dark:text-blue-400">₹{maxPrice}</span>
               </div>
               <input
                 type="range"
@@ -232,7 +223,7 @@ export default function BooksListing() {
                 aria-label="Max price filter"
                 className="w-full accent-blue-600 cursor-pointer"
               />
-              <div className="flex justify-between text-[10px] text-slate-400 mt-1">
+              <div className="flex justify-between text-[10px] text-slate-400 dark:text-slate-500 mt-1">
                 <span>₹200</span>
                 <span>₹1000</span>
               </div>
@@ -240,7 +231,7 @@ export default function BooksListing() {
 
             {/* Rating Filter */}
             <div className="py-4">
-              <h3 className="mb-2.5 text-xs font-bold uppercase tracking-wider text-slate-500">
+              <h3 className="mb-2.5 text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
                 Minimum Rating
               </h3>
               <div className="space-y-1">
@@ -251,8 +242,8 @@ export default function BooksListing() {
                     onClick={() => setMinRating(rating)}
                     className={`flex w-full items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs transition ${
                       minRating === rating
-                        ? "bg-blue-50 text-blue-600 font-bold"
-                        : "text-slate-600 hover:bg-slate-50"
+                        ? "bg-blue-50 text-blue-600 font-bold dark:bg-blue-900/40 dark:text-blue-400"
+                        : "text-slate-600 hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-slate-800"
                     }`}
                   >
                     {rating > 0 ? (
@@ -272,21 +263,21 @@ export default function BooksListing() {
           {/* MOBILE FILTER MODAL / DRAWER */}
           {mobileFilters && (
             <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm lg:hidden">
-              <div className="absolute left-0 top-0 h-full w-[300px] overflow-y-auto bg-white p-5 shadow-2xl">
-                <div className="mb-4 flex items-center justify-between border-b border-slate-100 pb-3">
-                  <h2 className="text-base font-bold text-[#07164b]">Filters</h2>
+              <div className="absolute left-0 top-0 h-full w-[300px] overflow-y-auto bg-white dark:bg-slate-900 p-5 shadow-2xl">
+                <div className="mb-4 flex items-center justify-between border-b border-slate-100 dark:border-slate-800 pb-3">
+                  <h2 className="text-base font-bold text-[#07164b] dark:text-white">Filters</h2>
                   <button
                     type="button"
                     onClick={() => setMobileFilters(false)}
-                    className="rounded-lg p-1.5 text-slate-500 hover:bg-slate-100"
+                    className="rounded-lg p-1.5 text-slate-500 hover:bg-slate-100 dark:text-slate-400 dark:hover:bg-slate-800"
                   >
                     ✕
                   </button>
                 </div>
 
                 {/* Categories */}
-                <div className="py-3 border-b border-slate-100">
-                  <h3 className="mb-2 text-xs font-bold text-slate-500 uppercase">
+                <div className="py-3 border-b border-slate-100 dark:border-slate-800">
+                  <h3 className="mb-2 text-xs font-bold text-slate-500 dark:text-slate-400 uppercase">
                     Categories
                   </h3>
                   <div className="space-y-1">
@@ -300,8 +291,8 @@ export default function BooksListing() {
                         }}
                         className={`flex w-full items-center justify-between rounded-lg px-3 py-2 text-xs transition ${
                           selectedCategory === name
-                            ? "bg-blue-50 text-blue-600 font-bold"
-                            : "text-slate-600 hover:bg-slate-50"
+                            ? "bg-blue-50 text-blue-600 font-bold dark:bg-blue-900/40 dark:text-blue-400"
+                            : "text-slate-600 hover:bg-slate-50 dark:text-slate-300 dark:hover:bg-slate-800"
                         }`}
                       >
                         <span>{name}</span>
@@ -312,10 +303,10 @@ export default function BooksListing() {
                 </div>
 
                 {/* Price */}
-                <div className="py-4 border-b border-slate-100">
+                <div className="py-4 border-b border-slate-100 dark:border-slate-800">
                   <div className="flex items-center justify-between text-xs mb-2">
-                    <span className="font-bold text-slate-500">Max Price:</span>
-                    <span className="font-bold text-blue-600">₹{maxPrice}</span>
+                    <span className="font-bold text-slate-500 dark:text-slate-400">Max Price:</span>
+                    <span className="font-bold text-blue-600 dark:text-blue-400">₹{maxPrice}</span>
                   </div>
                   <input
                     type="range"
@@ -344,14 +335,51 @@ export default function BooksListing() {
 
           {/*         = BOOK CARDS         = */}
           <div className="min-w-0 flex-1">
-            {filteredBooks.length === 0 ? (
-              <div className="rounded-2xl border border-slate-200 bg-white p-12 text-center shadow-sm">
+            {error && (
+              <div className="mb-4 flex items-center justify-between rounded-xl border border-amber-200 bg-amber-50 dark:border-amber-900/50 dark:bg-amber-950/40 p-4 text-xs text-amber-800 dark:text-amber-300">
+                <div>
+                  <span className="font-bold">Backend Status:</span> {error}
+                </div>
+                <button
+                  type="button"
+                  onClick={refetchBooks}
+                  className="font-bold underline hover:no-underline ml-3"
+                >
+                  Retry
+                </button>
+              </div>
+            )}
+
+            {loading ? (
+              <div
+                className={
+                  view === "grid"
+                    ? "grid grid-cols-2 gap-3 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 sm:gap-4"
+                    : "grid grid-cols-1 gap-4"
+                }
+              >
+                {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
+                  <div
+                    key={i}
+                    className="h-80 animate-pulse rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-3.5"
+                  >
+                    <div className="h-44 w-full rounded-xl bg-slate-200 dark:bg-slate-800 mb-3" />
+                    <div className="h-4 w-3/4 rounded bg-slate-200 dark:bg-slate-800 mb-2" />
+                    <div className="h-3 w-1/2 rounded bg-slate-200 dark:bg-slate-800 mb-4" />
+                    <div className="h-8 w-full rounded-xl bg-slate-200 dark:bg-slate-800 mt-6" />
+                  </div>
+                ))}
+              </div>
+            ) : filteredBooks.length === 0 ? (
+              <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-12 text-center shadow-sm">
                 <p className="text-4xl">🔍</p>
-                <h3 className="mt-3 text-lg font-bold text-slate-800">
+                <h3 className="mt-3 text-lg font-bold text-slate-800 dark:text-white">
                   No eBooks found
                 </h3>
-                <p className="mt-1 text-xs text-slate-500">
-                  Try adjusting your filters or search terms.
+                <p className="mt-1 text-xs text-slate-500 dark:text-slate-400">
+                  {error
+                    ? "Make sure your backend server is running on http://localhost:3000 to display books."
+                    : "Try adjusting your filters or search terms."}
                 </p>
                 <button
                   type="button"
@@ -396,8 +424,8 @@ function ListingBookCard({ book, view }) {
 
   if (view === "list") {
     return (
-      <div className="group flex flex-col sm:flex-row items-center gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-sm transition hover:border-blue-200 hover:shadow-md">
-        <Link to={`/book/${book.id}`} className="h-32 w-24 shrink-0 overflow-hidden rounded-xl bg-slate-100">
+      <div className="group flex flex-col sm:flex-row items-center gap-4 rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 shadow-sm transition hover:border-blue-200 hover:shadow-md">
+        <Link to={`/book/${book.id}`} className="h-32 w-24 shrink-0 overflow-hidden rounded-xl bg-slate-100 dark:bg-slate-800">
           <BookCover
             src={book.image}
             alt={book.title}
@@ -412,15 +440,15 @@ function ListingBookCard({ book, view }) {
           <div>
             <div className="flex items-start justify-between">
               <div>
-                <span className="text-[10px] font-bold text-blue-600 uppercase tracking-wider">
+                <span className="text-[10px] font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wider">
                   {book.category}
                 </span>
                 <Link to={`/book/${book.id}`}>
-                  <h3 className="text-base font-bold text-[#07164b] hover:text-blue-600 transition">
+                  <h3 className="text-base font-bold text-[#07164b] dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition">
                     {book.title}
                   </h3>
                 </Link>
-                <p className="text-xs text-slate-500">by {book.author}</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400">by {book.author}</p>
               </div>
 
               <button
@@ -435,15 +463,15 @@ function ListingBookCard({ book, view }) {
               </button>
             </div>
 
-            <p className="mt-2 text-xs text-slate-600 line-clamp-2">
+            <p className="mt-2 text-xs text-slate-600 dark:text-slate-300 line-clamp-2">
               {book.description}
             </p>
           </div>
 
-          <div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-3">
+          <div className="mt-4 flex items-center justify-between border-t border-slate-100 dark:border-slate-800 pt-3">
             <div className="flex items-center gap-2">
-              <span className="text-lg font-bold text-slate-900">₹{book.price}</span>
-              <span className="text-xs text-slate-400 line-through">₹{book.oldPrice}</span>
+              <span className="text-lg font-bold text-slate-900 dark:text-white">₹{book.price}</span>
+              <span className="text-xs text-slate-400 dark:text-slate-500 line-through">₹{book.oldPrice}</span>
             </div>
 
             <button
@@ -465,10 +493,10 @@ function ListingBookCard({ book, view }) {
   }
 
   return (
-    <div className="group relative flex flex-col justify-between overflow-hidden rounded-xl border border-slate-200 bg-white p-3 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-blue-300 hover:shadow-lg">
+    <div className="group relative flex flex-col justify-between overflow-hidden rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-3 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-blue-300 hover:shadow-lg">
       <div>
         {/* Image Area */}
-        <div className="relative mb-2.5 aspect-[3/4] w-full overflow-hidden rounded-lg bg-slate-100">
+        <div className="relative mb-2.5 aspect-[3/4] w-full overflow-hidden rounded-lg bg-slate-100 dark:bg-slate-800">
           <Link to={`/book/${book.id}`} className="block h-full w-full">
             <BookCover
               src={book.image}
@@ -491,43 +519,43 @@ function ListingBookCard({ book, view }) {
           <button
             type="button"
             onClick={() => toggleWishlist(book.id)}
-            className="absolute right-2 top-2 z-10 flex h-7 w-7 items-center justify-center rounded-full bg-white/95 shadow-sm transition hover:scale-110"
+            className="absolute right-2 top-2 z-10 flex h-7 w-7 items-center justify-center rounded-full bg-white/95 dark:bg-slate-800/95 shadow-sm transition hover:scale-110"
           >
             <Heart
               size={15}
-              className={liked ? "fill-red-500 text-red-500" : "text-slate-600"}
+              className={liked ? "fill-red-500 text-red-500" : "text-slate-600 dark:text-slate-300"}
             />
           </button>
         </div>
 
         {/* Info */}
         <div>
-          <span className="text-[10px] font-bold text-blue-600 uppercase tracking-wide">
+          <span className="text-[10px] font-bold text-blue-600 dark:text-blue-400 uppercase tracking-wide">
             {book.category}
           </span>
           <Link to={`/book/${book.id}`}>
-            <h3 className="line-clamp-1 text-xs sm:text-sm font-bold text-[#07164b] hover:text-blue-600 transition">
+            <h3 className="line-clamp-1 text-xs sm:text-sm font-bold text-[#07164b] dark:text-white hover:text-blue-600 dark:hover:text-blue-400 transition">
               {book.title}
             </h3>
           </Link>
-          <p className="line-clamp-1 text-[11px] text-slate-500">{book.author}</p>
+          <p className="line-clamp-1 text-[11px] text-slate-500 dark:text-slate-400">{book.author}</p>
 
           <div className="mt-1 flex items-center gap-1 text-[11px]">
             <Star size={11} className="fill-amber-400 text-amber-400" />
-            <span className="font-semibold text-slate-700">{book.rating}</span>
-            <span className="text-slate-400">({book.reviews})</span>
+            <span className="font-semibold text-slate-700 dark:text-slate-300">{book.rating}</span>
+            <span className="text-slate-400 dark:text-slate-500">({book.reviews})</span>
           </div>
         </div>
       </div>
 
       {/* Pricing & Cart Button */}
-      <div className="mt-3 border-t border-slate-100 pt-2.5">
+      <div className="mt-3 border-t border-slate-100 dark:border-slate-800 pt-2.5">
         <div className="flex items-center justify-between mb-2">
-          <span className="text-sm sm:text-base font-extrabold text-slate-900">
+          <span className="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white">
             ₹{book.price}
           </span>
           {book.oldPrice && (
-            <span className="text-[11px] text-slate-400 line-through">
+            <span className="text-[11px] text-slate-400 dark:text-slate-500 line-through">
               ₹{book.oldPrice}
             </span>
           )}

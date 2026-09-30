@@ -179,18 +179,18 @@ const CategoriesGrid = () => {
   };
 
   return (
-    <section className="w-full bg-white py-8 md:py-12">
-      <div className="mx-auto max-w-[1250px] px-5">
+    <section className="w-full bg-white dark:bg-slate-950 py-8 md:py-12 transition-colors duration-200">
+      <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
 
         {/*         = SECTION HEADER         = */}
 
         <div className="mb-6 flex items-center justify-between">
           <div>
-            <h2 className="text-2xl font-extrabold tracking-tight text-[#07194f] md:text-3xl">
+            <h2 className="text-2xl font-extrabold tracking-tight text-[#07194f] dark:text-white md:text-3xl">
               Explore Categories
             </h2>
 
-            <p className="mt-1 text-sm text-slate-500 md:text-base">
+            <p className="mt-1 text-sm text-slate-500 dark:text-slate-400 md:text-base">
               Find your next great read by category.
             </p>
           </div>
@@ -204,8 +204,10 @@ const CategoriesGrid = () => {
               text-sm
               font-semibold
               text-blue-600
+              dark:text-blue-400
               transition
               hover:text-blue-700
+              dark:hover:text-blue-300
               sm:flex
             "
           >
@@ -243,7 +245,9 @@ const CategoriesGrid = () => {
                   rounded-xl
                   border
                   border-white
+                  dark:border-slate-800
                   ${category.bg}
+                  dark:bg-slate-900/90
                   p-4
                   text-left
                   transition-all
@@ -251,6 +255,7 @@ const CategoriesGrid = () => {
 
                   hover:-translate-y-1
                   hover:border-slate-200
+                  dark:hover:border-slate-700
                   hover:shadow-md
 
                   md:min-h-[165px]
@@ -269,6 +274,7 @@ const CategoriesGrid = () => {
                     justify-center
                     rounded-2xl
                     ${category.iconBg}
+                    dark:bg-slate-800
                     transition-transform
                     duration-300
                     group-hover:scale-110
@@ -293,6 +299,7 @@ const CategoriesGrid = () => {
                       font-extrabold
                       leading-5
                       text-[#07194f]
+                      dark:text-white
                       md:text-[15px]
                     "
                   >
@@ -305,6 +312,7 @@ const CategoriesGrid = () => {
                       text-xs
                       font-medium
                       text-slate-400
+                      dark:text-slate-400
                     "
                   >
                     {category.books}
@@ -325,7 +333,9 @@ const CategoriesGrid = () => {
                     justify-center
                     rounded-full
                     bg-white
+                    dark:bg-slate-800
                     text-blue-600
+                    dark:text-blue-400
                     shadow-sm
                     transition-all
                     duration-300

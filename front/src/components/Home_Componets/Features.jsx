@@ -39,7 +39,7 @@ const Features = () => {
   ];
 
   return (
-    <section className="w-full bg-white py-8 sm:py-10">
+    <section className="w-full bg-white dark:bg-slate-950 py-8 sm:py-10 transition-colors duration-200">
       <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4 items-stretch">
           {features.map((feature) => {
@@ -48,21 +48,21 @@ const Features = () => {
             return (
               <div
                 key={feature.title}
-                className="group flex h-full min-h-[96px] items-center gap-4 rounded-2xl border border-slate-100 bg-slate-50/60 p-4 transition-all duration-300 hover:-translate-y-1 hover:border-blue-200 hover:bg-white hover:shadow-md"
+                className="group flex h-full min-h-[96px] items-center gap-4 rounded-2xl border border-slate-100 dark:border-slate-800 bg-slate-50/60 dark:bg-slate-900/90 p-4 transition-all duration-300 hover:-translate-y-1 hover:border-blue-200 dark:hover:border-slate-700 hover:bg-white dark:hover:bg-slate-900 hover:shadow-md"
               >
                 {/* Icon */}
                 <div
-                  className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl ${feature.iconBg} transition-transform duration-300 group-hover:scale-105`}
+                  className={`flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl ${feature.iconBg} dark:bg-slate-800 transition-transform duration-300 group-hover:scale-105`}
                 >
                   <Icon className={`text-2xl ${feature.iconColor}`} />
                 </div>
 
                 {/* Text */}
                 <div className="min-w-0">
-                  <h3 className="text-sm sm:text-base font-bold text-slate-900">
+                  <h3 className="text-sm sm:text-base font-bold text-slate-900 dark:text-white">
                     {feature.title}
                   </h3>
-                  <p className="mt-0.5 text-xs text-slate-500">
+                  <p className="mt-0.5 text-xs text-slate-500 dark:text-slate-400">
                     {feature.description}
                   </p>
                 </div>

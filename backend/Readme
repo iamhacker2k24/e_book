@@ -14,7 +14,7 @@
 // │   ├── POST   /login
 // │   ├── POST   /logout
 // │   ├── GET    /dashboard
-// 
+//                                                                    
 // ├── /banners                                 //done 
 // │   ├── GET    /
 // │   └── GET    /active

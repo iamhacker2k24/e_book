@@ -29,14 +29,14 @@ const Offers = () => {
   ];
 
   return (
-    <section className="w-full bg-white py-6">
+    <section className="w-full bg-white dark:bg-slate-950 py-6 transition-colors duration-200">
       <div className="mx-auto max-w-[1400px] px-4 sm:px-6">
         {/*         = OFFERS WITH UNIFORM HEIGHTS         = */}
         <div className="grid grid-cols-1 gap-5 lg:grid-cols-2">
           {offers.map((offer) => (
             <article
               key={offer.type}
-              className="group relative h-[210px] sm:h-[220px] overflow-hidden rounded-2xl border border-slate-200/90 bg-slate-50 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
+              className="group relative h-[210px] sm:h-[220px] overflow-hidden rounded-2xl border border-slate-200/90 dark:border-slate-800 bg-slate-50 dark:bg-slate-900 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
             >
               {/* BACKGROUND IMAGE */}
               <img
@@ -47,7 +47,7 @@ const Offers = () => {
               />
 
               {/* GRADIENT OVERLAY */}
-              <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/85 to-transparent" />
+              <div className="absolute inset-0 bg-gradient-to-r from-white/95 via-white/85 to-transparent dark:from-slate-950/95 dark:via-slate-950/85 dark:to-transparent" />
 
               {/* CONTENT WITH BALANCED HEIGHT */}
               <div className="relative z-10 flex h-full max-w-[65%] sm:max-w-[55%] flex-col justify-center px-6 py-5 sm:px-8">
@@ -57,11 +57,11 @@ const Offers = () => {
                   {offer.label}
                 </p>
 
-                <h2 className="mt-1.5 text-xl sm:text-2xl font-extrabold leading-tight tracking-tight text-slate-950">
+                <h2 className="mt-1.5 text-xl sm:text-2xl font-extrabold leading-tight tracking-tight text-slate-950 dark:text-white">
                   {offer.title}
                 </h2>
 
-                <p className="mt-1.5 text-xs sm:text-sm leading-5 text-slate-600 line-clamp-2">
+                <p className="mt-1.5 text-xs sm:text-sm leading-5 text-slate-600 dark:text-slate-300 line-clamp-2">
                   {offer.description}
                 </p>
 

@@ -15,61 +15,61 @@ import {
   FiChevronRight,
 } from "react-icons/fi";
 
+const sections = [
+  {
+    id: "introduction",
+    title: "Introduction",
+    icon: FiFileText,
+  },
+  {
+    id: "information",
+    title: "Information We Collect",
+    icon: FiDatabase,
+  },
+  {
+    id: "usage",
+    title: "How We Use Your Information",
+    icon: FiSettings,
+  },
+  {
+    id: "cookies",
+    title: "Cookies & Tracking",
+    icon: FiActivity,
+  },
+  {
+    id: "sharing",
+    title: "Data Sharing",
+    icon: FiShare2,
+  },
+  {
+    id: "security",
+    title: "Data Security",
+    icon: FiShield,
+  },
+  {
+    id: "rights",
+    title: "Your Rights",
+    icon: FiUser,
+  },
+  {
+    id: "children",
+    title: "Children's Privacy",
+    icon: FiUsers,
+  },
+  {
+    id: "changes",
+    title: "Changes to This Policy",
+    icon: FiRefreshCw,
+  },
+  {
+    id: "contact",
+    title: "Contact Us",
+    icon: FiMail,
+  },
+];
+
 const PrivacyContent = () => {
   const [activeSection, setActiveSection] = useState("introduction");
-
-  const sections = [
-    {
-      id: "introduction",
-      title: "Introduction",
-      icon: FiFileText,
-    },
-    {
-      id: "information",
-      title: "Information We Collect",
-      icon: FiDatabase,
-    },
-    {
-      id: "usage",
-      title: "How We Use Your Information",
-      icon: FiSettings,
-    },
-    {
-      id: "cookies",
-      title: "Cookies & Tracking",
-      icon: FiActivity,
-    },
-    {
-      id: "sharing",
-      title: "Data Sharing",
-      icon: FiShare2,
-    },
-    {
-      id: "security",
-      title: "Data Security",
-      icon: FiShield,
-    },
-    {
-      id: "rights",
-      title: "Your Rights",
-      icon: FiUser,
-    },
-    {
-      id: "children",
-      title: "Children's Privacy",
-      icon: FiUsers,
-    },
-    {
-      id: "changes",
-      title: "Changes to This Policy",
-      icon: FiRefreshCw,
-    },
-    {
-      id: "contact",
-      title: "Contact Us",
-      icon: FiMail,
-    },
-  ];
 
   /*
                                 
